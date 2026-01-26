@@ -1,3 +1,11 @@
+"""
+DXF Layer Extractor & Validator
+
+A Flask web application that uploads, extracts, and validates layer information
+from DXF files against a master JSON rule set (odisha_layers.json).
+Supports .dxf and .zip uploads with comprehensive validation.
+"""
+
 import os
 import json
 import zipfile
@@ -12,7 +20,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
 # Configuration
-app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100 MB limit
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100 MB upload limit
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 app.config['MASTER_JSON'] = os.path.join(os.path.dirname(__file__), 'odisha_layers.json')
 ALLOWED_EXTENSIONS = {'dxf', 'zip'}
@@ -31,44 +39,16 @@ IGNORED_LAYERS = {
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 def allowed_file(filename):
-    """Check if the uploaded file has a valid extension"""
+    """Check if the uploaded file has a valid extension (.dxf or .zip)"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def parse_layer_pattern(pattern_name):
-    """Convert JSON layer name pattern to regex"""
-    # Escape special characters but preserve 'n' for replacement
+    """Convert JSON layer name pattern to regex, replacing 'n' placeholders with digit matchers"""
+    # Replace 'n' placeholders with regex digit patterns
     escaped = re.escape(pattern_name)
     # Replace 'n' with '\d+' (one or more digits)
-    # We need to be careful not to replace 'n' in words like 'Green', but the patterns seem to use 'n' as a standalone or specific marker
-    # Looking at "BLK_n_COVERED_AREA", "RWH_CAPACITY_L=n".
-    # It seems safe to replace "_n_" with "_\d+_" or "_n$" with "_\d+$" or "=n" with "=\d+".
-    # A simpler approach: split by underscores and other delimiters?
-    # Let's try replacing specific 'n' occurrences.
-    
-    # Actually, looking at the JSON, 'n' appears in:
-    # BLK_n_...
-    # ..._LVL_n_...
-    # ..._FLR_n_...
-    # ..._UNIT_n...
-    # ...=n
-    # ..._STAIR_n...
-    
-    regex = escaped.replace(r'\ n', r'\d+') # If re.escape escapes space (it usually doesn't for alphanumeric)
-    # re.escape('BLK_n_COVERED_AREA') -> 'BLK_n_COVERED_AREA' (in python 3.7+ some chars aren't escaped)
-    # Let's just do string replacement on the raw pattern before regex compile, assuming 'n' is the variable.
-    # To avoid replacing 'n' in "Green", we should check context.
-    # Most 'n's are preceded by underscore or equals or space, or valid separators.
-    
-    # Strategy: Replace 'n' with '\d+' or '-?\d+' (negative supported)
-    # But wait, "Green" has 'n'. "Open" has 'n'.
-    # We only want to replace 'n' that stands for a number.
-    # In the JSON examples: "BLK_n_", "L=n", "FLR_n_".
-    # It seems 'n' is always a standalone component separated by `_` or `=`.
-    
-    # pattern = pattern_name.replace('n', r'-?\d+')
-    # Fix: "Green" -> "Gree\d+". Bad.
-    
-    # Better strategy: match specific placeholders
+    # Replace 'n' placeholders in specific contexts (e.g., BLK_n, _n_, =n)
+    # Avoids replacing 'n' in words like 'Green' or 'Open'
     regex_pattern = pattern_name
     regex_pattern = regex_pattern.replace('BLK_n', r'BLK_-?\d+')
     regex_pattern = regex_pattern.replace('_n_', r'_-?\d+_')
@@ -89,31 +69,28 @@ def parse_layer_pattern(pattern_name):
     regex_pattern = regex_pattern.replace('CTI_n', r'CTI_-?\d+')
     regex_pattern = regex_pattern.replace('OHEL_n', r'OHEL_-?\d+')
     
-    # Handle "BLK_1_LVL_0_SIDE_SETBACK1" vs "BLK_n_LVL_n_SIDE_SETBACKn"? 
-    # The JSON has specific numbers sometimes (e.g. SIDE_SETBACK1).
-    
-    # If the layer name in JSON has no 'n' placeholders but is just text (e.g. "PLOT BOUNDARY"), strict match.
+    # If no placeholders were found, use strict pattern matching
     if regex_pattern == pattern_name:
         return f"^{re.escape(pattern_name)}$"
     
     return f"^{regex_pattern}$"
 
 def get_master_rules():
-    """Load and parse master rules from JSON"""
+    """Load and parse master validation rules from odisha_layers.json"""
     if not os.path.exists(app.config['MASTER_JSON']):
         return []
     with open(app.config['MASTER_JSON'], 'r') as f:
         return json.load(f)
 
 def validate_dxf_content(doc):
-    """Validate DXF content against master rules"""
+    """Validate DXF content against master rules, checking units and layer specifications"""
     errors = []
     warnings = []
     
-    # Load rules
+    # Load master validation rules
     master_rules = get_master_rules()
     
-    # 1. Unit Settings Validation
+    # 1. Validate DXF unit settings (must be Meters, Decimal, Decimal Degrees)
     units = doc.header.get('$INSUNITS', 0)
     if units != 6:
         unit_names = {0: 'Unitless', 1: 'Inches', 2: 'Feet', 4: 'Millimeters', 5: 'Centimeters', 6: 'Meters'}
@@ -132,27 +109,26 @@ def validate_dxf_content(doc):
         found_aunit = aunit_names.get(aunits, str(aunits))
         errors.append(f"Drawing unit angle type must be Decimal Degrees ($AUNITS=0). Found: {found_aunit}")
         
-    # Check Precision (Warning)
+    # Check linear unit precision (warning only)
     luprec = doc.header.get('$LUPREC', 0)
     if luprec != 2:
         warnings.append(f"Linear unit precision should be 0.00 ($LUPREC=2). Found: {luprec}")
 
-    # 2. Layer Analysis
+    # 2. Perform layer analysis and validation
     dxf_layers = {layer.dxf.name: layer for layer in doc.layers}
     
-    # Find allowed occupancy colors from BLT_UP_AREA layers
+    # Extract allowed occupancy colors from BLT_UP_AREA layers
     occupancy_colors = set()
     blt_up_pattern = re.compile(r'^BLK_-?\d+_FLR_-?\d+_BLT_UP_AREA$')
     
     for name, layer in dxf_layers.items():
         if blt_up_pattern.match(name):
             occupancy_colors.add(layer.dxf.color)
-            # If layer has true color, add that too (as int)
+            # Include true color if present
             if layer.dxf.hasattr('true_color'):
                 occupancy_colors.add(layer.dxf.true_color)
 
-    # Compile rules for matching
-    # Map regex pattern -> rule object
+    # Compile regex patterns from master rules for efficient matching
     compiled_rules = []
     for rule in master_rules:
         pattern = parse_layer_pattern(rule['Layer Name'])
@@ -268,9 +244,9 @@ def validate_dxf_content(doc):
                 if valid_match_found:
                     break
             
-            # If layer color is invalid, check entities
+            # If layer color is invalid, check if all entities have valid explicit colors
             if not valid_match_found:
-                # Prepare allowed color set for efficient checking
+                # Build set of allowed color codes for validation
                 allowed_code_set = set()
                 for c in allowed_colors:
                     if c == "As per Sub-Occupancy":
@@ -301,9 +277,11 @@ def validate_dxf_content(doc):
                         
                         entity_valid = False
                         
-                        if e_color == 256: # ByLayer -> Inherits bad layer color
+                        # ByLayer (256) inherits invalid layer color
+                        if e_color == 256:
                             entity_valid = False
-                        elif e_color == 0: # ByBlock -> Assume bad
+                        # ByBlock (0) is not acceptable
+                        elif e_color == 0:
                              entity_valid = False
                         elif "Any" in allowed_code_set:
                             entity_valid = True
@@ -318,12 +296,13 @@ def validate_dxf_content(doc):
                             break
                     
                     if all_entities_valid:
-                        layer_info['status'] = 'valid' # Accepted because all entities are compliant
-                        valid_match_found = True # Override failure
+                        # Accept layer if all entities have valid explicit colors
+                        layer_info['status'] = 'valid'
+                        valid_match_found = True
             
             if not valid_match_found:
                 layer_info['status'] = 'error'
-                # Remove duplicates from allowed list
+                # Get unique allowed colors for error message
                 unique_colors = sorted(list(set(allowed_colors)))
                 
                 # Expand "As per Sub-Occupancy" for better error message
@@ -348,7 +327,7 @@ def validate_dxf_content(doc):
 
     return {
         'success': True,
-        'layers': validated_layers, # List of dicts with validation info
+        'layers': validated_layers,  # List of validated layer dictionaries
         'count': len(dxf_layers),
         'errors': errors,
         'warnings': warnings,
@@ -362,7 +341,7 @@ def index():
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
-    """Handle master JSON upload"""
+    """Admin panel for updating master validation rules JSON file"""
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file selected', 'error')
@@ -390,7 +369,7 @@ def admin():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    """Handle file upload and display validation results"""
+    """Process uploaded DXF/ZIP file and return validation results"""
     if 'file' not in request.files:
         flash('No file selected', 'error')
         return redirect(url_for('index'))
@@ -417,7 +396,7 @@ def upload_file():
         
         target_dxf = filepath
         
-        # Handle ZIP
+        # Extract DXF from ZIP if necessary
         if filename.lower().endswith('.zip'):
             extract_dir = os.path.join(app.config['UPLOAD_FOLDER'], f"temp_{os.path.splitext(filename)[0]}")
             os.makedirs(extract_dir, exist_ok=True)
@@ -439,7 +418,7 @@ def upload_file():
             if not found_dxf:
                 raise Exception("No .dxf file found in the zip archive")
 
-        # Process DXF
+        # Read and validate DXF file
         try:
             doc = ezdxf.readfile(target_dxf)
             result = validate_dxf_content(doc)
@@ -447,7 +426,7 @@ def upload_file():
         except Exception as e:
             raise Exception(f"Error parsing DXF: {str(e)}")
         
-        # Clean up
+        # Clean up temporary files
         if filepath and os.path.exists(filepath):
             os.remove(filepath)
         if extract_dir and os.path.exists(extract_dir):
