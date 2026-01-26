@@ -1,0 +1,3410 @@
+[
+    {
+        "Feature": "Plot area",
+        "Layer Name": "PLOT BOUNDARY",
+        "Color Code": "70",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as Polygon around the plot boundary"
+    },
+    {
+        "Feature": "Ground Coverage area",
+        "Layer Name": "BLK_n_COVERED_AREA",
+        "Color Code": "140",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as Polygon around the coverage area"
+    },
+    {
+        "Feature": "Ground Coverage deduction",
+        "Layer Name": "BLK_n_COVERED_AREA_DEDUCT",
+        "Color Code": "140",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as Polygon around the area for coverage deduction"
+    },
+    {
+        "Feature": "Building Footprint",
+        "Layer Name": "BLK_n_LVL_n_BLDG_FOOT_PRINT",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon, using poly line"
+    },
+    {
+        "Feature": "Setbacks Front",
+        "Layer Name": "BLK_n_LVL_n_FRONT_SETBACK",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Setbacks Rear",
+        "Layer Name": "BLK_n_LVL_n_REAR_SETBACK",
+        "Color Code": "11",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Setbacks Left",
+        "Layer Name": "BLK_1_LVL_0_SIDE_SETBACK1",
+        "Color Code": "171",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Setbacks Right",
+        "Layer Name": "BLK_1_LVL_0_SIDE_SETBACK2",
+        "Color Code": "102",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Open Space between buildings",
+        "Layer Name": "DIST_BETWEEN_BLK_n_BLK_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension between Two Building Blocks"
+    },
+    {
+        "Feature": "Trees Cut",
+        "Layer Name": "PLANTATION_TREES_CUT",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Trees Cut"
+    },
+    {
+        "Feature": "Plantation Tree Count (Existing)",
+        "Layer Name": "PLANTATION_TREECOVER",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Existing Trees"
+    },
+    {
+        "Feature": "Plantation Tree Count (Planted)",
+        "Layer Name": "PLANTATION_TREECOVER",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Planted Trees"
+    },
+    {
+        "Feature": "Plantation Green Strip",
+        "Layer Name": "BLK_n_PLANTATION_GREENSTRIP",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around open green area"
+    },
+    {
+        "Feature": "Rainwater harvesting system",
+        "Layer Name": "RWH",
+        "Color Code": "4",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around the tank"
+    },
+    {
+        "Feature": "Rainwater Harvesting Capacity Text",
+        "Layer Name": "RWH_CAPACITY_L=n",
+        "Color Code": "4",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Text",
+        "Drawing Guidelines": "Add text for Rainwater Harvesting tank (using Mtext)"
+    },
+    {
+        "Feature": "Recharge Pit",
+        "Layer Name": "SITE_COMPONENTS",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around the Recharge Pit"
+    },
+    {
+        "Feature": "Recharge Pit Height",
+        "Layer Name": "SITE_COMPONENTS",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of Height of Recharge Pit"
+    },
+    {
+        "Feature": "Electric Lines",
+        "Layer Name": "OHEL_n",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Line",
+        "Drawing Guidelines": "Draw Polyline over Electric Line"
+    },
+    {
+        "Feature": "Voltage Text",
+        "Layer Name": "VOLTAGE_KV=n",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Text",
+        "Drawing Guidelines": "Add text for Voltage in KV (using Mtext)"
+    },
+    {
+        "Feature": "Horizontal Clearance OHEL",
+        "Layer Name": "HORIZ_CLEAR_OHEL_n",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Horizontal dimension between Building Block and Electric Line"
+    },
+    {
+        "Feature": "Distance from External Wall",
+        "Layer Name": "BLK_1_FLR_0_COMM_DIST_FROM_FRNT_EXT_WALL",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw distance from external wall"
+    },
+    {
+        "Feature": "Treatment Plant (WTP)",
+        "Layer Name": "WATER_TREATMENT_PLANT",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around the water treatment plant"
+    },
+    {
+        "Feature": "Waste Water Treatment (STP)",
+        "Layer Name": "SITE_COMPONENTS",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around the Sewage treatment plant"
+    },
+    {
+        "Feature": "Septic Tank",
+        "Layer Name": "SITE_COMPONENTS",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around the Septic Tank"
+    },
+    {
+        "Feature": "Sewage Treatment Plant",
+        "Layer Name": "SITE_COMPONENTS",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around sewage treatment plant"
+    },
+    {
+        "Feature": "Open Parking",
+        "Layer Name": "OPEN_PARKING",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over Open Parking"
+    },
+    {
+        "Feature": "Covered Parking",
+        "Layer Name": "BLK_n_FLR_n_COVERED_PARKING",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over Basement Parking"
+    },
+    {
+        "Feature": "Stilt Parking",
+        "Layer Name": "SPECIAL_PARKING",
+        "Color Code": "3",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over Stilt Parking"
+    },
+    {
+        "Feature": "Roof top parking",
+        "Layer Name": "SPECIAL_PARKING",
+        "Color Code": "4",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over Roof top parking"
+    },
+    {
+        "Feature": "Stack parking",
+        "Layer Name": "STACK_PARKING",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over stack parking"
+    },
+    {
+        "Feature": "Parking Unit (Open)",
+        "Layer Name": "PARKING_UNIT",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon for each Open Parking Units"
+    },
+    {
+        "Feature": "Parking Unit (Basement)",
+        "Layer Name": "PARKING_UNIT",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon for each Basement Parking Units"
+    },
+    {
+        "Feature": "Parking Unit (Stilt)",
+        "Layer Name": "PARKING_UNIT",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon for each Stilt Parking Units"
+    },
+    {
+        "Feature": "Parking Unit (Rooftop)",
+        "Layer Name": "PARKING_UNIT",
+        "Color Code": "4",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon for each Rooftop Parking Units"
+    },
+    {
+        "Feature": "Loading Space",
+        "Layer Name": "LOADING_SPACE",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon for each Loading Space Units"
+    },
+    {
+        "Feature": "Visitor Parking",
+        "Layer Name": "VISITOR_PARKING",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over Visitor Parking space"
+    },
+    {
+        "Feature": "Staff Parking",
+        "Layer Name": "SPECIAL_PARKING",
+        "Color Code": "5",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over Staff Parking Space"
+    },
+    {
+        "Feature": "Two Wheeler Parking",
+        "Layer Name": "TWO_WHEELER_PARKING",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over Two Wheeler Parking Space"
+    },
+    {
+        "Feature": "Bicycle Parking",
+        "Layer Name": "TWO_WHEELER_PARKING",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over Bicycle Parking Space"
+    },
+    {
+        "Feature": "EWS/LIG Parking",
+        "Layer Name": "SPECIAL_PARKING",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over EWS/LIG Parking Space"
+    },
+    {
+        "Feature": "MIG Parking",
+        "Layer Name": "SPECIAL_PARKING",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over MIG Parking Space"
+    },
+    {
+        "Feature": "Disabled Parking",
+        "Layer Name": "DA_parking",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon over DA Parking Space"
+    },
+    {
+        "Feature": "North Direction",
+        "Layer Name": "NORTH_DIRECTION",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Text",
+        "Drawing Guidelines": "Draw North Direction Symbol using Polyline and add NORTH in Mtext"
+    },
+    {
+        "Feature": "Amenity in Open Space",
+        "Layer Name": "ACCBLK_1",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Amenity in Open Space Block"
+    },
+    {
+        "Feature": "Guard Room",
+        "Layer Name": "ACCBLK_n_UNIT_n",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Guard Room"
+    },
+    {
+        "Feature": "Electric Cabin",
+        "Layer Name": "ACCBLK_n_UNIT_n",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Electric Cabin"
+    },
+    {
+        "Feature": "Sub-Station",
+        "Layer Name": "ACCBLK_n_UNIT_n",
+        "Color Code": "3",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Sub-Station"
+    },
+    {
+        "Feature": "Area for Generator",
+        "Layer Name": "ACCBLK_n_UNIT_n",
+        "Color Code": "4",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Area for Generator Set"
+    },
+    {
+        "Feature": "ATM",
+        "Layer Name": "ACCBLK_n_UNIT_n",
+        "Color Code": "5",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around ATM"
+    },
+    {
+        "Feature": "Other Amenity",
+        "Layer Name": "ACCBLK_n_UNIT_n",
+        "Color Code": "6",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Other Amenity"
+    },
+    {
+        "Feature": "Vehicular access within Site",
+        "Layer Name": "BLK_n_FIRE_TENDER_MOVEMENT",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on access road within site"
+    },
+    {
+        "Feature": "CDP proposed drain affected area",
+        "Layer Name": "AFFECTED_LAND_AREA",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw polygon and Width dimension"
+    },
+    {
+        "Feature": "Proposed road affected area",
+        "Layer Name": "AFFECTED_LAND_AREA",
+        "Color Code": "3",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw polygon and Width dimension"
+    },
+    {
+        "Feature": "CDP proposed road affected area",
+        "Layer Name": "AFFECTED_LAND_AREA",
+        "Color Code": "4",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw polygon and Width dimension"
+    },
+    {
+        "Feature": "Road widening affected area",
+        "Layer Name": "AFFECTED_LAND_AREA",
+        "Color Code": "5",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw polygon and Width dimension"
+    },
+    {
+        "Feature": "Area left for restricted area",
+        "Layer Name": "AFFECTED_LAND_AREA",
+        "Color Code": "6",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon on site plan"
+    },
+    {
+        "Feature": "Ancillary road on Rear Side",
+        "Layer Name": "BLK_n_LVL_0_ANCILLARY_ROAD_WIDTH",
+        "Color Code": "11",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for ancillary road width"
+    },
+    {
+        "Feature": "Ancillary road on Left Side",
+        "Layer Name": "BLK_n_LVL_0_ANCILLARY_ROAD_WIDTH",
+        "Color Code": "171",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for ancillary road width"
+    },
+    {
+        "Feature": "Ancillary road on Right Side",
+        "Layer Name": "BLK_n_LVL_0_ANCILLARY_ROAD_WIDTH",
+        "Color Code": "102",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for ancillary road width"
+    },
+    {
+        "Feature": "Main Entrance on Front Side",
+        "Layer Name": "BLK_n_LVL_0_MAIN_ENTRANCE",
+        "Color Code": "2",
+        "Requirement": "Mandatory if ancillary road width provided",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for entrance width"
+    },
+    {
+        "Feature": "Main Entrance on Rear Side",
+        "Layer Name": "BLK_n_LVL_0_MAIN_ENTRANCE",
+        "Color Code": "11",
+        "Requirement": "Mandatory if ancillary road width provided",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for entrance width"
+    },
+    {
+        "Feature": "Main Entrance on Left Side",
+        "Layer Name": "BLK_n_LVL_0_MAIN_ENTRANCE",
+        "Color Code": "171",
+        "Requirement": "Mandatory if ancillary road width provided",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for entrance width"
+    },
+    {
+        "Feature": "Main Entrance on Right Side",
+        "Layer Name": "BLK_n_LVL_0_MAIN_ENTRANCE",
+        "Color Code": "102",
+        "Requirement": "Mandatory if ancillary road width provided",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for entrance width"
+    },
+    {
+        "Feature": "Built Up Area",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor"
+    },
+    {
+        "Feature": "FAR Deduction",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA_DEDUCT",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor"
+    },
+    {
+        "Feature": "FAR Area Add (Basement)",
+        "Layer Name": "BLK_n_FLR_n_FAR_AREA_ADD",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on basement floor"
+    },
+    {
+        "Feature": "FAR Deductions/Exemptions",
+        "Layer Name": "BLK_n_FLR_n_FAR_AREA_DEDUCT",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor"
+    },
+    {
+        "Feature": "Existing Built Up Area",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA_EXISTING",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor"
+    },
+    {
+        "Feature": "Existing Built Up Deduction",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA_DEDUCT_EXISTING",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor"
+    },
+    {
+        "Feature": "Existing FAR Add (Basement)",
+        "Layer Name": "BLK_n_FLR_n_FAR_AREA_ADD_EXISTING",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on existing basement floor"
+    },
+    {
+        "Feature": "Existing FAR Deduction",
+        "Layer Name": "BLK_n_FLR_n_FAR_AREA_DEDUCT_EXISTING",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor"
+    },
+    {
+        "Feature": "Existing Carpet Area",
+        "Layer Name": "BLK_n_FLR_n_CARPET_AREA_EXISTING",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on existing carpet area"
+    },
+    {
+        "Feature": "Existing Carpet Area Deduct",
+        "Layer Name": "BLK_n_FLR_n_CRPT_AREA_DEDUCT_EXISTING",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on existing carpet area deduct"
+    },
+    {
+        "Feature": "Approved Existing Construction",
+        "Layer Name": "BLK_n_FLR_n_APPROVED_CONSTRUCTION",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor"
+    },
+    {
+        "Feature": "Demolition Area",
+        "Layer Name": "BLK_n_FLR_n_DEMOLITION_AREA",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor"
+    },
+    {
+        "Feature": "Carpet Area",
+        "Layer Name": "BLK_n_FLR_n_CARPET_AREA",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw carpet area of each floor using polygon"
+    },
+    {
+        "Feature": "Carpet Area Deduct",
+        "Layer Name": "BLK_n_FLR_n_CRPT_AREA_DEDUCT",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw carpet area of each floor using polygon"
+    },
+    {
+        "Feature": "Roof Area",
+        "Layer Name": "BLK_n_FLR_n_ROOF_AREA",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon outlining Roof area"
+    },
+    {
+        "Feature": "Typical Floor Text",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional as per design",
+        "Type": "Text",
+        "Drawing Guidelines": "Denote all the typical floors in a building block in Mtext"
+    },
+    {
+        "Feature": "Staircase Layout",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon around staircase layout"
+    },
+    {
+        "Feature": "Floor Height Text",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Text",
+        "Drawing Guidelines": "Add floor height in same layer with MText"
+    },
+    {
+        "Feature": "Staircase Flight",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n_FLIGHT_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon around each flight in staircase"
+    },
+    {
+        "Feature": "Staircase Flight Length",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n_FLIGHT_n",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for flight length"
+    },
+    {
+        "Feature": "Staircase Flight Width",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n_FLIGHT_n",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for flight width"
+    },
+    {
+        "Feature": "Staircase Rises",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n_FLIGHT_n",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Line",
+        "Drawing Guidelines": "Number of rises by drawing lines"
+    },
+    {
+        "Feature": "Staircase Landing",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n_LANDING_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Polygon around each landing"
+    },
+    {
+        "Feature": "Landing Length",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n_LANDING_n",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for flight length"
+    },
+    {
+        "Feature": "Landing Width",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n_LANDING_n",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for flight width"
+    },
+    {
+        "Feature": "EWS Dwelling Unit",
+        "Layer Name": "BLK_n_FLR_n_UNIT",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each EWS Dwelling Unit"
+    },
+    {
+        "Feature": "LIG Dwelling Unit",
+        "Layer Name": "BLK_n_FLR_n_UNIT",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each LIG Dwelling Unit"
+    },
+    {
+        "Feature": "MIG 1 Dwelling Unit",
+        "Layer Name": "BLK_n_FLR_n_UNIT",
+        "Color Code": "3",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each MIG 1 Dwelling Unit"
+    },
+    {
+        "Feature": "MIG 2 Dwelling Unit",
+        "Layer Name": "BLK_n_FLR_n_UNIT",
+        "Color Code": "4",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each MIG 2 Dwelling Unit"
+    },
+    {
+        "Feature": "Other Dwelling Unit",
+        "Layer Name": "BLK_n_FLR_n_UNIT",
+        "Color Code": "5",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each Other Category of Dwelling Unit"
+    },
+    {
+        "Feature": "Room Unit",
+        "Layer Name": "BLK_n_FLR_n_UNIT",
+        "Color Code": "6",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each Room Unit"
+    },
+    {
+        "Feature": "Owner's Society Office",
+        "Layer Name": "BLK_n_FLR_n_UNIT",
+        "Color Code": "8",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each Owner's Society Office"
+    },
+    {
+        "Feature": "Exit Travel Distance",
+        "Layer Name": "DIST_EXIT",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Multiple Dimensions for Maximum Travel Distance"
+    },
+    {
+        "Feature": "Exit Width Staircase",
+        "Layer Name": "BLK_n_FLR_n_EXIT_WIDTH_STAIR",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Dimension for Staircase Exit width"
+    },
+    {
+        "Feature": "DA Ramp",
+        "Layer Name": "BLK_n_DA_RAMP_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around DA Ramp"
+    },
+    {
+        "Feature": "DA Ramp Slope Text",
+        "Layer Name": "BLK_n_DA_RAMP_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Text",
+        "Drawing Guidelines": "Add Slope in same layer with Mtext"
+    },
+    {
+        "Feature": "Vehicular Ramp LMV 1 Way",
+        "Layer Name": "BLK_n_FLR_n_VEHICLERAMP_n",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Vehicular Ramp"
+    },
+    {
+        "Feature": "Vehicular Ramp LMV 2 Way",
+        "Layer Name": "BLK_n_FLR_n_VEHICLERAMP_n",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Vehicular Ramp"
+    },
+    {
+        "Feature": "Vehicular Ramp LCV 1 Way",
+        "Layer Name": "BLK_n_FLR_n_VEHICLERAMP_n",
+        "Color Code": "3",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Vehicular Ramp"
+    },
+    {
+        "Feature": "Vehicular Ramp LCV 2 Way",
+        "Layer Name": "BLK_n_FLR_n_VEHICLERAMP_n",
+        "Color Code": "4",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Vehicular Ramp"
+    },
+    {
+        "Feature": "Vehicular Ramp HMV 1 Way",
+        "Layer Name": "BLK_n_FLR_n_VEHICLERAMP_n",
+        "Color Code": "5",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Vehicular Ramp"
+    },
+    {
+        "Feature": "Vehicular Ramp HMV 2 Way",
+        "Layer Name": "BLK_n_FLR_n_VEHICLERAMP_n",
+        "Color Code": "6",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Vehicular Ramp"
+    },
+    {
+        "Feature": "Fire tender Ramp",
+        "Layer Name": "BLK_n_FLR_n_VEHICLERAMP_n",
+        "Color Code": "8",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around Vehicular Ramp"
+    },
+    {
+        "Feature": "Ramp Slope Text",
+        "Layer Name": "BLK_n_FLR_n_VEHICLERAMP_n",
+        "Color Code": "Any",
+        "Requirement": "Optional as per design",
+        "Type": "Text",
+        "Drawing Guidelines": "Add Slope in same layer with Mtext"
+    },
+    {
+        "Feature": "Interior open space",
+        "Layer Name": "BLK_n_FLR_n_COURTYARD_INNER",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon around interior open space on each floor"
+    },
+    {
+        "Feature": "Light and Ventilation",
+        "Layer Name": "BLK_n_FLR_n_ROOM_n_LIGHT_VENTILATION_n",
+        "Color Code": "RGB 19,155,72",
+        "Requirement": "Mandatory where habitable room naturally ventilated",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw polygon with dimension of window"
+    },
+    {
+        "Feature": "Solar photo voltaic Panels",
+        "Layer Name": "SOLAR_PANEL",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon outlining Solar Panels"
+    },
+    {
+        "Feature": "Solar water heating system",
+        "Layer Name": "SOLAR_WATER_HEATER",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon outlining Solar Water Heater"
+    },
+    {
+        "Feature": "General Lift",
+        "Layer Name": "BLK_n_FLR_n_LIFT_n",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon to mark lift location"
+    },
+    {
+        "Feature": "Lift for Physically Disabled",
+        "Layer Name": "BLK_n_FLR_n_LIFT_n",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon to mark lift location"
+    },
+    {
+        "Feature": "Car Lift",
+        "Layer Name": "BLK_n_FLR_n_LIFT_n",
+        "Color Code": "3",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon to mark lift location"
+    },
+    {
+        "Feature": "Owner's Society Office",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "103",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on floor"
+    },
+    {
+        "Feature": "Outhouse",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "100",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on floor"
+    },
+    {
+        "Feature": "Public Washroom Complex",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "101",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on floor"
+    },
+    {
+        "Feature": "Wash Basin",
+        "Layer Name": "BLK_n_FLR_n_WASH",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a polygon on wash basin"
+    },
+    {
+        "Feature": "Chajja/Projections",
+        "Layer Name": "BLK_n_FLR_n_CHAJJA",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor"
+    },
+    {
+        "Feature": "Common Water closet",
+        "Layer Name": "BLK_n_FLR_n_WATER_CLOSET",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Common Water closet"
+    },
+    {
+        "Feature": "Female Water closet",
+        "Layer Name": "BLK_n_FLR_n_WATER_CLOSET",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Female Water closet"
+    },
+    {
+        "Feature": "Male Water closet",
+        "Layer Name": "BLK_n_FLR_n_WATER_CLOSET",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Male Water closet"
+    },
+    {
+        "Feature": "Male Urinal",
+        "Layer Name": "BLK_n_FLR_n_URINAL",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Male Urinal"
+    },
+    {
+        "Feature": "Common Bath",
+        "Layer Name": "BLK_n_FLR_n_BATH",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Common Bath"
+    },
+    {
+        "Feature": "Female Bath",
+        "Layer Name": "BLK_n_FLR_n_BATH",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Female Bath"
+    },
+    {
+        "Feature": "Male Bath",
+        "Layer Name": "BLK_n_FLR_n_BATH",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Male Bath"
+    },
+    {
+        "Feature": "Common Toilet",
+        "Layer Name": "BLK_n_FLR_n_WC_BATH",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Common Toilet"
+    },
+    {
+        "Feature": "Female Toilet",
+        "Layer Name": "BLK_n_FLR_n_WC_BATH",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Female Toilet"
+    },
+    {
+        "Feature": "Male Toilet",
+        "Layer Name": "BLK_n_FLR_n_WC_BATH",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Male Toilet"
+    },
+    {
+        "Feature": "Disabled Toilet Common",
+        "Layer Name": "BLK_n_FLR_n_SP_WC",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Common Disabled Toilet"
+    },
+    {
+        "Feature": "Disabled Toilet Female",
+        "Layer Name": "BLK_n_FLR_n_SP_WC",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Female Disabled Toilet"
+    },
+    {
+        "Feature": "Disabled Toilet Male",
+        "Layer Name": "BLK_n_FLR_n_SP_WC",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon for Male Disabled Toilet"
+    },
+    {
+        "Feature": "General Door Width",
+        "Layer Name": "BLK_n_FLR_n_EXIT_WIDTH_DOOR",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension for General Door/Entrance Door Width"
+    },
+    {
+        "Feature": "Service Door Width",
+        "Layer Name": "BLK_n_FLR_n_EXIT_WIDTH_DOOR",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension for Bathrooms, water closet and stores Door width"
+    },
+    {
+        "Feature": "Fire Door Width",
+        "Layer Name": "BLK_n_FLR_n_EXIT_WIDTH_DOOR",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension for Fire Door width"
+    },
+    {
+        "Feature": "Disabled Access Door Width",
+        "Layer Name": "BLK_n_FLR_n_EXIT_WIDTH_DOOR",
+        "Color Code": "4",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension for Disabled Access Door width"
+    },
+    {
+        "Feature": "Passageways Height",
+        "Layer Name": "PASSAGE",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension for Passage/Corridor height in Sectional Elevation"
+    },
+    {
+        "Feature": "Passageways Width",
+        "Layer Name": "PASSAGE",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension for width of Passage/Corridor on Floor Plan"
+    },
+    {
+        "Feature": "Double Loaded Passage Width",
+        "Layer Name": "PASSAGE_DOUBLELOADED",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension for width of Double loaded Passage/Corridor on Floor Plan"
+    },
+    {
+        "Feature": "Habitable Room (Natural)",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for each room on floor plan"
+    },
+    {
+        "Feature": "Habitable Room (Mech)",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for each Room on floor plan"
+    },
+    {
+        "Feature": "Study Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "3",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Study Room"
+    },
+    {
+        "Feature": "Library Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "4",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for library Room"
+    },
+    {
+        "Feature": "Game Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "5",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Game Room"
+    },
+    {
+        "Feature": "CCTV Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "28",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for CCTV Room"
+    },
+    {
+        "Feature": "Service Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "29",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Service Room"
+    },
+    {
+        "Feature": "MEP Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "30",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for MEP Room"
+    },
+    {
+        "Feature": "Laundry Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "31",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for laundry Room"
+    },
+    {
+        "Feature": "Lift Lobby",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "32",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for lift Lobby"
+    },
+    {
+        "Feature": "Guard Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "33",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Guard Room"
+    },
+    {
+        "Feature": "Electric Cabin",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "34",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Electric Cabin"
+    },
+    {
+        "Feature": "Sub-Station",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "35",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Sub-Station"
+    },
+    {
+        "Feature": "Generator Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "36",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Generator Room"
+    },
+    {
+        "Feature": "ATM",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "37",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for ATM"
+    },
+    {
+        "Feature": "Room Height Dimension",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_n",
+        "Color Code": "Any",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension of room height for respective room in sectional elevation"
+    },
+    {
+        "Feature": "Stilt Floor Proposed",
+        "Layer Name": "BLK_n_FLR_n_STILT_FLOOR",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Stilt Floor on floor plan"
+    },
+    {
+        "Feature": "Stilt Floor Height",
+        "Layer Name": "BLK_n_FLR_n_STILT_FLOOR",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension of room height for respective room in sectional elevation"
+    },
+    {
+        "Feature": "Stilt Floor Existing",
+        "Layer Name": "BLK_n_FLR_n_STILT_FLOOR_EXISTING",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Stilt Floor on floor plan"
+    },
+    {
+        "Feature": "Service Floor Proposed",
+        "Layer Name": "BLK_n_FLR_n_SERVICE_FLOOR",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Service Floor on floor plan"
+    },
+    {
+        "Feature": "Service Floor Existing",
+        "Layer Name": "BLK_n_FLR_n_SERVICE_FLOOR_EXISTING",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Service Floor on floor plan"
+    },
+    {
+        "Feature": "Mezzanine Floor",
+        "Layer Name": "BLK_n_FLR_n_ROOM_n_MEZ_AREA_n",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for Mezzanine Floor on floor plan"
+    },
+    {
+        "Feature": "Mezzanine Height",
+        "Layer Name": "BLK_n_FLR_n_ROOM_n_MEZ_AREA_n",
+        "Color Code": "105",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of the Mezzanine Floor height"
+    },
+    {
+        "Feature": "Entrance Facility (EF)",
+        "Layer Name": "BLK_n_FLR_n_IBS_EF_DIM",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on floor outlining built up area"
+    },
+    {
+        "Feature": "EF Length",
+        "Layer Name": "BLK_n_FLR_n_IBS_EF_DIM",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of the Entrance Facility Length"
+    },
+    {
+        "Feature": "EF Width",
+        "Layer Name": "BLK_n_FLR_n_IBS_EF_DIM",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of the Entrance Facility Width"
+    },
+    {
+        "Feature": "Entrance Facility (EF) Area",
+        "Layer Name": "BLK_n_FLR_n_IBS_FOR_CTI_n",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on floor outlining built up area"
+    },
+    {
+        "Feature": "MDF / Equipment Room",
+        "Layer Name": "BLK_n_FLR_n_IBS_FOR_CTI_n",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on floor outlining built up area"
+    },
+    {
+        "Feature": "Telecommunication Room (TR)",
+        "Layer Name": "BLK_n_FLR_n_IBS_FOR_CTI_n",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on floor outlining built up area"
+    },
+    {
+        "Feature": "Telecommunication Enclosure (TE)",
+        "Layer Name": "BLK_n_FLR_n_IBS_FOR_CTI_n",
+        "Color Code": "4",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on floor outlining built up area"
+    },
+    {
+        "Feature": "Building Height",
+        "Layer Name": "BLK_n_HT_OF_BLDG",
+        "Color Code": "5",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw as dimension on Sectional Elevations or Building Elevation"
+    },
+    {
+        "Feature": "Basement Floor Height",
+        "Layer Name": "BLK_n_FLR_n_BLDG_FOOTPRINT",
+        "Color Code": "1",
+        "Requirement": "Mandatory if basement is provided",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of basement floor clear height"
+    },
+    {
+        "Feature": "Upper Basement Height from Ground",
+        "Layer Name": "BLK_n_FLR_n_BLDG_FOOTPRINT",
+        "Color Code": "2",
+        "Requirement": "Mandatory if upper basement is provided",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of the height ceiling of upper basement"
+    },
+    {
+        "Feature": "Plinth Height",
+        "Layer Name": "BLK_n_PLINTH_HEIGHT",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of the Plinth height"
+    },
+    {
+        "Feature": "Staircase Headroom",
+        "Layer Name": "BLK_n_STAIR_HEADROOM",
+        "Color Code": "7",
+        "Requirement": "Mandatory where staircase is proposed",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension of Staircase Headroom"
+    },
+    {
+        "Feature": "Staircase Railing",
+        "Layer Name": "BLK_n_PARAPET_HT",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of Staircase Railing height"
+    },
+    {
+        "Feature": "DA Ramp Railing",
+        "Layer Name": "BLK_n_PARAPET_HT",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of DA Ramp Railing Height"
+    },
+    {
+        "Feature": "Parapet Height",
+        "Layer Name": "BLK_n_PARAPET_HT",
+        "Color Code": "3",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of Parapet Height"
+    },
+    {
+        "Feature": "Special Lift Handrail",
+        "Layer Name": "BLK_n_PARAPET_HT",
+        "Color Code": "4",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of Special Lift Handrail height"
+    },
+    {
+        "Feature": "Mumty Height",
+        "Layer Name": "BLK_n_MUMTY_HT",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of Parapet"
+    },
+    {
+        "Feature": "Entrance Main Gate",
+        "Layer Name": "MAIN_GATE",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon outlining main gate"
+    },
+    {
+        "Feature": "Gate Width",
+        "Layer Name": "MAIN_GATE",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw main gate width"
+    },
+    {
+        "Feature": "Archway Height",
+        "Layer Name": "MAIN_GATE",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw main gate Archway height"
+    },
+    {
+        "Feature": "Glass Facade Opening",
+        "Layer Name": "BLK_n_FLR_n_GLASS_FACADE_n",
+        "Color Code": "7",
+        "Requirement": "Optional as per design",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon outlining Glass Facade opening"
+    },
+    {
+        "Feature": "Glass Facade Height",
+        "Layer Name": "BLK_n_FLR_n_GLASS_FACADE_n",
+        "Color Code": "1",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of the Height of Glass Facade"
+    },
+    {
+        "Feature": "Glass Facade Width",
+        "Layer Name": "BLK_n_FLR_n_GLASS_FACADE_n",
+        "Color Code": "2",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of the Width of Glass Facade opening"
+    },
+    {
+        "Feature": "Height from floor to glass opening",
+        "Layer Name": "BLK_n_FLR_n_GLASS_FACADE_n",
+        "Color Code": "3",
+        "Requirement": "Optional as per design",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw Dimension of the height from floor to glass opening"
+    },
+    {
+        "Feature": "Residential - Plotted Detached/Individual Residential building",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "11",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Semi-detached",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "12",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Row housing",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "13",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Apartment Building",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "14",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Housing Project",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "15",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Studio Apartments",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "17",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Dharmsala",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "18",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Dormitory",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "19",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - EWS",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "20",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Low Income Housing",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "21",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Medium Income Housing",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "22",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Hostel",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "23",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Shelter House",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "24",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Residential - Staff Quarter",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "25",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Hotel",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "30",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - 5 Star Hotel",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "31",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Motels",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "32",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Services for households",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "33",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Bank",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "35",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Resorts",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "36",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Lagoons and Lagoon Resort",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "37",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Amusement Building/Park and water sports",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "38",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Financial services and Stock exchanges",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "39",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Cold Storage and Ice Factory",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "40",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Commercial and Business Offices/Complex",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "41",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Convenience and Neighborhood Shopping",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "42",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Professional offices",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "43",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Departmental store",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "44",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Gas Godown",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "45",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Godowns",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "46",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Good Storage",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "47",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Guest Houses",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "48",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Holiday Resort",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "49",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Boarding and lodging houses",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "50",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Petrol Pump (Only Filling Station)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "51",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Petrol Pump (Filling Station and Service station)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "52",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - CNG Mother Station",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "53",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Restaurant",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "54",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Local(retail) shopping",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "55",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Shopping Center",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "56",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Shopping Mall",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "57",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Showroom",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "58",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Wholesale Storage (Perishable)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "59",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Wholesale Storage (Non-Perishable)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "60",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Storage/Hangers/ Terminal Depot",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "61",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Supermarkets",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "62",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Warehouse",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "63",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Wholesale Market",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "64",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Media Centers",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "65",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - food courts",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "66",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Weigh bridges",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "67",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Commercial - Mercantile",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "68",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Auditorium",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "120",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Banquet Hall",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "121",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Cinema",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "122",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Club",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "123",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - music pavilions",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "124",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Community Hall",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "125",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Orphanage",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "126",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Old Age Home",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "127",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Science Centre/Museum",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "128",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Conference Hall",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "129",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Convention Hall",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "130",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - sculpture complex",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "131",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Cultural Complex",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "132",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Exhibition Center",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "133",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Gymnasia",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "134",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Marriage Hall/Kalyan Mandap",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "135",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Multiplex",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "136",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Museum",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "137",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Place of worship",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "138",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Public Libraries",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "139",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Recreation Building",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "140",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Sports Complex",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "141",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Stadium",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "142",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Theatre",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "143",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Administrative Buildings",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "144",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Government offices",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "145",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Local and semi-Government offices",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "146",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Police/Army/Barrack",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "147",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Religious Building",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "148",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Social and welfare centers",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "149",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Clinic",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "150",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Dispensary",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "151",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Yoga Center",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "152",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Diagnostic Centre",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "153",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Govt-Semi Govt. Hospital",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "154",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Registered Trust",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "155",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Health center",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "156",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Hospital",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "157",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Lab",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "158",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Maternity Home",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "159",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Medical Building",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "160",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Nursing Home",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "161",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Polyclinic",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "162",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Rehabilitation Center",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "163",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Veterinary Hospital for pet animals and birds",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "164",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Research and Training Institute",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "165",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Police Station",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "166",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Fire Station",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "167",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Jail/Prison",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "168",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public-Semi Public/Institutional - Post Office",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "169",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - Bill Collection Center",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "210",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - Broadcasting-Transmission Centre",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "211",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - Burial and cremation grounds",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "212",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - Public Distribution System Shop",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "213",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - Public Toilets in Public Area",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "214",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - Public Utility Building",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "215",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - Sub-Station",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "216",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - Telecommunication",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "217",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - water pumping stations",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "218",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - service and storage yards",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "219",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Public Utility - electrical distribution depots",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "220",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Industrial Zone - Industrial Buildings (Factories, Workshops, etc.)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "200",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Industrial Zone - Non-Polluting Industrial",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "201",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Industrial Zone - IT, ITES Buildings",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "202",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Industrial Zone - SEZ Industrial",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "203",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Industrial Zone - Loading/Unloading Spaces",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "204",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Industrial Zone - Flatted Factory",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "205",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Industrial Zone - small factories and etc. falls in industrial",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "206",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Coaching Centre",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "170",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Commercial Institute",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "171",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - College",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "172",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Computer Training Institute",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "173",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Nursery School",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "174",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Primary School",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "175",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Hostel (Captive)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "176",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - High School",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "177",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Play School",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "178",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - creche",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "179",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - School for Mentally Challenged.",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "180",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Art academy",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "181",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Technical College",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "182",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Sports training centers",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "183",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Training Institute",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "184",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Veterinary Institute",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "185",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Medical College",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "186",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Education - Research and Training Center",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "187",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Airport",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "29",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Auto Stand",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "79",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Metro Station",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "189",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Bus Stand",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "199",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Bus Terminal",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "229",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - ISBT",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "239",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Railway station",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "249",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Taxi Stand",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "250",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Multi Level Car Parking",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "251",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Public Parking",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "252",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Toll Plaza",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "253",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Transportation - Truck Terminal",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "254",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Agriculture - Agriculture Farm",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "80",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Agriculture - Agro Godown",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "81",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Agriculture - Agro-Research Farm",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "82",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Agriculture - Farmhouse",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "83",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Agriculture - Country Homes",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "84",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Agriculture - Nursery and green houses",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "85",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Agriculture - Poultry, Diary and Swine/Goat/Horse",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "86",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Agriculture - Horticulture",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "87",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Agriculture - Seri culture",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "88",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on each floor outlining build up area"
+    },
+    {
+        "Feature": "Name of architect/Technical person",
+        "Layer Name": "ARCHITECT_OR_TECHNICAL_PERSON_NAME",
+        "Color Code": "N/A",
+        "Requirement": "Full Name",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: ARCHITECT_OR_TECHNICAL_PERSON_NAME=Full Name"
+    },
+    {
+        "Feature": "Plot Number of the project site",
+        "Layer Name": "PLOT_NO",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PLOT_NO=Numeric value"
+    },
+    {
+        "Feature": "Khata Number of the project site",
+        "Layer Name": "KHATA_NO",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: KHATA_NO=Numeric value"
+    },
+    {
+        "Feature": "Mauza of the project site",
+        "Layer Name": "MAUZA",
+        "Color Code": "N/A",
+        "Requirement": "Mauza Name",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: MAUZA=Mauza Name"
+    },
+    {
+        "Feature": "District of the project site",
+        "Layer Name": "DISTRICT",
+        "Color Code": "N/A",
+        "Requirement": "District Name",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DISTRICT=District Name"
+    },
+    {
+        "Feature": "Plot area of the project site",
+        "Layer Name": "PLOT_AREA_M2",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PLOT_AREA_M2=Numeric value with decimal"
+    },
+    {
+        "Feature": "Depth of the Plot",
+        "Layer Name": "AVG_PLOT_DEPTH",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: AVG_PLOT_DEPTH=Numeric value with decimal"
+    },
+    {
+        "Feature": "Width of the Plot / Plot Frontage Dimension",
+        "Layer Name": "AVG_PLOT_WIDTH",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: AVG_PLOT_WIDTH=Numeric value with decimal"
+    },
+    {
+        "Feature": "Describes the width of the adjacent road",
+        "Layer Name": "ADJACENT_ROAD_WIDTH",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: ADJACENT_ROAD_WIDTH=Numeric value"
+    },
+    {
+        "Feature": "Floor area of demolition if required",
+        "Layer Name": "EXISTING_FLOOR_AREA_TO_BE_DEMOLISHED_M2",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: EXISTING_FLOOR_AREA_TO_BE_DEMOLISHED_M2=Numeric value with decimal"
+    },
+    {
+        "Feature": "Occupant load/Users/Beds Block 1",
+        "Layer Name": "NUMBER_OF_OCCUPANTS_OR_USERS_OR_BED_BLK_1",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NUMBER_OF_OCCUPANTS_OR_USERS_OR_BED_BLK_1=Numeric value"
+    },
+    {
+        "Feature": "Occupant load/Users/Beds Block 2",
+        "Layer Name": "NUMBER_OF_OCCUPANTS_OR_USERS_OR_BED_BLK_2",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NUMBER_OF_OCCUPANTS_OR_USERS_OR_BED_BLK_2=Numeric value"
+    },
+    {
+        "Feature": "Occupant load/Users/Beds Block n",
+        "Layer Name": "NUMBER_OF_OCCUPANTS_OR_USERS_OR_BED_BLK_n",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NUMBER_OF_OCCUPANTS_OR_USERS_OR_BED_BLK_n=Numeric value"
+    },
+    {
+        "Feature": "Is plot part of approved layout/Govt/Scheme?",
+        "Layer Name": "IS_THE_PLOT_PART_OF_THE_LAYOUT_APPROVED_BY_THE_AUTHORITY_OR_DEVELOPED_AND_ALLOTTED_BY_THE_GOVERNMENT_OR_STATUTORY_BODIES_OR_IS_A_FINAL_PLOT_IN_TOWN_PLANNING_SCHEMES_OR_DEVELOPMENT_SCHEMES",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PLOT_PART_OF_THE_LAYOUT_APPROVED_BY_THE_AUTHORITY_OR_DEVELOPED_AND_ALLOTTED_BY_THE_GOVERNMENT_OR_STATUTORY_BODIES_OR_IS_A_FINAL_PLOT_IN_TOWN_PLANNING_SCHEMES_OR_DEVELOPMENT_SCHEMES=YES/NO"
+    },
+    {
+        "Feature": "Is land regularized",
+        "Layer Name": "IS_LAND_REGULARIZED",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_LAND_REGULARIZED=YES/NO"
+    },
+    {
+        "Feature": "Land Use Zone",
+        "Layer Name": "LAND_USE_ZONE",
+        "Color Code": "N/A",
+        "Requirement": "UTILITY & SERVICE USE ZONE / RESIDENTIAL USE ZONE / RETAIL COMMERCIAL & BUSINESS USE ZONE / WHOLESALE COMMERCIAL USE ZONE / INDUSTRIAL USE ZONE / PUBLIC & SEMI-PUBLIC USE ZONES / OPEN SPACE USE ZONE / TRANSPORTATION USE ZONE / AGRICULTURE & FOREST USE ZONE / WATER BODIES USE ZONE / SPECIAL HERITAGE ZONE / ENVIRONMENTALLY SENSITIVE ZONE",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: LAND_USE_ZONE=UTILITY & SERVICE USE ZONE / RESIDENTIAL USE ZONE / RETAIL COMMERCIAL & BUSINESS USE ZONE / WHOLESALE COMMERCIAL USE ZONE / INDUSTRIAL USE ZONE / PUBLIC & SEMI-PUBLIC USE ZONES / OPEN SPACE USE ZONE / TRANSPORTATION USE ZONE / AGRICULTURE & FOREST USE ZONE / WATER BODIES USE ZONE / SPECIAL HERITAGE ZONE / ENVIRONMENTALLY SENSITIVE ZONE"
+    },
+    {
+        "Feature": "Is building under hazardous occupancy?",
+        "Layer Name": "IS_BUILDING_UNDER_HAZARDOUS_OCCUPANCY_CATEGORY",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_BUILDING_UNDER_HAZARDOUS_OCCUPANCY_CATEGORY=YES/NO"
+    },
+    {
+        "Feature": "Is building Centrally Air Conditioned?",
+        "Layer Name": "IS_BUILDING_CENTRALLY_AIR_CONDITIONED",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_BUILDING_CENTRALLY_AIR_CONDITIONED=YES/NO"
+    },
+    {
+        "Feature": "Benchmark Value of Land (Per Acre)",
+        "Layer Name": "PER_ACRE_BENCHMARK_VALUE_OF_LAND_NEEDED_IF_PROJECT_IS_HAVING_PURCHASABLE_FAR_COMPONENT",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PER_ACRE_BENCHMARK_VALUE_OF_LAND_NEEDED_IF_PROJECT_IS_HAVING_PURCHASABLE_FAR_COMPONENT=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "Distance of DA parking space from Entrance",
+        "Layer Name": "DISTANCE_OF_DA_PARKING_SPACE_FROM_BUILDING_ENTRANCE",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DISTANCE_OF_DA_PARKING_SPACE_FROM_BUILDING_ENTRANCE=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "Total Parking area (Off site)",
+        "Layer Name": "TOTAL_PARKING_AREA_IF_PROJECT_HAS_OFF_SITE_PARKING_PROVISION_WITHIN_300_METERS_FROM_PROJECT_SITE",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: TOTAL_PARKING_AREA_IF_PROJECT_HAS_OFF_SITE_PARKING_PROVISION_WITHIN_300_METERS_FROM_PROJECT_SITE=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "Star Rating for Hotel",
+        "Layer Name": "STAR_RATING_FOR_HOTEL_PROJECT",
+        "Color Code": "N/A",
+        "Requirement": "1/2/3/4/5/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: STAR_RATING_FOR_HOTEL_PROJECT=1/2/3/4/5/NA"
+    },
+    {
+        "Feature": "Does Hospital have Critical Care Unit?",
+        "Layer Name": "DOES_HOSPITAL_HAVE_CRITICAL_CARE_UNIT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_HOSPITAL_HAVE_CRITICAL_CARE_UNIT=YES/NO/NA"
+    },
+    {
+        "Feature": "Provision for Helipad?",
+        "Layer Name": "PROVISION_FOR_HELIPAD_PRESENT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PROVISION_FOR_HELIPAD_PRESENT=YES/NO/NA"
+    },
+    {
+        "Feature": "Is driveway providing access to rear?",
+        "Layer Name": "IS_DRIVEWAY_PROVIDING_ACCESS_TO_REAR_SIDE_OR_ANY_OTHER_SIDE_OTHER_THAN_FRONT_OF_THE_BUILDING",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_DRIVEWAY_PROVIDING_ACCESS_TO_REAR_SIDE_OR_ANY_OTHER_SIDE_OTHER_THAN_FRONT_OF_THE_BUILDING=YES/NO"
+    },
+    {
+        "Feature": "Petrol Pump: Min Dist from Road Intersections",
+        "Layer Name": "MINIMUM_DISTANCE_FROM_THE_ROAD_INTERSECTIONS",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: MINIMUM_DISTANCE_FROM_THE_ROAD_INTERSECTIONS=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "Petrol Pump: Min Dist Property Line to Center Line",
+        "Layer Name": "MINIMUM_DISTANCE_OF_PROPERTY_LINE_FROM_THE_CENTRE_LINE_OF_THE_ROAD",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: MINIMUM_DISTANCE_OF_PROPERTY_LINE_FROM_THE_CENTRE_LINE_OF_THE_ROAD=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "More than 10000L Waste Water Discharge?",
+        "Layer Name": "DOES_PROJECT_HAVE_MORE_THAN_10000_LITRES_OF_WASTE_WATER_DISCHARGE_PER_DAY",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_PROJECT_HAVE_MORE_THAN_10000_LITRES_OF_WASTE_WATER_DISCHARGE_PER_DAY=YES/NO"
+    },
+    {
+        "Feature": "Total Connected Load (W)",
+        "Layer Name": "TOTAL_CONNECTED_LOAD_OF_THE_PROPOSED_PROJECT_IN_W",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: TOTAL_CONNECTED_LOAD_OF_THE_PROPOSED_PROJECT_IN_W=Numeric value with decimal"
+    },
+    {
+        "Feature": "Min Generation Capacity Solar PV (W)",
+        "Layer Name": "MINIMUM_GENERATION_CAPACITY_OF_THE_ROOFTOP_SOLAR_PV_SYSTEM_IN_W",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal / NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: MINIMUM_GENERATION_CAPACITY_OF_THE_ROOFTOP_SOLAR_PV_SYSTEM_IN_W=Numeric value with decimal / NA"
+    },
+    {
+        "Feature": "Capacity of Solar Water Heating (LPD)",
+        "Layer Name": "CAPACITY_OF_SOLAR_WATER_HEATING_SYSTEM_IN_LPD",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal / NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: CAPACITY_OF_SOLAR_WATER_HEATING_SYSTEM_IN_LPD=Numeric value with decimal / NA"
+    },
+    {
+        "Feature": "Low water consumption fixtures?",
+        "Layer Name": "DOES_PROJECT_HAVE_LOW_WATER_CONSUMPTION_AND_PLUMBING_FIXTURES",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_PROJECT_HAVE_LOW_WATER_CONSUMPTION_AND_PLUMBING_FIXTURES=YES/NO/NA"
+    },
+    {
+        "Feature": "Reduced Hardscape?",
+        "Layer Name": "DOES_PROJECT_HAVE_REDUCED_HARDSCAPE",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_PROJECT_HAVE_REDUCED_HARDSCAPE=YES/NO/NA"
+    },
+    {
+        "Feature": "Low energy consumption lighting?",
+        "Layer Name": "DOES_PROJECT_HAVE_LOW_ENERGY_CONSUMPTION_LIGHTING_FIXTURES",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_PROJECT_HAVE_LOW_ENERGY_CONSUMPTION_LIGHTING_FIXTURES=YES/NO/NA"
+    },
+    {
+        "Feature": "Energy efficient HVAC?",
+        "Layer Name": "DOES_PROJECT_HAVE_ENERGY_EFFICIENT_HVAC_SYSTEM",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_PROJECT_HAVE_ENERGY_EFFICIENT_HVAC_SYSTEM=YES/NO/NA"
+    },
+    {
+        "Feature": "Lighting common areas by Solar/LED?",
+        "Layer Name": "DOES_PROJECT_HAVE_LIGHTING_OF_COMMON_AREAS_BY_SOLAR_ENERGY_OR_LED_DEVICES",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_PROJECT_HAVE_LIGHTING_OF_COMMON_AREAS_BY_SOLAR_ENERGY_OR_LED_DEVICES=YES/NO/NA"
+    },
+    {
+        "Feature": "Segregation of waste provision?",
+        "Layer Name": "DOES_PROJECT_HAVE_SEGREGATION_OF_WASTE_PROVISION",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_PROJECT_HAVE_SEGREGATION_OF_WASTE_PROVISION=YES/NO/NA"
+    },
+    {
+        "Feature": "Organic waste management provision?",
+        "Layer Name": "DOES_PROJECT_HAVE_ORGANIC_WASTE_MANAGEMENT_PROVISION",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_PROJECT_HAVE_ORGANIC_WASTE_MANAGEMENT_PROVISION=YES/NO/NA"
+    },
+    {
+        "Feature": "Requires NOC from AAI?",
+        "Layer Name": "DOES_THE_PROJECT_REQUIRE_NOC_FROM_AAI_AS_PER_THE_COLOUR_CODED_ZONE_MAPS",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOES_THE_PROJECT_REQUIRE_NOC_FROM_AAI_AS_PER_THE_COLOUR_CODED_ZONE_MAPS=YES/NO"
+    },
+    {
+        "Feature": "Within 300m of Centrally Protected Monument?",
+        "Layer Name": "IS_THE_PROJECT_LOCATED_WITHIN_300_METERS_DISTANCE_OF_THE_CENTRALLY_PROTECTED_MONUMENT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_LOCATED_WITHIN_300_METERS_DISTANCE_OF_THE_CENTRALLY_PROTECTED_MONUMENT=YES/NO"
+    },
+    {
+        "Feature": "Within 300m of State Protected Monument?",
+        "Layer Name": "IS_THE_PROJECT_LOCATED_WITHIN_300_METERS_DISTANCE_OF_THE_STATE_PROTECTED_MONUMENT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_LOCATED_WITHIN_300_METERS_DISTANCE_OF_THE_STATE_PROTECTED_MONUMENT=YES/NO"
+    },
+    {
+        "Feature": "Within 200m from strategic buildings?",
+        "Layer Name": "IS_THE_PROJECT_LOCATED_WITHIN_200_METERS_FROM_STRATEGIC_BUILDINGS",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_LOCATED_WITHIN_200_METERS_FROM_STRATEGIC_BUILDINGS=YES/NO"
+    },
+    {
+        "Feature": "Next to flood embankment & direct access?",
+        "Layer Name": "IS_PROPOSED_CONSTRUCTION_NEXT_TO_FLOOD_EMBANKMENT_AND_DOES_APPLICANT_WANT_TO_HAVE_DIRECT_ACCESS_FROM_THE_EMBANKMENT_ROAD",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_PROPOSED_CONSTRUCTION_NEXT_TO_FLOOD_EMBANKMENT_AND_DOES_APPLICANT_WANT_TO_HAVE_DIRECT_ACCESS_FROM_THE_EMBANKMENT_ROAD=YES/NO"
+    },
+    {
+        "Feature": "Kisam of land recorded as Agriculture?",
+        "Layer Name": "IS_KISAM_OF_LAND_RECORDED_AS_AGRICULTURE_IN_RECORD_OF_RIGHTS",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_KISAM_OF_LAND_RECORDED_AS_AGRICULTURE_IN_RECORD_OF_RIGHTS=YES/NO"
+    },
+    {
+        "Feature": "Adjacent to Highway & direct access?",
+        "Layer Name": "IS_THE_PROJECT_ADJACENT_TO_HIGHWAY_AND_HAVING_DIRECT_ACCESS_TO_IT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_ADJACENT_TO_HIGHWAY_AND_HAVING_DIRECT_ACCESS_TO_IT=YES/NO"
+    },
+    {
+        "Feature": "Close to Coastal Region?",
+        "Layer Name": "IS_THE_PROJECT_CLOSE_TO_THE_COASTAL_REGION",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_CLOSE_TO_THE_COASTAL_REGION=YES/NO"
+    },
+    {
+        "Feature": "OSHB/Govt allotted or BDA developed plot?",
+        "Layer Name": "DOC_OSHB_OR_GA_OR_BDA_DEVELOPED_AND_ALLOTTED_PLOT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOC_OSHB_OR_GA_OR_BDA_DEVELOPED_AND_ALLOTTED_PLOT=YES/NO"
+    },
+    {
+        "Feature": "Plot part of approved private layout?",
+        "Layer Name": "DOC_PLOT_PART_OF_APPROVED_PRIVATE_LAYOUT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOC_PLOT_PART_OF_APPROVED_PRIVATE_LAYOUT=YES/NO"
+    },
+    {
+        "Feature": "Plot part of unauthorized layout/revenue plot?",
+        "Layer Name": "DOC_PLOT_PART_OF_UNAUTHORISED_LAYOUT_OR_REVENUE_PLOT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOC_PLOT_PART_OF_UNAUTHORISED_LAYOUT_OR_REVENUE_PLOT=YES/NO"
+    },
+    {
+        "Feature": "Coming under jurisdiction of planning authorities?",
+        "Layer Name": "DOC_IS_PROJECT_COMING_UNDER_THE_JURISDICTION_OF_PLANNING_AUTHORITIES",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOC_IS_PROJECT_COMING_UNDER_THE_JURISDICTION_OF_PLANNING_AUTHORITIES=YES/NO"
+    },
+    {
+        "Feature": "Has affordable housing component?",
+        "Layer Name": "DOC_DOES_THE_PROJECT_HAVE_AFFORDABLE_HOUSING_COMPONENT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOC_DOES_THE_PROJECT_HAVE_AFFORDABLE_HOUSING_COMPONENT=YES/NO"
+    },
+    {
+        "Feature": "More than 500 sqm built up area (excl affordable)?",
+        "Layer Name": "DOC_DOES_THE_PROJECT_HAVE_MORE_THAN_500_SQM_BUILT_UP_AREA_EXCLUDING_THE_AFFORDABLE_HOUSING_COMPONENT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOC_DOES_THE_PROJECT_HAVE_MORE_THAN_500_SQM_BUILT_UP_AREA_EXCLUDING_THE_AFFORDABLE_HOUSING_COMPONENT=YES/NO"
+    },
+    {
+        "Feature": "Require RERA registration?",
+        "Layer Name": "DOC_DOES_PROJECT_REQUIRE_RERA_REGISTRATION",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DOC_DOES_PROJECT_REQUIRE_RERA_REGISTRATION=YES/NO"
+    },
+    {
+        "Feature": "Is security deposit required?",
+        "Layer Name": "IS_SECURITY_DEPOSIT_REQUIRED",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_SECURITY_DEPOSIT_REQUIRED=YES/NO"
+    },
+    {
+        "Feature": "Block 1 entire facade in Glass?",
+        "Layer Name": "IS_BLOCK_1_HAVING_ENTIRE_FACADE_IN_GLASS",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_BLOCK_1_HAVING_ENTIRE_FACADE_IN_GLASS=YES/NO"
+    },
+    {
+        "Feature": "Project Value (if EIDP applicable)",
+        "Layer Name": "PROJECT_VALUE_IN_INR_IF_EIDP_FEE_IS_APPLICABLE_FOR_PROJECT",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal / NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PROJECT_VALUE_IN_INR_IF_EIDP_FEE_IS_APPLICABLE_FOR_PROJECT=Numeric value with decimal / NA"
+    },
+    {
+        "Feature": "Project by State/Central Govt?",
+        "Layer Name": "IS_THE_PROJECT_BY_STATE_GOVT_OR_CENTRAL_GOVT_OR_GOVT_UNDERTAKING",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_BY_STATE_GOVT_OR_CENTRAL_GOVT_OR_GOVT_UNDERTAKING=YES/NO"
+    },
+    {
+        "Feature": "Number of temporary structures",
+        "Layer Name": "NUMBER_OF_TEMPORARY_STRUCTURES_IF_PRESENT_AT_THE_SITE",
+        "Color Code": "N/A",
+        "Requirement": "Whole numeric value / NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NUMBER_OF_TEMPORARY_STRUCTURES_IF_PRESENT_AT_THE_SITE=Whole numeric value / NA"
+    },
+    {
+        "Feature": "Provided min 10% for EWS within 5km?",
+        "Layer Name": "HAS_PROJECT_PROVIDED_MIN_10_PER_BUA_FOR_EWS_WITHIN_5_KM_FROM_PROJECT_SITE",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: HAS_PROJECT_PROVIDED_MIN_10_PER_BUA_FOR_EWS_WITHIN_5_KM_FROM_PROJECT_SITE=YES/NO"
+    },
+    {
+        "Feature": "Additional TDR if applicable",
+        "Layer Name": "ADDITIONAL_TDR_IF_APPLICABLE_M2",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: ADDITIONAL_TDR_IF_APPLICABLE_M2=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "Block 1 Setback Front Existing",
+        "Layer Name": "BLK_1_SETBACK_FRONT_EXISTING",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: BLK_1_SETBACK_FRONT_EXISTING=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "Block 1 Setback Rear Existing",
+        "Layer Name": "BLK_1_SETBACK_REAR_EXISTING",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: BLK_1_SETBACK_REAR_EXISTING=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "Block 1 Setback Left Existing",
+        "Layer Name": "BLK_1_SETBACK_LEFT_EXISTING",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: BLK_1_SETBACK_LEFT_EXISTING=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "Block 1 Setback Right Existing",
+        "Layer Name": "BLK_1_SETBACK_RIGHT_EXISTING",
+        "Color Code": "N/A",
+        "Requirement": "Numeric value with decimal/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: BLK_1_SETBACK_RIGHT_EXISTING=Numeric value with decimal/NA"
+    },
+    {
+        "Feature": "Primary Use (Mixed Use Projects)",
+        "Layer Name": "COLOUR_CODE_OF_PRINCIPAL_USE_OF_THE_BUILDING_IN_CASE_OF_MIXED_USE_PROJECTS",
+        "Color Code": "N/A",
+        "Requirement": "Colour code of primary occupancy type/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: COLOUR_CODE_OF_PRINCIPAL_USE_OF_THE_BUILDING_IN_CASE_OF_MIXED_USE_PROJECTS=Colour code of primary occupancy type/NA"
+    },
+    {
+        "Feature": "Has Sewerage Connection?",
+        "Layer Name": "IS_PROJECT_HAVING_SEWERAGE_CONNECTION",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_PROJECT_HAVING_SEWERAGE_CONNECTION=YES/NO"
+    },
+    {
+        "Feature": "Within 100m of Grand Road (Puri)?",
+        "Layer Name": "WHETHER_PLOT_FALLS_WITHIN_100_M_OF_GRAND_ROAD",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: WHETHER_PLOT_FALLS_WITHIN_100_M_OF_GRAND_ROAD=YES/NO"
+    },
+    {
+        "Feature": "Within 3km of Sri Jagannath Temple?",
+        "Layer Name": "WHETHER_PLOT_FALLS_WITHIN_3_KM_ARIAL_RADIUS_DISTANCE_OF_SRI_JAGANNATH_TEMPLE",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: WHETHER_PLOT_FALLS_WITHIN_3_KM_ARIAL_RADIUS_DISTANCE_OF_SRI_JAGANNATH_TEMPLE=YES/NO"
+    },
+    {
+        "Feature": "CRZ Number (Coastal Zone)",
+        "Layer Name": "CRZ_NUMBER_FOR_PROJECTS_FALLING_UNDER_CRZ_AREA",
+        "Color Code": "N/A",
+        "Requirement": "0/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: CRZ_NUMBER_FOR_PROJECTS_FALLING_UNDER_CRZ_AREA=0/NA"
+    },
+    {
+        "Feature": "Avail lift count relaxation?",
+        "Layer Name": "DO_YOU_WANT_TO_AVAIL_LIFT_COUNT_RELAXATION_AS_PER_SECTION_42_2_2_OF_ODA_RULES",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DO_YOU_WANT_TO_AVAIL_LIFT_COUNT_RELAXATION_AS_PER_SECTION_42_2_2_OF_ODA_RULES=YES/NO/NA"
+    },
+    {
+        "Feature": "Project Only LIG or EWS?",
+        "Layer Name": "IS_PROJECT_ONLY_LIG_OR_EWS",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_PROJECT_ONLY_LIG_OR_EWS=YES/NO"
+    },
+    {
+        "Feature": "Under Affordable Housing Scheme (2022)?",
+        "Layer Name": "IS_THE_PROJECT_COMING_UNDER_AFFORDABLE_HOUSING_SCHEME_AS_PER_HOUSING_FOR_ALL_POLICY_2022",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_COMING_UNDER_AFFORDABLE_HOUSING_SCHEME_AS_PER_HOUSING_FOR_ALL_POLICY_2022=YES/NO"
+    },
+    {
+        "Feature": "Shop-cum-Residential Occupancy?",
+        "Layer Name": "IS_PROJECT_COMING_UNDER_SHOP_CUM_RESIDENTIAL_OCCUPANCY",
+        "Color Code": "N/A",
+        "Requirement": "YES",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_PROJECT_COMING_UNDER_SHOP_CUM_RESIDENTIAL_OCCUPANCY=YES"
+    },
+    {
+        "Feature": "Plots Allotted in Row?",
+        "Layer Name": "ARE_THE_PLOTS_ALLOTTED_IN_ROW",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: ARE_THE_PLOTS_ALLOTTED_IN_ROW=YES/NO"
+    },
+    {
+        "Feature": "Work-cum-Residential Occupancy?",
+        "Layer Name": "IS_PROJECT_COMING_UNDER_WORK_CUM_RESIDENTIAL_OCCUPANCY",
+        "Color Code": "N/A",
+        "Requirement": "YES",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_PROJECT_COMING_UNDER_WORK_CUM_RESIDENTIAL_OCCUPANCY=YES"
+    },
+    {
+        "Feature": "Is EIDP exempted?",
+        "Layer Name": "IS_EIDP_EXEMPTED_FOR_THE_PROJECT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_EIDP_EXEMPTED_FOR_THE_PROJECT=YES/NO"
+    },
+    {
+        "Feature": "CWWC Fee already paid?",
+        "Layer Name": "IS_THE_CWWC_FEE_ALREADY_PAID",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_CWWC_FEE_ALREADY_PAID=YES/NO"
+    },
+    {
+        "Feature": "Special Building Category?",
+        "Layer Name": "IS_THE_PROJECT_COMING_UNDER_SPECIAL_BUILDING_CATEGORY",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_COMING_UNDER_SPECIAL_BUILDING_CATEGORY=YES/NO"
+    },
+    {
+        "Feature": "Drivers accommodation provided?",
+        "Layer Name": "IS_ACCOMMODATION_OF_VEHICLE_DRIVERS_PROVIDED_WITHIN_SITE_OR_WITHIN_A_DISTANCE_OF_250_METERS_RADIUS_OF_THE_PREMISES",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_ACCOMMODATION_OF_VEHICLE_DRIVERS_PROVIDED_WITHIN_SITE_OR_WITHIN_A_DISTANCE_OF_250_METERS_RADIUS_OF_THE_PREMISES=YES/NO"
+    },
+    {
+        "Feature": "Layout approved under Section 16 ODA?",
+        "Layer Name": "IS_THE_LAYOUT_APPROVED_UNDER_SECTION_16_OF_ODA_ACT_1982",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_LAYOUT_APPROVED_UNDER_SECTION_16_OF_ODA_ACT_1982=YES/NO"
+    },
+    {
+        "Feature": "IDCO Plot in Industrial Estate?",
+        "Layer Name": "IS_THE_PROJECT_COMING_WITHIN_A_PLOT_ALLOTTED_BY_IDCO_AND_WITHIN_INDUSTRIAL_ESTATES",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_COMING_WITHIN_A_PLOT_ALLOTTED_BY_IDCO_AND_WITHIN_INDUSTRIAL_ESTATES=YES/NO"
+    }
+]

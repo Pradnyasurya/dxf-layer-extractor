@@ -172,22 +172,26 @@
         <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadForm">
             <div class="upload-area">
                 <div class="upload-icon">📄</div>
-                <label for="file" class="file-label">Choose DXF File</label>
-                <input type="file" name="file" id="file" accept=".dxf" required>
+                <label for="file" class="file-label">Choose DXF or ZIP File</label>
+                <input type="file" name="file" id="file" accept=".dxf,.zip" required>
                 <div class="file-name" id="fileName">No file selected</div>
             </div>
             
-            <button type="submit" id="submitBtn" disabled>Extract Layers</button>
+            <button type="submit" id="submitBtn" disabled>Validate Layers</button>
         </form>
         
         <div class="features">
             <h3>Supported Features:</h3>
             <ul>
                 <li>DXF versions R12 through R2018+</li>
+                <li>ZIP file support (auto-extraction)</li>
+                <li>Validation against Master Guidelines</li>
                 <li>Maximum file size: 100 MB</li>
-                <li>Sorted layer list with count</li>
-                <li>Secure file processing</li>
             </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/admin" style="color: #666; text-decoration: none; font-size: 14px;">Update Master Data</a>
         </div>
     </div>
     
