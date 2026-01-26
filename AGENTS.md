@@ -1,233 +1,143 @@
-# Agent Guide for DXF Layer Extractor
+# Agent Guide for DXF Layer Extractor & Validator
 
-This document provides guidelines for AI coding agents working on this Flask-based DXF layer extraction application.
+This document provides guidelines for AI coding agents working on this Flask-based DXF layer extraction and validation application.
 
 ## Project Overview
 
-A Python Flask web application that extracts and displays layer information from DXF (Drawing Exchange Format) files using the ezdxf library.
+A Python Flask web application that uploads, extracts, and validates layer information from DXF files against a master JSON rule set (`odisha_layers.json`). It supports `.dxf` and `.zip` uploads.
 
 **Tech Stack:**
-- Python 3.14+
-- Flask 3.0.0
-- ezdxf 1.3.0 (supports DXF R12-R2018+)
-- Jinja2 templates
-- Vanilla JavaScript (no frameworks)
+- **Python:** 3.14+
+- **Web Framework:** Flask 3.0.0
+- **DXF Processing:** ezdxf 1.3.0
+- **Frontend:** Jinja2 templates + Vanilla JS / CSS
+- **Data:** JSON for master validation rules
 
 ---
 
-## Development Commands
+## Build & Test Commands
 
-### Environment Setup
+### Environment
 ```bash
-# Create and activate virtual environment
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Running the Application
+### Running
 ```bash
-# Development server (with debug mode)
 python app.py
-
 # Access at http://localhost:8080
+# Admin panel at http://localhost:8080/admin
 ```
 
-### Testing
+### Testing (Manual & Scripted)
 ```bash
-# Manual test with a DXF file
-python -c "from app import extract_layers; print(extract_layers('/path/to/file.dxf'))"
+# Quick sanity check
+python -c "import ezdxf; print(ezdxf.__version__)"
 
-# Test specific function
-python -c "from app import allowed_file; print(allowed_file('test.dxf'))"
+# Manual validation test (create a temporary test script)
+# See 'test_validation.py' pattern in previous context for inspiration
 ```
 
 ### Code Quality
 ```bash
-# Format code (if black is installed)
-pip install black
-black app.py
+# Linting
+flake8 app.py --max-line-length=120 --ignore=E203,W503
 
-# Lint (if flake8 is installed)
-pip install flake8
-flake8 app.py --max-line-length=100
-
-# Type checking (if mypy is installed)
-pip install mypy
-mypy app.py
+# Type Checking
+mypy app.py --ignore-missing-imports
 ```
 
 ---
 
 ## Code Style Guidelines
 
-### 1. Imports
-- **Order:** Standard library → Third-party → Local imports
-- **Style:** One import per line for clarity
-- **Example:**
-  ```python
-  import os
-  from flask import Flask, render_template, request
-  from werkzeug.utils import secure_filename
-  import ezdxf
-  ```
+### 1. Imports & Structure
+- **Order:** Standard Lib (`os`, `json`, `re`) → Third-party (`flask`, `ezdxf`) → Local.
+- **Imports:** Absolute imports preferred.
+- **Structure:** Keep `app.py` distinct. Move complex logic to helper modules if file exceeds 500 lines.
 
-### 2. Formatting
-- **Line Length:** Max 100 characters
-- **Indentation:** 4 spaces (no tabs)
-- **Quotes:** Single quotes for strings, unless docstrings (use triple double quotes)
-- **Blank Lines:** 2 blank lines between top-level functions/classes
-- **Comments:** Use inline comments sparingly; prefer docstrings
+### 2. Formatting & Naming
+- **Style:** PEP 8.
+- **Indentation:** 4 spaces.
+- **Line Length:** 100-120 chars.
+- **Naming:** 
+  - Variables/Functions: `snake_case` (e.g., `validate_dxf_content`)
+  - Constants: `UPPER_SNAKE_CASE` (e.g., `ALLOWED_EXTENSIONS`)
+  - Layer Regex Patterns: Handle `BLK_n_` → `BLK_\d+`.
 
-### 3. Naming Conventions
-- **Functions/Variables:** `snake_case` (e.g., `extract_layers`, `dxf_path`)
-- **Constants:** `UPPER_SNAKE_CASE` (e.g., `ALLOWED_EXTENSIONS`, `MAX_CONTENT_LENGTH`)
-- **Classes:** `PascalCase` (if added in future)
-- **Private/Internal:** Prefix with underscore `_internal_function()`
-- **Flask Routes:** Use descriptive names matching URL paths
+### 3. Error Handling
+- **File I/O:** Always use `try-finally` or `with` blocks to ensure temporary files/dirs are cleaned up.
+- **DXF Parsing:** Catch `ezdxf.DXFStructureError` and `ezdxf.DXFVersionError` specifically.
+- **User Feedback:** Use `flash()` messages with categories (`error`, `success`, `warning`).
+- **Validation:** Do not crash on invalid DXF data; report it as a validation error.
 
-### 4. Documentation
-- **All functions must have docstrings** with Args, Returns, and Raises sections
-- **Format:**
-  ```python
-  def function_name(param):
-      """
-      Brief description of what the function does
-      
-      Args:
-          param: Description of parameter
-          
-      Returns:
-          dict: Description of return value
-          
-      Raises:
-          Exception: When this exception occurs
-      """
-  ```
+### 4. Validation Logic (Crucial)
+- **Master Data:** Rules are in `odisha_layers.json`.
+- **Pattern Matching:** Layer names must be matched using regex (converting `n` to `\d+`).
+- **Color Validation:**
+  - **Fixed:** Match exact ACI (Integer).
+  - **RGB:** Match `RGB r,g,b`.
+  - **Sub-Occupancy:** Allowed colors are derived dynamically from `BLK_n_FLR_n_BLT_UP_AREA` layers found in the file.
+- **Entity Fallback:** If Layer Color is invalid, check **ALL** entities on that layer. If all entities have valid explicit colors, the layer is considered **Valid**.
 
-### 5. Error Handling
-- **Always use try-except blocks** for external operations (file I/O, DXF parsing)
-- **Catch specific exceptions first:** `ezdxf.DXFStructureError` before generic `Exception`
-- **Clean up resources:** Use `finally` or ensure file cleanup in except blocks
-- **User-friendly messages:** Convert technical errors to readable flash messages
-- **Example:**
-  ```python
-  filepath = None
-  try:
-      filepath = save_file()
-      process_file(filepath)
-  except SpecificError as e:
-      flash(f'Specific error: {str(e)}', 'error')
-  finally:
-      if filepath and os.path.exists(filepath):
-          os.remove(filepath)
-  ```
+---
 
-### 6. Flask-Specific Guidelines
-- **Route handlers:** Include HTTP methods explicitly `@app.route('/', methods=['GET'])`
-- **Flash messages:** Always specify category: `flash('message', 'error')` or `flash('message', 'success')`
-- **Redirects:** Use `url_for()` instead of hardcoded URLs
-- **Configuration:** Use `app.config` for all settings
-- **Security:** Always use `secure_filename()` for user uploads
+## File Organization
 
-### 7. DXF Processing
-- **Use ezdxf library** (never suggest Kabeja or outdated libraries)
-- **Handle DXF version gracefully:** Catch `ezdxf.DXFVersionError` separately
-- **Always clean up uploaded files:** Delete after processing or on error
-- **Validate file extension** before processing
-
-### 8. File Organization
 ```
 layerslist/
-├── app.py              # Main Flask application (keep under 200 lines)
-├── requirements.txt    # Pinned dependencies
-├── templates/          # Jinja2 HTML templates
-│   ├── index.html     # Upload form
-│   └── results.html   # Results display
-├── uploads/           # Temporary storage (auto-cleaned)
-├── venv/              # Virtual environment (not in git)
-├── .gitignore         # Ignore patterns
-└── README.md          # User-facing documentation
+├── app.py              # Main application & validation logic
+├── odisha_layers.json  # Master validation rules (updatable via admin)
+├── requirements.txt    # Dependencies
+├── templates/
+│   ├── index.html      # Upload form
+│   ├── results.html    # Validation report
+│   └── admin.html      # Master data update page
+├── uploads/            # Temporary storage (auto-cleaned)
+└── AGENTS.md           # This guide
 ```
 
 ---
 
-## Important Constraints
+## Common Tasks & workflows
 
-### Do NOT:
-1. Add unnecessary dependencies (keep requirements.txt minimal)
-2. Use Java/Kabeja or any unmaintained DXF libraries
-3. Add Lombok or similar code generation tools
-4. Store uploaded files permanently
-5. Use relative imports for the main app.py file
-6. Add database dependencies unless explicitly requested
-7. Create files without reading existing code first
+### 1. Updating Validation Rules
+- The master JSON is the source of truth.
+- Update it via the `/admin` route or direct file edit.
+- Do NOT hardcode validation rules in Python unless checking generic DXF properties (Units/Precision).
 
-### DO:
-1. Keep the application simple and focused on layer extraction
-2. Validate all user inputs (file size, extension, content)
-3. Provide clear error messages to users
-4. Clean up temporary files in all code paths
-5. Use environment variables for secrets (`SECRET_KEY`)
-6. Test with real DXF files before committing
-7. Follow Python PEP 8 style guidelines
+### 2. Handling DXF Units
+- **Strict Requirement:** 
+  - `$INSUNITS` = 6 (Meters)
+  - `$LUNITS` = 2 (Decimal)
+  - `$AUNITS` = 0 (Decimal Degrees)
+- Report exact values found if validation fails (e.g., "Found Millimeters (4)").
 
----
-
-## Testing Guidelines
-
-### Manual Testing Checklist:
-1. Upload valid DXF file → Should display sorted layers
-2. Upload non-DXF file → Should show error message
-3. Upload file > 100MB → Should show size limit error
-4. Upload corrupted DXF → Should show parsing error
-5. No file selected → Should show validation error
-
-### Test DXF Files:
-- Sample file location: `/home/pkurane/Documents/Utility/drawing_template.dxf`
-- Test with multiple DXF versions (R12, R2000, R2010+)
-
----
-
-## Common Tasks
-
-### Adding a New Route:
+### 3. Adding New Routes
 ```python
-@app.route('/new-route', methods=['GET', 'POST'])
-def new_handler():
-    """Brief description"""
-    # Implementation
-    return render_template('template.html')
+@app.route('/new_feature')
+def new_feature():
+    try:
+        # logic
+        return render_template('new.html')
+    except Exception as e:
+        flash(f"Error: {e}", 'error')
+        return redirect(url_for('index'))
 ```
 
-### Adding a New Feature:
-1. Update requirements.txt if new dependency needed
-2. Add function with proper docstring
-3. Update templates if UI change required
-4. Test with real DXF files
-5. Update README.md with new feature
+---
 
-### Debugging:
-- Check Flask debug output in console
-- Verify file permissions for uploads/ directory
-- Confirm virtual environment is activated
-- Check DXF file version with: `doc.dxfversion`
+## Testing Checklist
+1. **Valid File:** Upload a perfect DXF. -> All Green.
+2. **Invalid Units:** Change `$INSUNITS` to 4. -> Top-level Error.
+3. **Color Mismatch:** Layer color 4 when 1 is required. -> Layer marked Invalid.
+4. **Entity Override:** Layer color 4 (invalid), but Entities are color 1 (valid). -> Layer marked Valid.
+5. **Sub-Occupancy:** Layer matches `BLT_UP_AREA` color. -> Valid.
+6. **ZIP Upload:** Upload `.zip` containing `.dxf`. -> Extracts & Validates.
 
 ---
 
-## Future Enhancements (Planned)
-
-When implementing these, maintain current code style:
-- Layer metadata (color, linetype, on/off status)
-- Entity count per layer
-- CSV export functionality
-- SVG preview/thumbnail generation
-- Batch upload support
-- REST API endpoint (`/api/layers`)
-
----
-
-**Last Updated:** 2026-01-26
-**Maintained by:** Agentic coding assistants
+**Maintained by:** Agentic Coding Assistants
+**Last Updated:** Jan 2026

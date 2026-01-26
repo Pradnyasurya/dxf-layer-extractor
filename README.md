@@ -72,10 +72,12 @@ http://localhost:8080
 
 ### Docker
 
-1. Create a `Dockerfile` (coming soon)
-2. Build and run:
+1. Build the image:
 ```bash
 docker build -t dxf-layers .
+```
+2. Run the container:
+```bash
 docker run -p 8080:8080 dxf-layers
 ```
 

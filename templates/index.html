@@ -3,210 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DXF Layer Extractor</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-        
-        .description {
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        .upload-area {
-            border: 2px dashed #667eea;
-            border-radius: 8px;
-            padding: 40px;
-            text-align: center;
-            background: #f8f9ff;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .upload-area:hover {
-            border-color: #764ba2;
-            background: #f0f2ff;
-        }
-        
-        .upload-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-        
-        input[type="file"] {
-            display: none;
-        }
-        
-        .file-label {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #667eea;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.3s ease;
-        }
-        
-        .file-label:hover {
-            background: #764ba2;
-        }
-        
-        .file-name {
-            margin-top: 15px;
-            color: #666;
-            font-size: 14px;
-        }
-        
-        button[type="submit"] {
-            width: 100%;
-            padding: 14px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        button[type="submit"]:hover {
-            background: #764ba2;
-        }
-        
-        button[type="submit"]:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-        
-        .alert {
-            padding: 12px 20px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-        }
-        
-        .alert-error {
-            background: #fee;
-            color: #c00;
-            border: 1px solid #fcc;
-        }
-        
-        .features {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid #eee;
-        }
-        
-        .features h3 {
-            color: #333;
-            font-size: 16px;
-            margin-bottom: 15px;
-        }
-        
-        .features ul {
-            list-style: none;
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .features li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .features li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #667eea;
-            font-weight: bold;
-        }
-    </style>
+    <title>DXF Layer Validator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>DXF Layer Extractor</h1>
-        <p class="description">
-            Upload a DXF (Drawing Exchange Format) file to extract and view all layers present in your AutoCAD drawing.
-        </p>
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        
-        <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadForm">
-            <div class="upload-area">
-                <div class="upload-icon">📄</div>
-                <label for="file" class="file-label">Choose DXF or ZIP File</label>
-                <input type="file" name="file" id="file" accept=".dxf,.zip" required>
-                <div class="file-name" id="fileName">No file selected</div>
+    <div class="page-wrapper">
+        <div class="container container--sm">
+            <div class="container__header">
+                <div class="page-header">
+                    <div class="page-header__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                        </svg>
+                    </div>
+                    <h1>DXF Layer Validator</h1>
+                </div>
+                <p class="page-description">
+                    Upload your DXF or ZIP file to validate layer names and colors against the master guidelines.
+                </p>
             </div>
             
-            <button type="submit" id="submitBtn" disabled>Validate Layers</button>
-        </form>
-        
-        <div class="features">
-            <h3>Supported Features:</h3>
-            <ul>
-                <li>DXF versions R12 through R2018+</li>
-                <li>ZIP file support (auto-extraction)</li>
-                <li>Validation against Master Guidelines</li>
-                <li>Maximum file size: 100 MB</li>
-            </ul>
-        </div>
-        
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="/admin" style="color: #666; text-decoration: none; font-size: 14px;">Update Master Data</a>
+            <div class="container__body">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert--{{ category }}">
+                                {% if category == 'error' %}
+                                <svg class="alert__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                                </svg>
+                                {% else %}
+                                <svg class="alert__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                {% endif %}
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadForm">
+                    <div class="upload-zone" id="uploadZone">
+                        <svg class="upload-zone__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                        </svg>
+                        <p class="upload-zone__title">Drop your file here or click to browse</p>
+                        <p class="upload-zone__subtitle">Supports .dxf and .zip files up to 100 MB</p>
+                        <input type="file" name="file" id="file" class="upload-zone__file" accept=".dxf,.zip" required>
+                        
+                        <div class="upload-zone__selected" id="selectedFile">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                            </svg>
+                            <span class="upload-zone__filename" id="fileName"></span>
+                            <span class="upload-zone__size" id="fileSize"></span>
+                            <button type="button" class="upload-zone__clear" id="clearFile" title="Remove file">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn--primary btn--full" id="submitBtn" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Validate Layers
+                    </button>
+                </form>
+                
+                <div class="features">
+                    <h3 class="features__title">Features</h3>
+                    <ul class="features__list">
+                        <li class="features__item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                            DXF versions R12 to R2018+
+                        </li>
+                        <li class="features__item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                            ZIP file auto-extraction
+                        </li>
+                        <li class="features__item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                            Master guideline validation
+                        </li>
+                        <li class="features__item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                            Entity-level color checks
+                        </li>
+                    </ul>
+                </div>
+                
+                <a href="/admin" class="footer-link">Update Master Data</a>
+            </div>
         </div>
     </div>
     
     <script>
+        const uploadZone = document.getElementById('uploadZone');
         const fileInput = document.getElementById('file');
         const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const selectedFile = document.getElementById('selectedFile');
+        const clearFile = document.getElementById('clearFile');
         const submitBtn = document.getElementById('submitBtn');
         
-        fileInput.addEventListener('change', function(e) {
-            if (this.files && this.files[0]) {
-                fileName.textContent = this.files[0].name;
+        // Format bytes to human readable
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Update UI when file is selected
+        function updateFileDisplay(file) {
+            if (file) {
+                fileName.textContent = file.name;
+                fileSize.textContent = formatBytes(file.size);
+                selectedFile.classList.add('active');
+                uploadZone.classList.add('upload-zone--active');
                 submitBtn.disabled = false;
             } else {
-                fileName.textContent = 'No file selected';
+                selectedFile.classList.remove('active');
+                uploadZone.classList.remove('upload-zone--active');
                 submitBtn.disabled = true;
+            }
+        }
+        
+        // File input change handler
+        fileInput.addEventListener('change', function(e) {
+            updateFileDisplay(this.files[0]);
+        });
+        
+        // Clear file button
+        clearFile.addEventListener('click', function(e) {
+            e.stopPropagation();
+            fileInput.value = '';
+            updateFileDisplay(null);
+        });
+        
+        // Click on zone to trigger file input
+        uploadZone.addEventListener('click', function(e) {
+            if (e.target !== clearFile && !clearFile.contains(e.target)) {
+                fileInput.click();
+            }
+        });
+        
+        // Drag and drop handling
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.add('upload-zone--dragover');
+            });
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.remove('upload-zone--dragover');
+            });
+        });
+        
+        uploadZone.addEventListener('drop', function(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                const file = files[0];
+                const ext = file.name.split('.').pop().toLowerCase();
+                
+                if (ext === 'dxf' || ext === 'zip') {
+                    fileInput.files = files;
+                    updateFileDisplay(file);
+                } else {
+                    alert('Please upload a .dxf or .zip file');
+                }
             }
         });
     </script>

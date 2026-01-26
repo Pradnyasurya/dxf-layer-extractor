@@ -17,6 +17,16 @@ app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 app.config['MASTER_JSON'] = os.path.join(os.path.dirname(__file__), 'odisha_layers.json')
 ALLOWED_EXTENSIONS = {'dxf', 'zip'}
 
+# Layers to ignore during validation (AutoCAD standard + user defined)
+IGNORED_LAYERS = {
+    '0', 'Defpoints',
+    'PLAN', 'WALL', 'elevation', 'TEXT', 'column', 'dim', 'HATCH', 'IC',
+    'sec-slab', 'Chajja', 'win', 'BUA TOTAL', 'FORMAT LINE', 'SEC LINE',
+    'ele-1', 'SEC WALL', 'SEC DIM', 'rm text', 'TEXT-D-W', 'ELE-2',
+    'ELE-3', 'LANDSCAPE', 'dw text', 'Dim.', 'WALL.', 'ELE', 'layer',
+    'Layer2', 'WINDOWS', 'LS-Tree', 'RM TXT'
+}
+
 # Ensure upload folder exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
@@ -49,34 +59,35 @@ def parse_layer_pattern(pattern_name):
     # To avoid replacing 'n' in "Green", we should check context.
     # Most 'n's are preceded by underscore or equals or space, or valid separators.
     
-    # Strategy: Replace 'n' with '\d+'
+    # Strategy: Replace 'n' with '\d+' or '-?\d+' (negative supported)
     # But wait, "Green" has 'n'. "Open" has 'n'.
     # We only want to replace 'n' that stands for a number.
     # In the JSON examples: "BLK_n_", "L=n", "FLR_n_".
     # It seems 'n' is always a standalone component separated by `_` or `=`.
     
-    pattern = pattern_name.replace('n', r'\d+')
+    # pattern = pattern_name.replace('n', r'-?\d+')
     # Fix: "Green" -> "Gree\d+". Bad.
     
     # Better strategy: match specific placeholders
     regex_pattern = pattern_name
-    regex_pattern = regex_pattern.replace('BLK_n', r'BLK_\d+')
-    regex_pattern = regex_pattern.replace('_n_', r'_\d+_')
-    regex_pattern = regex_pattern.replace('_n$', r'_\d+$')
-    regex_pattern = regex_pattern.replace('=n', r'=\d+')
+    regex_pattern = regex_pattern.replace('BLK_n', r'BLK_-?\d+')
+    regex_pattern = regex_pattern.replace('_n_', r'_-?\d+_')
+    if regex_pattern.endswith('_n'):
+        regex_pattern = regex_pattern[:-2] + r'_-?\d+'
+    regex_pattern = regex_pattern.replace('=n', r'=-?\d+')
     
     # Special case: "STAIR_n" at end or middle
-    regex_pattern = regex_pattern.replace('STAIR_n', r'STAIR_\d+')
-    regex_pattern = regex_pattern.replace('RAMP_n', r'RAMP_\d+')
-    regex_pattern = regex_pattern.replace('LIFT_n', r'LIFT_\d+')
-    regex_pattern = regex_pattern.replace('UNIT_n', r'UNIT_\d+')
-    regex_pattern = regex_pattern.replace('FLIGHT_n', r'FLIGHT_\d+')
-    regex_pattern = regex_pattern.replace('LANDING_n', r'LANDING_\d+')
-    regex_pattern = regex_pattern.replace('ROOM_n', r'ROOM_\d+')
-    regex_pattern = regex_pattern.replace('FACADE_n', r'FACADE_\d+')
-    regex_pattern = regex_pattern.replace('AREA_n', r'AREA_\d+')
-    regex_pattern = regex_pattern.replace('CTI_n', r'CTI_\d+')
-    regex_pattern = regex_pattern.replace('OHEL_n', r'OHEL_\d+')
+    regex_pattern = regex_pattern.replace('STAIR_n', r'STAIR_-?\d+')
+    regex_pattern = regex_pattern.replace('RAMP_n', r'RAMP_-?\d+')
+    regex_pattern = regex_pattern.replace('LIFT_n', r'LIFT_-?\d+')
+    regex_pattern = regex_pattern.replace('UNIT_n', r'UNIT_-?\d+')
+    regex_pattern = regex_pattern.replace('FLIGHT_n', r'FLIGHT_-?\d+')
+    regex_pattern = regex_pattern.replace('LANDING_n', r'LANDING_-?\d+')
+    regex_pattern = regex_pattern.replace('ROOM_n', r'ROOM_-?\d+')
+    regex_pattern = regex_pattern.replace('FACADE_n', r'FACADE_-?\d+')
+    regex_pattern = regex_pattern.replace('AREA_n', r'AREA_-?\d+')
+    regex_pattern = regex_pattern.replace('CTI_n', r'CTI_-?\d+')
+    regex_pattern = regex_pattern.replace('OHEL_n', r'OHEL_-?\d+')
     
     # Handle "BLK_1_LVL_0_SIDE_SETBACK1" vs "BLK_n_LVL_n_SIDE_SETBACKn"? 
     # The JSON has specific numbers sometimes (e.g. SIDE_SETBACK1).
@@ -131,7 +142,7 @@ def validate_dxf_content(doc):
     
     # Find allowed occupancy colors from BLT_UP_AREA layers
     occupancy_colors = set()
-    blt_up_pattern = re.compile(r'^BLK_\d+_FLR_\d+_BLT_UP_AREA$')
+    blt_up_pattern = re.compile(r'^BLK_-?\d+_FLR_-?\d+_BLT_UP_AREA$')
     
     for name, layer in dxf_layers.items():
         if blt_up_pattern.match(name):
@@ -154,8 +165,8 @@ def validate_dxf_content(doc):
     validated_layers = []
     
     for name, layer in dxf_layers.items():
-        # Ignore special layers
-        if name in ['0', 'Defpoints']:
+        # Ignore special and excluded layers
+        if name in IGNORED_LAYERS:
             continue
             
         matched_rules = []
@@ -209,7 +220,7 @@ def validate_dxf_content(doc):
                                 color_valid = True
                     except:
                         pass
-                elif required_color == "Any":
+                elif required_color in ["Any", "NA", "N/A"]:
                     color_valid = True
                 else:
                     try:
@@ -245,7 +256,7 @@ def validate_dxf_content(doc):
                                 valid_match_found = True
                     except:
                         pass
-                elif required_color == "Any":
+                elif required_color in ["Any", "NA", "N/A"]:
                     valid_match_found = True
                 else:
                     try:
@@ -271,7 +282,7 @@ def validate_dxf_content(doc):
                                 expected_int = colors.rgb2int((parts[0], parts[1], parts[2]))
                                 allowed_code_set.add(expected_int)
                         except: pass
-                    elif c == "Any":
+                    elif c in ["Any", "NA", "N/A"]:
                         allowed_code_set.add("Any")
                     else:
                         try:
@@ -327,7 +338,7 @@ def validate_dxf_content(doc):
                     else:
                         expanded_colors.append(c)
                 
-                msg = f"Incorrect color. Expected one of: {', '.join(expanded_colors)}, Found: ACI {layer.dxf.color}"
+                msg = f"Incorrect color. Expected one of: {', '.join(expanded_colors)}, Found: {layer.dxf.color}"
                 if layer.dxf.hasattr('true_color'):
                     msg += f" (True Color {layer.dxf.true_color})"
                 layer_info['messages'].append(msg)

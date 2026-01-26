@@ -1,8 +1,16 @@
 [
     {
+        "Feature": "Plan Info",
+        "Layer Name": "PLAN_INFO",
+        "Color Code": "Any",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
         "Feature": "Plot area",
-        "Layer Name": "PLOT BOUNDARY",
-        "Color Code": "70",
+        "Layer Name": "PLOT_BOUNDARY",
+        "Color Code": "Any",
         "Requirement": "Mandatory as per rule",
         "Type": "Polygon",
         "Drawing Guidelines": "Draw as Polygon around the plot boundary"
@@ -30,6 +38,62 @@
         "Requirement": "Mandatory as per rule",
         "Type": "Polygon",
         "Drawing Guidelines": "Draw as closed polygon, using poly line"
+    },
+    {
+        "Feature": "Dwelling Units",
+        "Layer Name": "BLK_n_FLR_n_UNITFA",
+        "Color Code": "1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Dwelling Units",
+        "Layer Name": "BLK_n_FLR_n_UNITFA",
+        "Color Code": "2",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Dwelling Units",
+        "Layer Name": "BLK_n_FLR_n_UNITFA",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Dwelling Units",
+        "Layer Name": "BLK_n_FLR_n_UNITFA",
+        "Color Code": "4",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Dwelling Units",
+        "Layer Name": "BLK_n_FLR_n_UNITFA",
+        "Color Code": "5",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Dwelling Units",
+        "Layer Name": "BLK_n_FLR_n_UNITFA",
+        "Color Code": "6",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Dwelling Units",
+        "Layer Name": "BLK_n_FLR_n_UNITFA",
+        "Color Code": "8",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
     },
     {
         "Feature": "Setbacks Front",
@@ -3406,5 +3470,85 @@
         "Requirement": "YES/NO",
         "Type": "Text",
         "Drawing Guidelines": "Write text: IS_THE_PROJECT_COMING_WITHIN_A_PLOT_ALLOTTED_BY_IDCO_AND_WITHIN_INDUSTRIAL_ESTATES=YES/NO"
+    },
+    {
+        "Feature": "Site Plan",
+        "Layer Name": "SITE_PLAN",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on SITE_PLAN layer"
+    },
+    {
+        "Feature": "Floor Plan",
+        "Layer Name": "BLK_n_FLR_n_FLOOR_PLAN",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on BLK_n_FLR_n_FLOOR_PLAN layer"
+    },
+    {
+        "Feature": "Elevation Plan",
+        "Layer Name": "ELEVATION_PLAN_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on ELEVATION_PLAN_n layer"
+    },
+    {
+        "Feature": "Section Plan",
+        "Layer Name": "SECTION_PLAN_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on SECTION_PLAN_n layer"
+    },
+    {
+        "Feature": "Service Plan",
+        "Layer Name": "SERVICE_PLAN",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on SERVICE_PLAN layer"
+    },
+    {
+        "Feature": "Site Plan Sign",
+        "Layer Name": "SITE_PLAN_SIGN",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on SITE_PLAN_SIGN layer"
+    },
+    {
+        "Feature": "Floor Plan Sign",
+        "Layer Name": "BLK_n_FLR_n_FLOOR_PLAN_SIGN",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on BLK_n_FLR_n_FLOOR_PLAN_SIGN layer"
+    },
+    {
+        "Feature": "Elevation Plan Sign",
+        "Layer Name": "ELEVATION_PLAN_n_SIGN",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on ELEVATION_PLAN_n_SIGN layer"
+    },
+    {
+        "Feature": "Section Plan Sign",
+        "Layer Name": "SECTION_PLAN_n_SIGN",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on SECTION_PLAN_n_SIGN layer"
+    },
+    {
+        "Feature": "Service Plan Sign",
+        "Layer Name": "SERVICE_PLAN_SIGN",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon on SERVICE_PLAN_SIGN layer"
     }
 ]
