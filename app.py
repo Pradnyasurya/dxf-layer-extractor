@@ -75,20 +75,13 @@ def parse_layer_pattern(pattern_name):
     
     return f"^{regex_pattern}$"
 
-def get_master_rules():
-    """Load and parse master validation rules from odisha_layers.json"""
-    if not os.path.exists(app.config['MASTER_JSON']):
-        return []
-    with open(app.config['MASTER_JSON'], 'r') as f:
-        return json.load(f)
-
-def validate_dxf_content(doc):
+def validate_dxf_content(doc, master_rules):
     """Validate DXF content against master rules, checking units and layer specifications"""
     errors = []
     warnings = []
     
-    # Load master validation rules
-    master_rules = get_master_rules()
+    # Master rules passed as argument
+
     
     # 1. Validate DXF unit settings (must be Meters, Decimal, Decimal Degrees)
     units = doc.header.get('$INSUNITS', 0)
@@ -180,7 +173,7 @@ def validate_dxf_content(doc):
                 
                 color_valid = False
                 
-                if required_color == "As per Sub-Occupancy":
+                if required_color in ["As per Sub-Occupancy", "As per sub-occupancy type"]:
                     if current_color in occupancy_colors or (current_true_color is not None and current_true_color in occupancy_colors):
                         color_valid = True
                     elif not occupancy_colors:
@@ -196,13 +189,20 @@ def validate_dxf_content(doc):
                                 color_valid = True
                     except:
                         pass
-                elif required_color in ["Any", "NA", "N/A"]:
+                elif required_color in ["Any", "NA", "N/A", "ANY"]:
                     color_valid = True
                 else:
+                    # Handle complex color codes like "1, 2, 3", "1 (M)"
                     try:
-                        if int(required_color) == current_color:
+                        allowed_list = []
+                        for part in str(required_color).split(','):
+                            match = re.search(r'(\d+)', part)
+                            if match:
+                                allowed_list.append(int(match.group(1)))
+                        
+                        if current_color in allowed_list:
                             color_valid = True
-                    except ValueError:
+                    except:
                         pass
                 
                 if color_valid:
@@ -217,7 +217,7 @@ def validate_dxf_content(doc):
                 allowed_types.append(required_type)
                 
                 # Check Layer Color
-                if required_color == "As per Sub-Occupancy":
+                if required_color in ["As per Sub-Occupancy", "As per sub-occupancy type"]:
                     if layer.dxf.color in occupancy_colors:
                         valid_match_found = True
                     # Check True Color
@@ -232,13 +232,20 @@ def validate_dxf_content(doc):
                                 valid_match_found = True
                     except:
                         pass
-                elif required_color in ["Any", "NA", "N/A"]:
+                elif required_color in ["Any", "NA", "N/A", "ANY"]:
                     valid_match_found = True
                 else:
+                    # Handle complex color codes like "1, 2, 3", "1 (M)"
                     try:
-                        if int(required_color) == layer.dxf.color:
+                        allowed_list = []
+                        for part in str(required_color).split(','):
+                            match = re.search(r'(\d+)', part)
+                            if match:
+                                allowed_list.append(int(match.group(1)))
+                        
+                        if layer.dxf.color in allowed_list:
                             valid_match_found = True
-                    except ValueError:
+                    except:
                         pass
                 
                 if valid_match_found:
@@ -249,7 +256,7 @@ def validate_dxf_content(doc):
                 # Build set of allowed color codes for validation
                 allowed_code_set = set()
                 for c in allowed_colors:
-                    if c == "As per Sub-Occupancy":
+                    if c in ["As per Sub-Occupancy", "As per sub-occupancy type"]:
                         allowed_code_set.update(occupancy_colors)
                     elif c.startswith("RGB"):
                         try:
@@ -258,11 +265,15 @@ def validate_dxf_content(doc):
                                 expected_int = colors.rgb2int((parts[0], parts[1], parts[2]))
                                 allowed_code_set.add(expected_int)
                         except: pass
-                    elif c in ["Any", "NA", "N/A"]:
+                    elif c in ["Any", "NA", "N/A", "ANY"]:
                         allowed_code_set.add("Any")
                     else:
+                        # Handle complex color codes like "1, 2, 3", "1 (M)"
                         try:
-                            allowed_code_set.add(int(c))
+                            for part in str(c).split(','):
+                                match = re.search(r'(\d+)', part)
+                                if match:
+                                    allowed_code_set.add(int(match.group(1)))
                         except: pass
 
                 # Check entities
@@ -308,7 +319,7 @@ def validate_dxf_content(doc):
                 # Expand "As per Sub-Occupancy" for better error message
                 expanded_colors = []
                 for c in unique_colors:
-                    if c == "As per Sub-Occupancy":
+                    if c in ["As per Sub-Occupancy", "As per sub-occupancy type"]:
                         if not occupancy_colors:
                             expanded_colors.append("As per Sub-Occupancy (No valid BLT_UP_AREA layers found to define colors)")
                         else:
@@ -418,11 +429,48 @@ def upload_file():
             if not found_dxf:
                 raise Exception("No .dxf file found in the zip archive")
 
+        # Load master validation rules based on selection
+        rules_source = request.form.get('rules_source', 'odisha')
+        master_rules = []
+        rules_source_name = "Odisha Rules"
+
+        if rules_source == 'odisha':
+            rules_path = app.config['MASTER_JSON']
+            if os.path.exists(rules_path):
+                with open(rules_path, 'r') as f:
+                    master_rules = json.load(f)
+            rules_source_name = "Odisha Rules"
+        elif rules_source == 'ppa':
+            rules_path = os.path.join(os.path.dirname(__file__), 'ppa_layers.json')
+            if os.path.exists(rules_path):
+                with open(rules_path, 'r') as f:
+                    master_rules = json.load(f)
+            else:
+                raise Exception("PPA Rules file not found on server")
+            rules_source_name = "PPA Rules"
+        elif rules_source == 'custom':
+            if 'custom_rules_file' not in request.files:
+                raise Exception("No custom rules file uploaded")
+            
+            cfile = request.files['custom_rules_file']
+            if cfile.filename == '':
+                raise Exception("No custom rules file selected")
+                
+            if cfile and cfile.filename.endswith('.json'):
+                try:
+                    master_rules = json.load(cfile.stream)
+                    rules_source_name = f"Custom Rules ({cfile.filename})"
+                except Exception as e:
+                    raise Exception(f"Invalid JSON in custom rules file: {str(e)}")
+            else:
+                raise Exception("Custom rules file must be a .json file")
+
         # Read and validate DXF file
         try:
             doc = ezdxf.readfile(target_dxf)
-            result = validate_dxf_content(doc)
+            result = validate_dxf_content(doc, master_rules)
             result['filename'] = filename
+            result['rules_source_name'] = rules_source_name
         except Exception as e:
             raise Exception(f"Error parsing DXF: {str(e)}")
         

@@ -1,0 +1,1354 @@
+[
+    {
+        "Feature": "Plot Area",
+        "Layer Name": "PLOT_BOUNDARY",
+        "Color Code": "70",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon."
+    },
+    {
+        "Feature": "FAR (Maximum permissible)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon."
+    },
+    {
+        "Feature": "FAR area deduct",
+        "Layer Name": "BLK_n_FLR_n_FLOOR_AREA_DEDUCT",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon."
+    },
+    {
+        "Feature": "Building Footprint",
+        "Layer Name": "BLK_n_BLDG_FOOT_PRINT",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon."
+    },
+    {
+        "Feature": "Covered Area (Maximum permissible)",
+        "Layer Name": "BLK_n_COVERED_AREA",
+        "Color Code": "140",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon."
+    },
+    {
+        "Feature": "Building Height (Maximum permissible)",
+        "Layer Name": "BLK_n_HT_OF_BLDG",
+        "Color Code": "5",
+        "Requirement": "Mandatory",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension only"
+    },
+    {
+        "Feature": "Plinth Height",
+        "Layer Name": "BLK_n_PLINTH_HEIGHT",
+        "Color Code": "Any",
+        "Requirement": "Mandatory",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension only"
+    },
+    {
+        "Feature": "Headroom terrace/Mumty",
+        "Layer Name": "BLK_n_MUMTY_HT",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension only"
+    },
+    {
+        "Feature": "Parapet/staircase railing/ service zone",
+        "Layer Name": "BLK_n_PARAPET_HT",
+        "Color Code": "3, 2, 1",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw dimensions for Parapet (3), staircase railing (2), service zone railing (1)"
+    },
+    {
+        "Feature": "Wider Road",
+        "Layer Name": "WIDER_ROAD",
+        "Color Code": "7",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon."
+    },
+    {
+        "Feature": "Setback Front",
+        "Layer Name": "BLK_n_LVL_n_FRONT_SETBACK",
+        "Color Code": "2",
+        "Requirement": "Mandatory",
+        "Type": "Polygon (with Dimensions)",
+        "Drawing Guidelines": "Setback dimension on site plan using dimension tool. Draw as closed polygon."
+    },
+    {
+        "Feature": "Setback Rear",
+        "Layer Name": "BLK_n_LVL_n_REAR_SETBACK",
+        "Color Code": "11",
+        "Requirement": "Mandatory",
+        "Type": "Polygon (with Dimensions)",
+        "Drawing Guidelines": "Setback dimension on site plan using dimension tool. Draw as closed polygon."
+    },
+    {
+        "Feature": "Setback side 1",
+        "Layer Name": "BLK_n_LVL_n_SIDE_SETBACK1",
+        "Color Code": "171",
+        "Requirement": "Mandatory",
+        "Type": "Polygon (with Dimensions)",
+        "Drawing Guidelines": "Setback dimension on site plan. Draw as closed polygon."
+    },
+    {
+        "Feature": "Setback side 2",
+        "Layer Name": "BLK_n_LVL_n_SIDE_SETBACK2",
+        "Color Code": "102",
+        "Requirement": "Mandatory",
+        "Type": "Polygon (with Dimensions)",
+        "Drawing Guidelines": "Setback dimension on site plan. Draw as closed polygon."
+    },
+    {
+        "Feature": "Habitable room (Master bedroom)",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_DWn",
+        "Color Code": "3",
+        "Requirement": "Mandatory in case of Residential",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Habitable room (other Bedroom)",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_DWn",
+        "Color Code": "4",
+        "Requirement": "Mandatory in case of Residential",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Habitable room (Children Bedroom)",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_DWn",
+        "Color Code": "5",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Habitable room (Storeroom)",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_DWn",
+        "Color Code": "6",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Habitable room (Servant room)",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_DWn",
+        "Color Code": "8",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Kitchen with Store",
+        "Layer Name": "BLK_n_FLR_n_KITCHEN",
+        "Color Code": "1",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Kitchen Canteen/Restaurant",
+        "Layer Name": "BLK_n_FLR_n_KITCHEN",
+        "Color Code": "2",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Pantry",
+        "Layer Name": "BLK_n_FLR_n_KITCHEN",
+        "Color Code": "3",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "General Staircase",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n",
+        "Color Code": "ANY",
+        "Requirement": "Mandatory",
+        "Type": "Text",
+        "Drawing Guidelines": "Draw Polygon around staircase layout. Add floor height in same layer with text FLR_HT_M=n"
+    },
+    {
+        "Feature": "Staircase Flight",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n_FLIGHT_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon around each flight in staircase"
+    },
+    {
+        "Feature": "Staircase Landing",
+        "Layer Name": "BLK_n_FLR_n_STAIR_n_LANDING_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Polygon around each landing"
+    },
+    {
+        "Feature": "Fire Staircase",
+        "Layer Name": "BLK_n_FLR_n_FIRESTAIR_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Text",
+        "Drawing Guidelines": "Draw Polygon around staircase layout. Add floor height text FLR_HT_M=n"
+    },
+    {
+        "Feature": "Fire Staircase Flight",
+        "Layer Name": "BLK_n_FLR_n_FIRESTAIR_n_FLIGHT_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon around each flight"
+    },
+    {
+        "Feature": "Spiral Fire Stair",
+        "Layer Name": "BLK_n_FLR_n_SPIRAL_FIRE_STAIR_n",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Polygon"
+    },
+    {
+        "Feature": "Water Closet",
+        "Layer Name": "BLK_n_FLR_n_WATER_CLOSET",
+        "Color Code": "1 (M), 2 (F), 3 (C)",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for males (1), females (2), common (3)"
+    },
+    {
+        "Feature": "Urinal",
+        "Layer Name": "BLK_n_FLR_n_URINAL",
+        "Color Code": "1 (M), 2 (F), 3 (C)",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for males (1), females (2), common (3)"
+    },
+    {
+        "Feature": "Bath",
+        "Layer Name": "BLK_n_FLR_n_BATH",
+        "Color Code": "1 (M), 2 (F), 3 (C)",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for males (1), females (2), common (3)"
+    },
+    {
+        "Feature": "Wash",
+        "Layer Name": "BLK_n_FLR_n_WASH",
+        "Color Code": "1 (M), 2 (F), 3 (C)",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for males (1), females (2), common (3)"
+    },
+    {
+        "Feature": "Toilets",
+        "Layer Name": "BLK_n_FLR_n_WC_BATH",
+        "Color Code": "1 (M), 2 (F), 3 (C)",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw polygon for males (1), females (2), common (3)"
+    },
+    {
+        "Feature": "North Direction",
+        "Layer Name": "NORTH_DIRECTION",
+        "Color Code": "7",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw North Direction Symbol"
+    },
+    {
+        "Feature": "Solar PV System",
+        "Layer Name": "SOLAR_PANEL",
+        "Color Code": "3",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "Solar Water Heating System",
+        "Layer Name": "SOLAR_WATER_HEATER",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "RWH",
+        "Layer Name": "RWH",
+        "Color Code": "4",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Text",
+        "Drawing Guidelines": "Mention Text - RWH_Capacity_L= (calculated capacity)"
+    },
+    {
+        "Feature": "Projection balcony/ cantilever",
+        "Layer Name": "BLK_n_FLR_n_CHAJJA",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "Staircase Headroom height",
+        "Layer Name": "BLK_n_STAIR_HEADROOM",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension"
+    },
+    {
+        "Feature": "Sale or Work Area",
+        "Layer Name": "BLK_n_FLR_n_SALE_OR_WORK_AREA",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "Sale or Work Parking Area",
+        "Layer Name": "BLK_n_SALE_OR_WORK_PARKING_AREA",
+        "Color Code": "7",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "Parking (Open)",
+        "Layer Name": "OPEN_PARKING",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "Parking (Stilt)",
+        "Layer Name": "BLK_n_FLR_n_STILT_PARKING",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "Parking (Covered)",
+        "Layer Name": "BLK_n_FLR_n_COVERED_PARKING",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "Distance from Electric Lines",
+        "Layer Name": "OHEL_n",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polyline"
+    },
+    {
+        "Feature": "Voltage Text",
+        "Layer Name": "VOLTAGE_n",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Text",
+        "Drawing Guidelines": "Use text to mention voltage - VOLTAGE_KV=xxx"
+    },
+    {
+        "Feature": "Horizontal Clearance OHEL",
+        "Layer Name": "HORIZ_CLEAR_OHEL_n",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension to measure the distance"
+    },
+    {
+        "Feature": "Vertical Clearance OHEL",
+        "Layer Name": "VERT_CLEAR_OHEL_n",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension to measure the distance"
+    },
+    {
+        "Feature": "Stilt Floor",
+        "Layer Name": "BLK_n_FLR_n_STILT_FLOOR",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional",
+        "Type": "Polygon (with Dimensions)",
+        "Drawing Guidelines": "Draw a closed polygon. For height use dimension tool."
+    },
+    {
+        "Feature": "Stilt Floor Existing",
+        "Layer Name": "BLK_n_FLR_n_STILT_FLOOR_EXISTING",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional",
+        "Type": "Polygon (with Dimensions)",
+        "Drawing Guidelines": "Draw a closed polygon. For height use dimension tool."
+    },
+    {
+        "Feature": "Dwelling Units",
+        "Layer Name": "BLK_n_FLR_n_UNITFA",
+        "Color Code": "As per occupancy type",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon"
+    },
+    {
+        "Feature": "Light & Ventilation",
+        "Layer Name": "BLK_n_FLR_n_ROOM_n_LIGHT_VENTILATION_n",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as polygon"
+    },
+    {
+        "Feature": "Gate",
+        "Layer Name": "MAIN_GATE",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Polygon (with Dimensions)",
+        "Drawing Guidelines": "Draw polygon outlining gate. Use dimension tool for height (1) and width (2)."
+    },
+    {
+        "Feature": "Wicket Gate",
+        "Layer Name": "WICKET_GATE",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Polygon (with Dimensions)",
+        "Drawing Guidelines": "Draw polygon outlining gate. Use dimension tool for height (1) and width (2)."
+    },
+    {
+        "Feature": "Lift",
+        "Layer Name": "BLK_n_FLR_n_LIFT_n",
+        "Color Code": "1 (General), 2 (Special)",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "Corridor",
+        "Layer Name": "BLK_n_FLR_n_PASSAGE",
+        "Color Code": "1",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension only"
+    },
+    {
+        "Feature": "Verandah",
+        "Layer Name": "BLK_n_FLR_n_PASSAGE",
+        "Color Code": "2",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension only"
+    },
+    {
+        "Feature": "Passageway",
+        "Layer Name": "BLK_n_FLR_n_PASSAGE",
+        "Color Code": "3",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw dimension only"
+    },
+    {
+        "Feature": "Boundary Wall (Front)",
+        "Layer Name": "COMPOUNDWALL",
+        "Color Code": "1",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Dimension"
+    },
+    {
+        "Feature": "Boundary Wall (Rear)",
+        "Layer Name": "COMPOUNDWALL",
+        "Color Code": "2",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Dimension"
+    },
+    {
+        "Feature": "Railing",
+        "Layer Name": "COMPOUNDWALL",
+        "Color Code": "3",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw Dimension"
+    },
+    {
+        "Feature": "Ramp",
+        "Layer Name": "BLK_n_RAMP",
+        "Color Code": "7 (One-way), 8 (Two-way)",
+        "Requirement": "Optional",
+        "Type": "Text",
+        "Drawing Guidelines": "Draw a closed polygon. Mention text - SLOPE=1IN8"
+    },
+    {
+        "Feature": "Floor Height",
+        "Layer Name": "BLK_n_FLR_n_FLOOR_HEIGHT",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Draw a dimension layer for floor height"
+    },
+    {
+        "Feature": "Exit Travel Distance",
+        "Layer Name": "DIST_EXIT",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a dimension layer"
+    },
+    {
+        "Feature": "Roof type",
+        "Layer Name": "BLK_n_FLR_n_ROOF_TYPE",
+        "Color Code": "7",
+        "Requirement": "Mandatory as per rule",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon at the Roof"
+    },
+    {
+        "Feature": "Drinking Water",
+        "Layer Name": "BLK_n_FLR_n_DRINKING_WATER",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon"
+    },
+    {
+        "Feature": "Guard Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_DWn",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Motor Room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_DWn",
+        "Color Code": "11",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Functional services room",
+        "Layer Name": "BLK_n_FLR_n_REGULAR_ROOM_DWn",
+        "Color Code": "12",
+        "Requirement": "Optional",
+        "Type": "Dimension",
+        "Drawing Guidelines": "Use dimension tool to draw the height"
+    },
+    {
+        "Feature": "Structure within Front Setback",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_FRONT_SETBACK",
+        "Color Code": "As per activity",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon. Dimension on site plan."
+    },
+    {
+        "Feature": "Structure within Rear Setback",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_REAR_SETBACK",
+        "Color Code": "As per activity",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon. Dimension on site plan."
+    },
+    {
+        "Feature": "Structure within Side Setback 1",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SIDE_SETBACK1",
+        "Color Code": "As per activity",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon. Dimension on site plan."
+    },
+    {
+        "Feature": "Structure within Side Setback 2",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SIDE_SETBACK2",
+        "Color Code": "As per activity",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon. Dimension on site plan."
+    },
+    {
+        "Feature": "Service Floor",
+        "Layer Name": "BLK_n_FLR_n_SERVICE_FLOOR",
+        "Color Code": "As per Sub-Occupancy",
+        "Requirement": "Optional",
+        "Type": "Polygon (with Dimensions)",
+        "Drawing Guidelines": "Draw a closed polygon. For height use dimension tool."
+    },
+    {
+        "Feature": "Parking/Vehicle Ramp",
+        "Layer Name": "BLK_n_VEHICLE_RAMP_n",
+        "Color Code": "7, 8",
+        "Requirement": "Optional",
+        "Type": "Text",
+        "Drawing Guidelines": "Draw a closed polygon. Text SLOPE=1IN8"
+    },
+    {
+        "Feature": "Occupancy: Industrial - White",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "201",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Industrial - Green",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "202",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Industrial - Red",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "204",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Industrial - Orange",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "203",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Lodge, Guest Rooms",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "101",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Restaurant",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "102",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Hotel, Resort",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "103",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Resto Bar, Wine Shop",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "104",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Residential Stay Houses",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "105",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Working Hostel, Students Hostel",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "106",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Orphanage, Old Age Home",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "107",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Dormitory",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "108",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Night Shelter, Homeless Shelter",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "109",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Shop, Shopping Complex, Mercantile",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "110",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Petty Shop, ATM",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "111",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Office, Banks, IT Office, Training",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "112",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Library",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "113",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Store, Godown, Warehouse",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "114",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - LPG Distribution Gas Godown",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "115",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Clinic, Dispensary, Pharmacy",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "116",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Fuel Filling Station Office",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "117",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Fuel Filling-cum-Service Station",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "118",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Battery Charging Station",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "119",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Market Building",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "120",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Gymnasia",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "121",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Club",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "122",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Group Development (Commercial)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "123",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - Swimming Pool (Commercial)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "124",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Commercial - CNG Fuel Station",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "100",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Residential - Residence",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "25",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Residential - Residential Flats / Apartments / Quarters",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "29",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Residential - Affordable Housing",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "30",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Residential - EWS Building",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "31",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Occupancy: Residential - Group Development (Residence)",
+        "Layer Name": "BLK_n_FLR_n_BLT_UP_AREA",
+        "Color Code": "32",
+        "Requirement": "Mandatory for this Occupancy",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon"
+    },
+    {
+        "Feature": "Plot No",
+        "Layer Name": "PLOT_NO",
+        "Color Code": "N/A",
+        "Requirement": "123/22",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PLOT_NO=123/22"
+    },
+    {
+        "Feature": "Plot Region",
+        "Layer Name": "PLOT_REGION",
+        "Color Code": "N/A",
+        "Requirement": "PUDUCHERRY / KARAIKAL / MAHE / YANAM",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PLOT_REGION=PUDUCHERRY / KARAIKAL / MAHE / YANAM"
+    },
+    {
+        "Feature": "Plot Location",
+        "Layer Name": "PLOT_LOCATION",
+        "Color Code": "N/A",
+        "Requirement": "BA_EAST/ BA_WEST/CTA/CBA/OTHER_AREAS",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PLOT_LOCATION=BA_EAST/ BA_WEST/CTA/CBA/OTHER_AREAS"
+    },
+    {
+        "Feature": "Land Use Zone",
+        "Layer Name": "LAND_USE_ZONE",
+        "Color Code": "N/A",
+        "Requirement": "RESIDENTIAL ZONE / MIXED RESIDENTIAL ZONE / COMMERCIAL ZONE / MIXED COMMERCIAL ZONE / INDUSTRIAL ZONE / MIXED INDUSTRIAL ZONE / PUBLIC AND SEMI-PUBLIC ZONE / AGRICULTURE ZONE / RECEATIONAL TOURISM ZONE /TRASPORTATION AND COMMUNICATION ZONE ZONER.S.NO=112/8",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: LAND_USE_ZONE=RESIDENTIAL ZONE / MIXED RESIDENTIAL ZONE / COMMERCIAL ZONE / MIXED COMMERCIAL ZONE / INDUSTRIAL ZONE / MIXED INDUSTRIAL ZONE / PUBLIC AND SEMI-PUBLIC ZONE / AGRICULTURE ZONE / RECEATIONAL TOURISM ZONE /TRASPORTATION AND COMMUNICATION ZONE ZONER.S.NO=112/8"
+    },
+    {
+        "Feature": "Ward No/Block No/T.S.No",
+        "Layer Name": "WARD_NO/BLOCK_NO/T.S.NO",
+        "Color Code": "N/A",
+        "Requirement": "22",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: WARD_NO/BLOCK_NO/T.S.NO=22"
+    },
+    {
+        "Feature": "Revenue Village",
+        "Layer Name": "REVENUE_VILLAGE",
+        "Color Code": "N/A",
+        "Requirement": "OLANDAI",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: REVENUE_VILLAGE=OLANDAI"
+    },
+    {
+        "Feature": "Commune/Municipalities",
+        "Layer Name": "COMMUNE/MUNICIPALITIES",
+        "Color Code": "N/A",
+        "Requirement": "PUDUCHERRY",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: COMMUNE/MUNICIPALITIES=PUDUCHERRY"
+    },
+    {
+        "Feature": "Plot Area M2",
+        "Layer Name": "PLOT_AREA_M2",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PLOT_AREA_M2=numerical value"
+    },
+    {
+        "Feature": "Plot Frontage",
+        "Layer Name": "PLOT_FRONTAGE",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PLOT_FRONTAGE=numerical value"
+    },
+    {
+        "Feature": "Plot Depth",
+        "Layer Name": "PLOT_DEPTH",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PLOT_DEPTH=numerical value"
+    },
+    {
+        "Feature": "Plot Width",
+        "Layer Name": "PLOT_WIDTH",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: PLOT_WIDTH=numerical value"
+    },
+    {
+        "Feature": "Industry Category",
+        "Layer Name": "INDUSTRY_CATEGORY",
+        "Color Code": "N/A",
+        "Requirement": "GREEN/WHITE/ORANGE/RED/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: INDUSTRY_CATEGORY=GREEN/WHITE/ORANGE/RED/NA"
+    },
+    {
+        "Feature": "If The Plot Falls Under Crz",
+        "Layer Name": "IF_THE_PLOT_FALLS_UNDER_CRZ",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IF_THE_PLOT_FALLS_UNDER_CRZ=YES/NO"
+    },
+    {
+        "Feature": "Minimum Generation Capacity Of The Rooftop Solar Pv System In W",
+        "Layer Name": "MINIMUM_GENERATION_CAPACITY_OF_THE_ROOFTOP_SOLAR_PV_SYSTEM_IN_W",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: MINIMUM_GENERATION_CAPACITY_OF_THE_ROOFTOP_SOLAR_PV_SYSTEM_IN_W=numerical value"
+    },
+    {
+        "Feature": "Capacity Of Solar Water Heating System In Lpd",
+        "Layer Name": "CAPACITY_OF_SOLAR_WATER_HEATING_SYSTEM_IN_LPD",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: CAPACITY_OF_SOLAR_WATER_HEATING_SYSTEM_IN_LPD=numerical value"
+    },
+    {
+        "Feature": "Demolition Area",
+        "Layer Name": "DEMOLITION_AREA",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: DEMOLITION_AREA=numerical value"
+    },
+    {
+        "Feature": "There Is No Storage Of Explosive Obnoxious Products And Other Material Likely To Cause Health Hazards And Danger To Lives In Residential Zone",
+        "Layer Name": "THERE_IS_NO_STORAGE_OF_EXPLOSIVE_OBNOXIOUS_PRODUCTS_AND_OTHER_MATERIAL_LIKELY_TO_CAUSE_HEALTH_HAZARDS_AND_DANGER_TO_LIVES_IN_RESIDENTIAL_ZONE",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: THERE_IS_NO_STORAGE_OF_EXPLOSIVE_OBNOXIOUS_PRODUCTS_AND_OTHER_MATERIAL_LIKELY_TO_CAUSE_HEALTH_HAZARDS_AND_DANGER_TO_LIVES_IN_RESIDENTIAL_ZONE=YES/NO/NA"
+    },
+    {
+        "Feature": "Industries Power Requirement In Hp",
+        "Layer Name": "INDUSTRIES_POWER_REQUIREMENT_IN_HP",
+        "Color Code": "N/A",
+        "Requirement": "numerical value/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: INDUSTRIES_POWER_REQUIREMENT_IN_HP=numerical value/NA"
+    },
+    {
+        "Feature": "In Case Of Industrial Estate And Approved Industrial Layouts The Setback Provided On The Side Of Existing Residential Area",
+        "Layer Name": "IN_CASE_OF_INDUSTRIAL_ESTATE_AND_APPROVED_INDUSTRIAL_LAYOUTS_THE_SETBACK_PROVIDED_ON_THE_SIDE_OF_EXISTING_RESIDENTIAL_AREA",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IN_CASE_OF_INDUSTRIAL_ESTATE_AND_APPROVED_INDUSTRIAL_LAYOUTS_THE_SETBACK_PROVIDED_ON_THE_SIDE_OF_EXISTING_RESIDENTIAL_AREA=YES/NO/NA"
+    },
+    {
+        "Feature": "Is The Site Beside The Nh Or Ecr",
+        "Layer Name": "IS_THE_SITE_BESIDE_THE_NH_OR_ECR",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_SITE_BESIDE_THE_NH_OR_ECR=YES/NO"
+    },
+    {
+        "Feature": "Ensured Lighting And Ventilation Through Artificial Lighting And Mechanical Ventilation",
+        "Layer Name": "ENSURED_LIGHTING_AND_VENTILATION_THROUGH_ARTIFICIAL_LIGHTING_AND_MECHANICAL_VENTILATION",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: ENSURED_LIGHTING_AND_VENTILATION_THROUGH_ARTIFICIAL_LIGHTING_AND_MECHANICAL_VENTILATION=YES/NO/NA"
+    },
+    {
+        "Feature": "Noc From Electricity Department",
+        "Layer Name": "NOC_FROM_ELECTRICITY_DEPARTMENT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NOC_FROM_ELECTRICITY_DEPARTMENT=YES/NO/NA"
+    },
+    {
+        "Feature": "Crz Category Applicable For Plot",
+        "Layer Name": "CRZ_CATEGORY_APPLICABLE_FOR_PLOT",
+        "Color Code": "N/A",
+        "Requirement": "CRZ_I / CRZ_II / CRZ_III_UPTO_200M / CRZ_III_200M_TO_500M / CRZ_II_RIVER_CREEK /CRZ_III_RIVER_CREEK/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: CRZ_CATEGORY_APPLICABLE_FOR_PLOT=CRZ_I / CRZ_II / CRZ_III_UPTO_200M / CRZ_III_200M_TO_500M / CRZ_II_RIVER_CREEK /CRZ_III_RIVER_CREEK/NA"
+    },
+    {
+        "Feature": "Risk Category",
+        "Layer Name": "RISK_CATEGORY",
+        "Color Code": "N/A",
+        "Requirement": "LOW/MEDIUM/HIGH",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: RISK_CATEGORY=LOW/MEDIUM/HIGH"
+    },
+    {
+        "Feature": "Rwh Declared",
+        "Layer Name": "RWH_DECLARED",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: RWH_DECLARED=YES/NO"
+    },
+    {
+        "Feature": "Noc From The Airport Authority Of India If The Site Falls In The Cczm Of Puducherry Or The Site Falls Within The Vicinity Of Airport",
+        "Layer Name": "NOC_FROM_THE_AIRPORT_AUTHORITY_OF_INDIA_IF_THE_SITE_FALLS_IN_THE_CCZM_OF_PUDUCHERRY_OR_THE_SITE_FALLS_WITHIN_THE_VICINITY_OF_AIRPORT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NOC_FROM_THE_AIRPORT_AUTHORITY_OF_INDIA_IF_THE_SITE_FALLS_IN_THE_CCZM_OF_PUDUCHERRY_OR_THE_SITE_FALLS_WITHIN_THE_VICINITY_OF_AIRPORT=YES/NO/NA"
+    },
+    {
+        "Feature": "Noc From The Coastal Zone Management Authority Of Puducherry If The Site Falls In The Notified Area Of Coastal Zone Management Authority Or Czmp Of Puducherry",
+        "Layer Name": "NOC_FROM_THE_COASTAL_ZONE_MANAGEMENT_AUTHORITY_OF_PUDUCHERRY_IF_THE_SITE_FALLS_IN_THE_NOTIFIED_AREA_OF_COASTAL_ZONE_MANAGEMENT_AUTHORITY_OR_CZMP_OF_PUDUCHERRY",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NOC_FROM_THE_COASTAL_ZONE_MANAGEMENT_AUTHORITY_OF_PUDUCHERRY_IF_THE_SITE_FALLS_IN_THE_NOTIFIED_AREA_OF_COASTAL_ZONE_MANAGEMENT_AUTHORITY_OR_CZMP_OF_PUDUCHERRY=YES/NO/NA"
+    },
+    {
+        "Feature": "Noc From The National Monument Authority Of India If The Site Falls Within The 300Mts Radius Of Asi Identified Monuments",
+        "Layer Name": "NOC_FROM_THE_NATIONAL_MONUMENT_AUTHORITY_OF_INDIA_IF_THE_SITE_FALLS_WITHIN_THE_300MTS_RADIUS_OF_ASI_IDENTIFIED_MONUMENTS",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NOC_FROM_THE_NATIONAL_MONUMENT_AUTHORITY_OF_INDIA_IF_THE_SITE_FALLS_WITHIN_THE_300MTS_RADIUS_OF_ASI_IDENTIFIED_MONUMENTS=YES/NO/NA"
+    },
+    {
+        "Feature": "Noc From The Railway Authorities If The Site Abuts Or Falls Within The 30Mts From The Railway Boundary",
+        "Layer Name": "NOC_FROM_THE_RAILWAY_AUTHORITIES_IF_THE_SITE_ABUTS_OR_FALLS_WITHIN_THE_30MTS_FROM_THE_RAILWAY_BOUNDARY",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NOC_FROM_THE_RAILWAY_AUTHORITIES_IF_THE_SITE_ABUTS_OR_FALLS_WITHIN_THE_30MTS_FROM_THE_RAILWAY_BOUNDARY=YES/NO/NA"
+    },
+    {
+        "Feature": "Noc From The Irrigation Division Or Pwd Or Municipalities Survey And Land Records If The Site Falls Near Or Abuts The Water Bodies Like Canal Channel Lake Etc",
+        "Layer Name": "NOC_FROM_THE_IRRIGATION_DIVISION_OR_PWD_OR_MUNICIPALITIES_SURVEY_AND_LAND_RECORDS_IF_THE_SITE_FALLS_NEAR_OR_ABUTS_THE_WATER_BODIES_LIKE_CANAL_CHANNEL_LAKE_ETC",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NOC_FROM_THE_IRRIGATION_DIVISION_OR_PWD_OR_MUNICIPALITIES_SURVEY_AND_LAND_RECORDS_IF_THE_SITE_FALLS_NEAR_OR_ABUTS_THE_WATER_BODIES_LIKE_CANAL_CHANNEL_LAKE_ETC=YES/NO/NA"
+    },
+    {
+        "Feature": "Noc From The Department Of Revenue And Disaster Management If The Land Under Reference Is Recorded As Government Land (La/Lr) As Per The Records Available",
+        "Layer Name": "NOC_FROM_THE_DEPARTMENT_OF_REVENUE_AND_DISASTER_MANAGEMENT_IF_THE_LAND_UNDER_REFERENCE_IS_RECORDED_AS_GOVERNMENT_LAND_(LA/LR)_AS_PER_THE_RECORDS_AVAILABLE",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO/NA",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NOC_FROM_THE_DEPARTMENT_OF_REVENUE_AND_DISASTER_MANAGEMENT_IF_THE_LAND_UNDER_REFERENCE_IS_RECORDED_AS_GOVERNMENT_LAND_(LA/LR)_AS_PER_THE_RECORDS_AVAILABLE=YES/NO/NA"
+    },
+    {
+        "Feature": "Whether Site Abuts More Than One Road",
+        "Layer Name": "WHETHER_SITE_ABUTS_MORE_THAN_ONE_ROAD",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: WHETHER_SITE_ABUTS_MORE_THAN_ONE_ROAD=YES/NO"
+    },
+    {
+        "Feature": "Is The Project Part Of Industrial Estate Or Approved Industrial Layout",
+        "Layer Name": "IS_THE_PROJECT_PART_OF_INDUSTRIAL_ESTATE_OR_APPROVED_INDUSTRIAL_LAYOUT",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_THE_PROJECT_PART_OF_INDUSTRIAL_ESTATE_OR_APPROVED_INDUSTRIAL_LAYOUT=YES/NO"
+    },
+    {
+        "Feature": "Is Sheet Roof Provided For Any Block",
+        "Layer Name": "IS_SHEET_ROOF_PROVIDED_FOR_ANY_BLOCK",
+        "Color Code": "N/A",
+        "Requirement": "YES/NO",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IS_SHEET_ROOF_PROVIDED_FOR_ANY_BLOCK=YES/NO"
+    },
+    {
+        "Feature": "If There Is Existing Residential Area Abutting The Industrial Estate And Approved Industral Layout",
+        "Layer Name": "IF_THERE_IS_EXISTING_RESIDENTIAL_AREA_ABUTTING_THE_INDUSTRIAL_ESTATE_AND_APPROVED_INDUSTRAL_LAYOUT",
+        "Color Code": "N/A",
+        "Requirement": "LEFT, RIGHT, REAR",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: IF_THERE_IS_EXISTING_RESIDENTIAL_AREA_ABUTTING_THE_INDUSTRIAL_ESTATE_AND_APPROVED_INDUSTRAL_LAYOUT=LEFT, RIGHT, REAR"
+    },
+    {
+        "Feature": "Wider Road Avg Width",
+        "Layer Name": "WIDER_ROAD_AVG_WIDTH",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: WIDER_ROAD_AVG_WIDTH=numerical value"
+    },
+    {
+        "Feature": "Narrower Road Avg Width",
+        "Layer Name": "NARROWER_ROAD_AVG_WIDTH",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: NARROWER_ROAD_AVG_WIDTH=numerical value"
+    },
+    {
+        "Feature": "Offices Or Visitor Male Count",
+        "Layer Name": "OFFICES_OR_VISITOR_MALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OFFICES_OR_VISITOR_MALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Offices Or Visitor Female Count",
+        "Layer Name": "OFFICES_OR_VISITOR_FEMALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OFFICES_OR_VISITOR_FEMALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Worker Male Count",
+        "Layer Name": "WORKER_MALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: WORKER_MALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Worker Female Count",
+        "Layer Name": "WORKER_FEMALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: WORKER_FEMALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Staff Male Count",
+        "Layer Name": "OCCUPANT_LOAD_STAFF_MALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_STAFF_MALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Staff Female Count",
+        "Layer Name": "OCCUPANT_LOAD_STAFF_FEMALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_STAFF_FEMALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Public Male Count",
+        "Layer Name": "OCCUPANT_LOAD_PUBLIC_MALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_PUBLIC_MALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Public Female Count",
+        "Layer Name": "OCCUPANT_LOAD_PUBLIC_FEMALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_PUBLIC_FEMALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Resident Male Count",
+        "Layer Name": "OCCUPANT_LOAD_RESIDENT_MALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_RESIDENT_MALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Resident Female Count",
+        "Layer Name": "OCCUPANT_LOAD_RESIDENT_FEMALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_RESIDENT_FEMALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Non Resident Male Count",
+        "Layer Name": "OCCUPANT_LOAD_NON_RESIDENT_MALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_NON_RESIDENT_MALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Non Resident Female Count",
+        "Layer Name": "OCCUPANT_LOAD_NON_RESIDENT_FEMALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_NON_RESIDENT_FEMALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Common Male Count",
+        "Layer Name": "OCCUPANT_LOAD_COMMON_MALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_COMMON_MALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Occupant Load Common Female Count",
+        "Layer Name": "OCCUPANT_LOAD_COMMON_FEMALE_COUNT",
+        "Color Code": "N/A",
+        "Requirement": "numerical value",
+        "Type": "Text",
+        "Drawing Guidelines": "Write text: OCCUPANT_LOAD_COMMON_FEMALE_COUNT=numerical value"
+    },
+    {
+        "Feature": "Setback Activity: Motor Room",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SETBACK (varies)",
+        "Color Code": "1",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon in setback area"
+    },
+    {
+        "Feature": "Setback Activity: Watchman Booth",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SETBACK (varies)",
+        "Color Code": "2",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon in setback area"
+    },
+    {
+        "Feature": "Setback Activity: Servant Room",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SETBACK (varies)",
+        "Color Code": "3",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon in setback area"
+    },
+    {
+        "Feature": "Setback Activity: Cycle stand",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SETBACK (varies)",
+        "Color Code": "4",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon in setback area"
+    },
+    {
+        "Feature": "Setback Activity: Generator Room",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SETBACK (varies)",
+        "Color Code": "5",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon in setback area"
+    },
+    {
+        "Feature": "Setback Activity: Toilet / Water Closet",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SETBACK (varies)",
+        "Color Code": "6",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon in setback area"
+    },
+    {
+        "Feature": "Setback Activity: Pump Room",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SETBACK (varies)",
+        "Color Code": "7",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon in setback area"
+    },
+    {
+        "Feature": "Setback Activity: Transformer Room",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SETBACK (varies)",
+        "Color Code": "8",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon in setback area"
+    },
+    {
+        "Feature": "Setback Activity: Electric Room",
+        "Layer Name": "BLK_n_STRUCTURE_n_WITHIN_SETBACK (varies)",
+        "Color Code": "9",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw as closed polygon in setback area"
+    }
+]

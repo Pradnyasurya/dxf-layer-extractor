@@ -69,6 +69,20 @@
                         </div>
                     </div>
                     
+                    <div class="form-group">
+                        <label for="rules_source" class="form-label">Validation Guidelines</label>
+                        <select name="rules_source" id="rules_source" class="form-select">
+                            <option value="odisha" selected>Odisha Rules (Default)</option>
+                            <option value="ppa">PPA Rules</option>
+                            <option value="custom">Upload Custom Rules JSON</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="customRulesGroup" style="display: none;">
+                        <label for="custom_rules_file" class="form-label">Upload Rules JSON</label>
+                        <input type="file" name="custom_rules_file" id="custom_rules_file" class="form-control" accept=".json">
+                    </div>
+
                     <button type="submit" class="btn btn--primary btn--full" id="submitBtn" disabled>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -120,6 +134,21 @@
         const selectedFile = document.getElementById('selectedFile');
         const clearFile = document.getElementById('clearFile');
         const submitBtn = document.getElementById('submitBtn');
+        const rulesSource = document.getElementById('rules_source');
+        const customRulesGroup = document.getElementById('customRulesGroup');
+        const customRulesFile = document.getElementById('custom_rules_file');
+        
+        // Handle rules source change
+        rulesSource.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                customRulesGroup.style.display = 'block';
+                customRulesFile.required = true;
+            } else {
+                customRulesGroup.style.display = 'none';
+                customRulesFile.required = false;
+                customRulesFile.value = ''; // clear selection
+            }
+        });
         
         // Format bytes to human readable
         function formatBytes(bytes) {
