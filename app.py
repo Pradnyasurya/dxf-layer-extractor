@@ -16,7 +16,10 @@ from flask import Flask, render_template, request, flash, redirect, url_for, sen
 from werkzeug.utils import secure_filename
 import ezdxf
 from ezdxf import colors
-from ezdxf.math import area
+from ezdxf.math import area, Vec3
+from ezdxf.addons.drawing import Frontend, RenderContext
+from ezdxf.addons.drawing.svg import SVGBackend
+from ezdxf.addons.drawing.properties import Properties, LayoutProperties
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
@@ -137,11 +140,92 @@ def validate_text_content(text_str, layer_name):
             
     return True, None
 
+def get_entity_center(entity):
+    """Get a representative center point for an entity for error marking"""
+    try:
+        dxftype = entity.dxftype()
+        if dxftype in ('LWPOLYLINE', 'POLYLINE'):
+            # Return first point
+            if hasattr(entity, 'get_points'):
+                pts = entity.get_points()
+                if pts: return pts[0]
+            elif hasattr(entity, 'points'):
+                pts = list(entity.points())
+                if pts: return pts[0]
+        elif dxftype == 'LINE':
+            return entity.dxf.start
+        elif dxftype in ('TEXT', 'MTEXT', 'INSERT', 'CIRCLE', 'ARC'):
+             if entity.dxf.hasattr('insert'):
+                 return entity.dxf.insert
+             elif entity.dxf.hasattr('center'):
+                 return entity.dxf.center
+    except:
+        pass
+    return (0, 0) # Fallback
+
+def generate_preview_svg(doc, error_markers):
+    """
+    Generate an SVG string of the DXF with error markers.
+    doc: ezdxf document
+    error_markers: list of (x, y, message) tuples
+    """
+    try:
+        msp = doc.modelspace()
+        
+        # 1. Add Error Markers (Visual Red Circles) to a temp layer
+        marker_layer = "SYS_ERROR_MARKERS"
+        if marker_layer not in doc.layers:
+            doc.layers.add(marker_layer, color=1) # Red
+            
+        for marker in error_markers:
+            x, y = marker['coords']
+            # Add a small circle (donut) or solid hatch
+            # Using simple circle for now. Radius depends on drawing scale...
+            # A fixed radius might be too big/small. 
+            # Better: The SVG backend can render points.
+            # Let's add a circle with a distinct color (Red=1)
+            # We assume units are Meters. A 0.5m circle might be visible.
+            msp.add_circle((x, y), radius=0.5, dxfattribs={'layer': marker_layer, 'color': 1})
+            
+            # Optional: Add text next to it? Might clutter.
+            
+        # 2. Render to SVG
+        # Setup context
+        ctx = RenderContext(doc)
+        
+        # In ezdxf 1.x, SVGBackend is initialized without arguments
+        backend = SVGBackend()
+        
+        # Frontend initialization
+        frontend = Frontend(ctx, backend)
+        
+        # Draw layout
+        frontend.draw_layout(msp, finalize=True)
+        
+        # Generate SVG string
+        # We need a page layout for the backend to produce the final SVG
+        from ezdxf.addons.drawing.layout import Page, Settings
+        
+        # Auto-detect page size from content
+        page = Page(0, 0)
+        settings = Settings()
+        
+        # Use get_string method of backend
+        svg_string = backend.get_string(page, settings=settings)
+        return svg_string
+        
+    except Exception as e:
+        print(f"SVG Generation Error: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
+
 def validate_dxf_content(doc, master_rules):
     """Validate DXF content against master rules, checking units and layer specifications"""
     errors = []
     warnings = []
     fix_actions = [] # List of fixable actions for LISP script
+    error_markers = [] # List of {'coords': (x,y), 'msg': str} for Visual Preview
     
     # Master rules passed as argument
 
@@ -413,7 +497,11 @@ def validate_dxf_content(doc, master_rules):
                         # Type Check
                         if valid_dxf_types and dxftype not in valid_dxf_types:
                              rule_type_valid = False
-                             current_type_errors.append(f"Invalid Entity: Found '{dxftype}' on layer requiring '{required_type}'")
+                             err_msg = f"Invalid Entity: Found '{dxftype}' on layer requiring '{required_type}'"
+                             current_type_errors.append(err_msg)
+                             # Add Marker
+                             pt = get_entity_center(e)
+                             error_markers.append({'coords': (pt[0], pt[1]), 'msg': err_msg})
                         
                         # Geometry Check (Closed Polygon) & Area Calculation
                         if required_type == "Polygon" and dxftype in ('LWPOLYLINE', 'POLYLINE', 'HATCH'):
@@ -435,7 +523,11 @@ def validate_dxf_content(doc, master_rules):
                             
                             if not is_closed:
                                 rule_geometry_valid = False
-                                current_geometry_errors.append("Open Polygon detected. Area cannot be calculated.")
+                                err_msg = "Open Polygon detected. Area cannot be calculated."
+                                current_geometry_errors.append(err_msg)
+                                # Add Marker
+                                pt = get_entity_center(e)
+                                error_markers.append({'coords': (pt[0], pt[1]), 'msg': err_msg})
                             else:
                                 # Valid closed polygon - Calculate Area
                                 current_rule_area += calculate_entity_area(e)
@@ -654,6 +746,11 @@ def validate_dxf_content(doc, master_rules):
 
         validated_layers.append(layer_info)
 
+    # Generate Preview SVG if errors found (or always?)
+    # Generating always is nice for "Preview", but might be slow.
+    # Let's generate it.
+    preview_svg = generate_preview_svg(doc, error_markers)
+
     return {
         'success': True,
         'layers': validated_layers,  # List of validated layer dictionaries
@@ -661,7 +758,8 @@ def validate_dxf_content(doc, master_rules):
         'errors': errors,
         'warnings': warnings,
         'fix_actions': fix_actions,
-        'dxf_version': doc.dxfversion
+        'dxf_version': doc.dxfversion,
+        'preview_svg': preview_svg
     }
 
 @app.route('/', methods=['GET'])
