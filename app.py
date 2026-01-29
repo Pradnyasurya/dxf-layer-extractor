@@ -9,9 +9,10 @@ Supports .dxf and .zip uploads with comprehensive validation.
 import os
 import json
 import zipfile
+import io
 import re
 import shutil
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, send_file
 from werkzeug.utils import secure_filename
 import ezdxf
 from ezdxf import colors
@@ -140,6 +141,7 @@ def validate_dxf_content(doc, master_rules):
     """Validate DXF content against master rules, checking units and layer specifications"""
     errors = []
     warnings = []
+    fix_actions = [] # List of fixable actions for LISP script
     
     # Master rules passed as argument
 
@@ -213,6 +215,34 @@ def validate_dxf_content(doc, master_rules):
         
         if not match_found:
             errors.append(f"Missing Mandatory Layer: {rule['Layer Name']} (Feature: {rule.get('Feature', 'Unknown')})")
+            
+            # Determine correct color for fix
+            fix_color = "7" # Default white
+            required_color = rule.get('Color Code', '7')
+            
+            # Try to resolve color code
+            if required_color in ["Any", "NA", "N/A", "ANY"]:
+                fix_color = "7"
+            elif required_color in ["As per Sub-Occupancy", "As per sub-occupancy type"]:
+                # Can't auto-fix safely
+                fix_color = None
+            elif required_color.startswith("RGB"):
+                fix_color = f"T {required_color.replace('RGB', '').strip()}"
+            else:
+                 # Take first number if multiple
+                 try:
+                     parts = str(required_color).split(',')
+                     match = re.search(r'(\d+)', parts[0])
+                     if match:
+                         fix_color = match.group(1)
+                 except: pass
+
+            if fix_color:
+                fix_actions.append({
+                    'type': 'create_layer',
+                    'layer': rule['Layer Name'],
+                    'color': fix_color
+                })
 
     # Validate each layer in the DXF
     validated_layers = []
@@ -587,6 +617,8 @@ def validate_dxf_content(doc, master_rules):
                 
                 # Expand "As per Sub-Occupancy" for better error message
                 expanded_colors = []
+                fix_color_code = None
+                
                 for c in unique_colors:
                     if c in ["As per Sub-Occupancy", "As per sub-occupancy type"]:
                         if not occupancy_colors:
@@ -596,12 +628,29 @@ def validate_dxf_content(doc, master_rules):
                             expanded_colors.append(f"As per Sub-Occupancy ({', '.join(occ_list)})")
                     else:
                         expanded_colors.append(c)
+                        # Pick first valid color as fix target if not yet set
+                        if not fix_color_code and c not in ["Any", "NA", "N/A", "ANY"]:
+                            if str(c).startswith("RGB"):
+                                fix_color_code = f"T {str(c).replace('RGB', '').strip()}"
+                            else:
+                                try:
+                                     parts = str(c).split(',')
+                                     match = re.search(r'(\d+)', parts[0])
+                                     if match: fix_color_code = match.group(1)
+                                except: pass
                 
                 msg = f"Incorrect color. Expected one of: {', '.join(expanded_colors)}, Found: {layer.dxf.color}"
                 if layer.dxf.hasattr('true_color'):
                     msg += f" (True Color {layer.dxf.true_color})"
                 layer_info['messages'].append(msg)
                 errors.append(f"Layer '{name}': {msg}")
+                
+                if fix_color_code:
+                    fix_actions.append({
+                        'type': 'fix_color',
+                        'layer': name,
+                        'color': fix_color_code
+                    })
 
         validated_layers.append(layer_info)
 
@@ -611,6 +660,7 @@ def validate_dxf_content(doc, master_rules):
         'count': len(dxf_layers),
         'errors': errors,
         'warnings': warnings,
+        'fix_actions': fix_actions,
         'dxf_version': doc.dxfversion
     }
 
@@ -760,6 +810,73 @@ def upload_file():
         
         flash(f'Error processing file: {str(e)}', 'error')
         return redirect(url_for('index'))
+
+@app.route('/generate_fix_script', methods=['POST'])
+def generate_fix_script():
+    """Generate AutoLISP script to fix layer issues"""
+    try:
+        data = request.json
+        if not data or 'actions' not in data:
+            return "No actions provided", 400
+            
+        actions = data['actions']
+        lsp_content = [
+            ";; Auto-Generated Fix Script by DXF Validator",
+            ";; Run this script in AutoCAD (Drag & Drop or APPLOAD)",
+            "",
+            "(defun c:FixLayers ()",
+            "  (setvar \"CMDECHO\" 0)",
+            "  (command \"-LAYER\""
+        ]
+        
+        for action in actions:
+            layer = action.get('layer')
+            color = action.get('color')
+            
+            if not layer or not color:
+                continue
+                
+            # Handle True Color logic for LISP (simplified, mostly supports Index)
+            # AutoCAD LISP for True Color is complex "c" "t" "r,g,b"
+            color_cmd = ""
+            if str(color).startswith("T "):
+                 # True Color format: "T 255,0,0"
+                 rgb = color.replace("T ", "").strip()
+                 color_cmd = f"\"C\" \"T\" \"{rgb}\" \"{layer}\""
+            else:
+                 # Index Color
+                 color_cmd = f"\"C\" \"{color}\" \"{layer}\""
+
+            if action['type'] == 'create_layer':
+                # Make (Create) layer and set color
+                # "M" makes and sets current. "N" New. 
+                # Better: "N" to create, then "C" to set color.
+                lsp_content.append(f"    \"N\" \"{layer}\"")
+                lsp_content.append(f"    {color_cmd}")
+            elif action['type'] == 'fix_color':
+                 lsp_content.append(f"    {color_cmd}")
+
+        lsp_content.append("    \"\")") # End Layer command
+        lsp_content.append("  (setvar \"CMDECHO\" 1)")
+        lsp_content.append("  (princ \"\\nLayers Updated Successfully.\")")
+        lsp_content.append("  (princ)")
+        lsp_content.append(")")
+        lsp_content.append("")
+        lsp_content.append("(princ \"\\nType FixLayers to run the script.\")")
+        
+        # Create memory file
+        proxy = io.BytesIO("\n".join(lsp_content).encode('utf-8'))
+        proxy.seek(0)
+        
+        return send_file(
+            proxy,
+            as_attachment=True,
+            download_name="fix_layers.lsp",
+            mimetype="application/x-lisp"
+        )
+
+    except Exception as e:
+        return str(e), 500
 
 @app.errorhandler(413)
 def request_entity_too_large(error):
