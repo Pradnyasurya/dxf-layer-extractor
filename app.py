@@ -170,48 +170,146 @@ def generate_preview_svg(doc, error_markers):
     error_markers: list of (x, y, message) tuples
     """
     try:
+        from ezdxf import bbox as ezdxf_bbox
+        import re
+        
         msp = doc.modelspace()
         
-        # 1. Add Error Markers (Visual Red Circles) to a temp layer
+        # Try to find bounds of specific layers first (SITE_PLAN or BLT_UP_AREA)
+        target_layers = ['SITE_PLAN', 'BLT_UP_AREA']
+        target_entities = []
+        
+        for entity in msp:
+            try:
+                layer_name = entity.dxf.layer.upper()
+                # Check if layer matches or contains target names
+                for target in target_layers:
+                    if target in layer_name:
+                        target_entities.append(entity)
+                        break
+            except Exception:
+                pass
+        
+        # Calculate bounding box of target layers if found
+        focus_bounds = None
+        if target_entities:
+            cache = ezdxf_bbox.Cache()
+            focus_box = ezdxf_bbox.extents(target_entities, cache=cache)
+            if focus_box.has_data:
+                focus_bounds = {
+                    'min_x': focus_box.extmin.x,
+                    'min_y': focus_box.extmin.y,
+                    'max_x': focus_box.extmax.x,
+                    'max_y': focus_box.extmax.y
+                }
+        
+        # Calculate full drawing bounds for rendering
+        cache = ezdxf_bbox.Cache()
+        bounding_box = ezdxf_bbox.extents(msp, cache=cache)
+        
+        if bounding_box.has_data:
+            min_x, min_y, _ = bounding_box.extmin
+            max_x, max_y, _ = bounding_box.extmax
+        else:
+            try:
+                extmin = doc.header.get('$EXTMIN', Vec3(0, 0, 0))
+                extmax = doc.header.get('$EXTMAX', Vec3(100, 100, 0))
+                min_x, min_y = extmin.x, extmin.y
+                max_x, max_y = extmax.x, extmax.y
+            except Exception:
+                min_x, min_y, max_x, max_y = 0, 0, 100, 100
+        
+        drawing_width = max(max_x - min_x, 1)
+        drawing_height = max(max_y - min_y, 1)
+        
+        # Add error markers
         marker_layer = "SYS_ERROR_MARKERS"
         if marker_layer not in doc.layers:
-            doc.layers.add(marker_layer, color=1) # Red
-            
+            doc.layers.add(marker_layer, color=1)
+        
+        marker_radius = max(drawing_width, drawing_height) * 0.005
+        marker_radius = max(marker_radius, 0.5)
+        
         for marker in error_markers:
             x, y = marker['coords']
-            # Add a small circle (donut) or solid hatch
-            # Using simple circle for now. Radius depends on drawing scale...
-            # A fixed radius might be too big/small. 
-            # Better: The SVG backend can render points.
-            # Let's add a circle with a distinct color (Red=1)
-            # We assume units are Meters. A 0.5m circle might be visible.
-            msp.add_circle((x, y), radius=0.5, dxfattribs={'layer': marker_layer, 'color': 1})
-            
-            # Optional: Add text next to it? Might clutter.
-            
-        # 2. Render to SVG
-        # Setup context
+            msp.add_circle((x, y), radius=marker_radius, dxfattribs={'layer': marker_layer, 'color': 1})
+        
+        # Render to SVG
         ctx = RenderContext(doc)
-        
-        # In ezdxf 1.x, SVGBackend is initialized without arguments
         backend = SVGBackend()
-        
-        # Frontend initialization
         frontend = Frontend(ctx, backend)
-        
-        # Draw layout
         frontend.draw_layout(msp, finalize=True)
         
-        # Generate SVG string
-        # We need a page layout for the backend to produce the final SVG
         from ezdxf.addons.drawing.layout import Page, Settings
         
-        # Auto-detect page size from content
         page = Page(0, 0)
         settings = Settings()
         
-        # Use get_string method of backend
         svg_string = backend.get_string(page, settings=settings)
+        
+        if not svg_string:
+            return None
+        
+        # ezdxf uses scale factor of 10000 for SVG coordinates
+        scale = 10000
+        
+        # Calculate viewBox based on focus area or full drawing
+        if focus_bounds:
+            # Use focused area with 20% padding
+            fb = focus_bounds
+            focus_width = fb['max_x'] - fb['min_x']
+            focus_height = fb['max_y'] - fb['min_y']
+            padding = max(focus_width, focus_height) * 0.2
+            
+            # Convert to SVG coordinates (relative to drawing origin)
+            # SVG x = (dxf_x - min_x) * scale
+            # SVG y = (max_y - dxf_y) * scale (Y is flipped)
+            vb_x = ((fb['min_x'] - min_x) * scale) - (padding * scale)
+            vb_y = ((max_y - fb['max_y']) * scale) - (padding * scale)
+            vb_width = (focus_width + 2 * padding) * scale
+            vb_height = (focus_height + 2 * padding) * scale
+        else:
+            # Use full drawing bounds
+            vb_x = 0
+            vb_y = 0
+            vb_width = drawing_width * scale
+            vb_height = drawing_height * scale
+        
+        # Ensure positive dimensions
+        vb_width = max(vb_width, 1000)
+        vb_height = max(vb_height, 1000)
+        
+        # Calculate display size
+        aspect = vb_width / vb_height if vb_height > 0 else 1
+        if aspect >= 1:
+            disp_width = 800
+            disp_height = 800 / aspect
+        else:
+            disp_height = 600
+            disp_width = 600 * aspect
+        
+        disp_width = max(disp_width, 300)
+        disp_height = max(disp_height, 200)
+        
+        # Remove dark background rect
+        svg_string = re.sub(r'<rect fill="#212830"[^/]*/>', '', svg_string)
+        
+        # Replace svg tag with focused viewBox
+        svg_string = re.sub(
+            r'<svg[^>]*>',
+            f'<svg xmlns="http://www.w3.org/2000/svg" '
+            f'width="{disp_width:.0f}" height="{disp_height:.0f}" '
+            f'viewBox="{vb_x:.0f} {vb_y:.0f} {vb_width:.0f} {vb_height:.0f}" '
+            f'preserveAspectRatio="xMidYMid meet" '
+            f'style="background:#fff;">',
+            svg_string,
+            count=1
+        )
+        
+        # Fix white strokes to dark color
+        svg_string = svg_string.replace('stroke: #ffffff', 'stroke: #2d3748')
+        svg_string = svg_string.replace('stroke:#ffffff', 'stroke:#2d3748')
+        
         return svg_string
         
     except Exception as e:
