@@ -128,12 +128,13 @@
                         <div class="preview-toolbar">
                             <div>
                                 <h2 class="issues-section__title">Visual Error Preview</h2>
-                                <div class="preview-hint">Scroll to pan, use +/- to zoom</div>
+                                <div class="preview-hint">Scroll to pan, use +/- or Fit to zoom</div>
                             </div>
                             <div class="preview-controls">
                                 <button class="btn btn--ghost btn--icon" type="button" data-zoom="out" title="Zoom out" aria-label="Zoom out">-</button>
                                 <div class="preview-zoom" id="previewZoomValue">100%</div>
                                 <button class="btn btn--ghost btn--icon" type="button" data-zoom="in" title="Zoom in" aria-label="Zoom in">+</button>
+                                <button class="btn btn--ghost btn--icon" type="button" data-zoom="fit" title="Fit to view" aria-label="Fit to view">Fit</button>
                                 <button class="btn btn--ghost btn--icon" type="button" data-zoom="reset" title="Reset zoom" aria-label="Reset zoom">100</button>
                             </div>
                         </div>
@@ -329,12 +330,13 @@
         // Visual preview zoom controls
         const previewViewport = document.getElementById('previewViewport');
         const previewZoomValue = document.getElementById('previewZoomValue');
-        const previewControls = document.querySelectorAll('[data-zoom]');
-        if (previewViewport && previewZoomValue && previewControls.length) {
-            let zoom = 1;
-            const minZoom = 0.25;
-            const maxZoom = 6;
-            const step = 0.1;
+            const previewControls = document.querySelectorAll('[data-zoom]');
+            const previewSvg = document.querySelector('#previewContent svg');
+            if (previewViewport && previewZoomValue && previewControls.length) {
+                let zoom = 1;
+                const minZoom = 0.25;
+                const maxZoom = 6;
+                const step = 0.1;
 
             const setZoom = (value) => {
                 zoom = Math.min(maxZoom, Math.max(minZoom, value));
@@ -342,10 +344,48 @@
                 previewZoomValue.textContent = `${Math.round(zoom * 100)}%`;
             };
 
-            const centerPreview = () => {
-                previewViewport.scrollLeft = Math.max(0, (previewViewport.scrollWidth - previewViewport.clientWidth) / 2);
-                previewViewport.scrollTop = Math.max(0, (previewViewport.scrollHeight - previewViewport.clientHeight) / 2);
-            };
+                const centerPreview = () => {
+                    previewViewport.scrollLeft = Math.max(0, (previewViewport.scrollWidth - previewViewport.clientWidth) / 2);
+                    previewViewport.scrollTop = Math.max(0, (previewViewport.scrollHeight - previewViewport.clientHeight) / 2);
+                };
+
+                const fitToView = () => {
+                    if (!previewSvg) {
+                        setZoom(1);
+                        centerPreview();
+                        return;
+                    }
+
+                    let bbox = null;
+                    try {
+                        bbox = previewSvg.getBBox();
+                    } catch (error) {
+                        bbox = null;
+                    }
+
+                    if (!bbox || !bbox.width || !bbox.height) {
+                        setZoom(1);
+                        centerPreview();
+                        return;
+                    }
+
+                    const padding = 48;
+                    const availableWidth = Math.max(0, previewViewport.clientWidth - padding);
+                    const availableHeight = Math.max(0, previewViewport.clientHeight - padding);
+                    if (!availableWidth || !availableHeight) {
+                        setZoom(1);
+                        centerPreview();
+                        return;
+                    }
+
+                    const scale = Math.min(availableWidth / bbox.width, availableHeight / bbox.height);
+                    if (!Number.isFinite(scale) || scale <= 0) {
+                        setZoom(1);
+                    } else {
+                        setZoom(scale);
+                    }
+                    centerPreview();
+                };
 
             previewControls.forEach((control) => {
                 control.addEventListener('click', () => {
@@ -353,6 +393,7 @@
                     if (action === 'in') setZoom(zoom + step);
                     if (action === 'out') setZoom(zoom - step);
                     if (action === 'reset') setZoom(1);
+                    if (action === 'fit') fitToView();
                     centerPreview();
                 });
             });
