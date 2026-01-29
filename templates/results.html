@@ -154,11 +154,20 @@
                                 <div class="layer-item__content">
                                     <div class="layer-item__header">
                                         <span class="layer-item__name">{{ layer.name }}</span>
-                                        <span class="layer-item__badge">
-                                            {% if layer.status == 'valid' %}Valid
-                                            {% elif layer.status == 'error' %}Error
-                                            {% else %}Warning{% endif %}
-                                        </span>
+                                        <div style="display: flex; gap: 8px; align-items: center;">
+                                            {% if layer.data_attributes %}
+                                                {% for data in layer.data_attributes %}
+                                                <span class="layer-item__badge" style="background: var(--primary-50); color: var(--primary-600); border: 1px solid var(--primary-100);">
+                                                    {{ data }}
+                                                </span>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <span class="layer-item__badge">
+                                                {% if layer.status == 'valid' %}Valid
+                                                {% elif layer.status == 'error' %}Error
+                                                {% else %}Warning{% endif %}
+                                            </span>
+                                        </div>
                                     </div>
                                     {% if layer.messages %}
                                     <div class="layer-item__messages">

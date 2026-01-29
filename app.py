@@ -15,6 +15,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 from werkzeug.utils import secure_filename
 import ezdxf
 from ezdxf import colors
+from ezdxf.math import area
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
@@ -82,6 +83,58 @@ def parse_layer_pattern(pattern_name):
         return f"^{re.escape(pattern_name)}$"
     
     return f"^{regex_pattern}$"
+
+def calculate_entity_area(entity):
+    """Calculate area of a closed entity (LWPOLYLINE, POLYLINE, HATCH, MPOLYGON)"""
+    try:
+        dxftype = entity.dxftype()
+        if dxftype == 'LWPOLYLINE':
+            if entity.is_closed:
+                # Use ezdxf's internal area calculation if available (newer versions)
+                # or manually calculate polygon area
+                with entity.points("xy") as points:
+                    if len(points) < 3: return 0.0
+                    # shoelace formula for polygon area
+                    return abs(area(points))
+        elif dxftype == 'POLYLINE':
+             if entity.is_closed:
+                # 2D Polyline only
+                points = [v.dxf.location[:2] for v in entity.vertices]
+                if len(points) < 3: return 0.0
+                return abs(area(points))
+        elif dxftype == 'HATCH':
+            # Hatch area is complex, simplified for single boundary
+            return entity.area if hasattr(entity, 'area') else 0.0
+    except Exception:
+        pass
+    return 0.0
+
+def validate_text_content(text_str, layer_name):
+    """Validate text content based on layer name suffixes"""
+    clean_text = text_str.strip().upper()
+    
+    # Rule 1: Capacity (CAPACITY_L=n) -> Expect Integer
+    if 'CAPACITY_L' in layer_name:
+        # Allow "1000", "1000L", "1000 L"
+        match = re.match(r'^(\d+)\s*L?$', clean_text)
+        if not match:
+            return False, "Expected numeric capacity (e.g. '5000' or '5000L')"
+            
+    # Rule 2: Voltage (VOLTAGE_KV=n) -> Expect Number
+    elif 'VOLTAGE_KV' in layer_name:
+        # Allow "11", "11KV", "11 KV", "11.5"
+        match = re.match(r'^(\d+(\.\d+)?)\s*(KV)?$', clean_text)
+        if not match:
+             return False, "Expected numeric voltage (e.g. '11' or '11KV')"
+             
+    # Rule 3: Height/Width/Slope (General number check)
+    elif any(x in layer_name for x in ['_HEIGHT', '_WIDTH', '_SLOPE']):
+        # Simple number check
+        match = re.match(r'^(\d+(\.\d+)?)\s*[A-Z%]*$', clean_text)
+        if not match:
+            return False, "Expected numeric value"
+            
+    return True, None
 
 def validate_dxf_content(doc, master_rules):
     """Validate DXF content against master rules, checking units and layer specifications"""
@@ -279,6 +332,11 @@ def validate_dxf_content(doc, master_rules):
             msp = doc.modelspace()
             layer_entities = msp.query(f'*[layer=="{name}"]')
             
+            # --- Phase 2: Data Extraction & Validation ---
+            layer_data = [] # To store "Area: 50sqm" or "Text: 5000L"
+            total_layer_area = 0.0
+            text_values = []
+            
             if len(layer_entities) == 0:
                  # Empty layer - usually not an error unless mandatory (handled elsewhere), but good to note
                  pass
@@ -287,6 +345,9 @@ def validate_dxf_content(doc, master_rules):
                 # We need at least ONE rule where (Color matches AND Type matches AND Geometry matches)
                 
                 fully_compliant_rule_found = False
+                
+                # Check for "Single Value" constraint (from user request 2)
+                is_single_value_layer = any('VOLTAGE' in r['Layer Name'] for r in rules_to_check)
                 
                 for rule in rules_to_check:
                     required_type = rule.get('Type')
@@ -306,9 +367,15 @@ def validate_dxf_content(doc, master_rules):
                     
                     rule_type_valid = True
                     rule_geometry_valid = True
+                    rule_text_valid = True
                     
                     current_type_errors = []
                     current_geometry_errors = []
+                    current_text_errors = []
+                    
+                    # Reset calculations for this rule iteration
+                    current_rule_area = 0.0
+                    current_rule_texts = []
                     
                     for e in layer_entities:
                         dxftype = e.dxftype()
@@ -318,60 +385,70 @@ def validate_dxf_content(doc, master_rules):
                              rule_type_valid = False
                              current_type_errors.append(f"Invalid Entity: Found '{dxftype}' on layer requiring '{required_type}'")
                         
-                        # Geometry Check (Closed Polygon)
-                        if required_type == "Polygon" and dxftype in ('LWPOLYLINE', 'POLYLINE'):
+                        # Geometry Check (Closed Polygon) & Area Calculation
+                        if required_type == "Polygon" and dxftype in ('LWPOLYLINE', 'POLYLINE', 'HATCH'):
                             is_closed = False
-                            if e.is_closed:
+                            if hasattr(e, 'is_closed') and e.is_closed:
                                 is_closed = True
+                            elif dxftype == 'HATCH':
+                                is_closed = True # Hatches are generally closed areas
                             else:
-                                # Check start/end points
+                                # Check start/end points manually
                                 try:
-                                    # ezdxf < 1.0 logic might differ, but 1.3.0 supports .is_closed
-                                    # Fallback manual check
                                     if dxftype == 'LWPOLYLINE':
                                         pts = e.get_points()
-                                        if len(pts) > 0 and pts[0] == pts[-1]:
-                                            is_closed = True
+                                        if len(pts) > 2 and pts[0] == pts[-1]: is_closed = True
                                     elif dxftype == 'POLYLINE':
-                                        # 3D/2D Polyline
                                         pts = list(e.points())
-                                        if len(pts) > 0 and pts[0] == pts[-1]:
-                                            is_closed = True
-                                except:
-                                    pass
+                                        if len(pts) > 2 and pts[0] == pts[-1]: is_closed = True
+                                except: pass
                             
                             if not is_closed:
                                 rule_geometry_valid = False
                                 current_geometry_errors.append("Open Polygon detected. Area cannot be calculated.")
+                            else:
+                                # Valid closed polygon - Calculate Area
+                                current_rule_area += calculate_entity_area(e)
 
-                    if rule_type_valid and rule_geometry_valid:
-                        # If we found a rule where color (checked previously implies this rule candidate)
-                        # AND type AND geometry are valid, we are good.
-                        # Wait, we need to ensure this specific rule ALSO matched the color.
-                        
+                        # Text Content Validation
+                        if required_type == "Text" and dxftype in ('TEXT', 'MTEXT'):
+                            text_content = e.dxf.text if hasattr(e.dxf, 'text') else ""
+                            is_valid_text, err_msg = validate_text_content(text_content, name)
+                            if not is_valid_text:
+                                rule_text_valid = False
+                                current_text_errors.append(f"Invalid Text: '{text_content}' ({err_msg})")
+                            current_rule_texts.append(text_content)
+
+                    if rule_type_valid and rule_geometry_valid and rule_text_valid:
                         # Re-verify color for this specific rule
                         this_rule_color_valid = False
-                        # ... (Reuse color check logic short version) ...
                         if required_color in ["Any", "NA", "N/A", "ANY"]:
                              this_rule_color_valid = True
                         elif required_color in ["As per Sub-Occupancy", "As per sub-occupancy type"]:
                             if layer.dxf.color in occupancy_colors: this_rule_color_valid = True
                             if layer.dxf.hasattr('true_color') and layer.dxf.true_color in occupancy_colors: this_rule_color_valid = True
                         else:
-                             # Simplified check: if valid_match_found is True, we assume color valid 
-                             # but strictly we should check if THIS rule matches.
-                             # For now, let's assume if the user followed the naming convention of a rule,
-                             # they intended to follow that rule.
+                             # For simplification, relying on earlier color check for candidate selection
                              pass
                         
-                        # Optimization: Just report errors if NO rule is fully satisfied.
-                        if valid_match_found: # Color was OK for at least one rule
+                        if valid_match_found: 
                              fully_compliant_rule_found = True
-                    
+                             
+                             # Store Data for Display (Area / Text) if this rule matched
+                             if required_type == "Polygon" and current_rule_area > 0:
+                                 total_layer_area = current_rule_area
+                             if required_type == "Text" and current_rule_texts:
+                                 text_values = current_rule_texts
+
                     if not rule_type_valid:
                         type_errors.extend(current_type_errors)
                     if not rule_geometry_valid:
                         geometry_errors.extend(current_geometry_errors)
+                    if not rule_text_valid:
+                        current_text_errors = list(set(current_text_errors)) # Dedup
+                        # Add to messages directly here or later? 
+                        # Let's collect them
+                        type_errors.extend(current_text_errors) # Treat text content errors as type/data errors
 
                 # Summarize findings
                 # If we had a color match, but Type/Geometry failed for ALL matching rules -> Error
@@ -384,8 +461,22 @@ def validate_dxf_content(doc, master_rules):
                         if geometry_errors:
                             final_layer_status = 'error'
                             layer_info['messages'].extend(sorted(list(set(geometry_errors)))[:3])
+                    else:
+                        # Valid Layer - Add Data Info
+                        if total_layer_area > 0:
+                            layer_data.append(f"Area: {total_layer_area:.2f} sq.m")
+                        
+                        if text_values:
+                            # Single Value Constraint Check
+                            unique_texts = sorted(list(set(text_values)))
+                            if is_single_value_layer and len(unique_texts) > 1:
+                                final_layer_status = 'error'
+                                layer_info['messages'].append(f"Multiple values found for Voltage: {', '.join(unique_texts)}. Expected single unique value.")
+                            else:
+                                layer_data.append(f"Text: {', '.join(unique_texts[:3])}" + ("..." if len(unique_texts)>3 else ""))
                 
             layer_info['status'] = final_layer_status
+            layer_info['data_attributes'] = layer_data # New field for UI
 
             # Check if layer color matches any of the rules
             for rule in matched_rules:
