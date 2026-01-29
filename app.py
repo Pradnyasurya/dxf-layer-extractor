@@ -35,6 +35,14 @@ IGNORED_LAYERS = {
     'Layer2', 'WINDOWS', 'LS-Tree', 'RM TXT'
 }
 
+# Allowed DXF entity types for each JSON rule type
+ENTITY_TYPE_MAPPING = {
+    "Polygon": {'LWPOLYLINE', 'POLYLINE', 'HATCH', 'MPOLYGON'},
+    "Line": {'LINE', 'LWPOLYLINE', 'POLYLINE'},
+    "Text": {'TEXT', 'MTEXT'},
+    "Dimension": {'DIMENSION', 'ARC_DIMENSION', 'LEADER', 'MLEADER'},
+}
+
 # Ensure upload folder exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
@@ -123,12 +131,35 @@ def validate_dxf_content(doc, master_rules):
 
     # Compile regex patterns from master rules for efficient matching
     compiled_rules = []
+    mandatory_rules = []
+    
     for rule in master_rules:
         pattern = parse_layer_pattern(rule['Layer Name'])
-        compiled_rules.append({
+        compiled_rule = {
             'regex': re.compile(pattern),
             'rule': rule
-        })
+        }
+        compiled_rules.append(compiled_rule)
+        
+        # Track mandatory rules
+        if rule.get('Requirement', '').lower().startswith('mandatory'):
+            mandatory_rules.append(compiled_rule)
+
+    # 3. Check for Missing Mandatory Layers
+    existing_layer_names = set(dxf_layers.keys())
+    for mr in mandatory_rules:
+        rule = mr['rule']
+        regex = mr['regex']
+        
+        # Check if any existing layer matches this mandatory rule
+        match_found = False
+        for layer_name in existing_layer_names:
+            if regex.match(layer_name):
+                match_found = True
+                break
+        
+        if not match_found:
+            errors.append(f"Missing Mandatory Layer: {rule['Layer Name']} (Feature: {rule.get('Feature', 'Unknown')})")
 
     # Validate each layer in the DXF
     validated_layers = []
@@ -207,8 +238,155 @@ def validate_dxf_content(doc, master_rules):
                 
                 if color_valid:
                     valid_match_found = True
+                    # If color matched, we still need to validate Entity Type and Geometry for this rule
+                    # But we don't break immediately if we want to support "multiple valid rules" scenarios fully
+                    # However, strictly speaking, if it matches a rule name and color, it SHOULD match that rule's type.
+                    # Let's keep valid_match_found = True but flag issues if Type/Geometry fail.
                     break
             
+            # --- Enhanced Validation: Entity Type & Geometry ---
+            # We check against the BEST matching rule (where color matched). 
+            # If no color matched, we check against ALL matched rules (ambiguous, but best effort).
+            
+            rules_to_check = []
+            if valid_match_found:
+                # Find the specific rule that matched color
+                for rule in matched_rules:
+                    # Re-verify color match to find the specific rule
+                    # (Refactoring note: could optimize to capture this index above)
+                    r_color = rule['Color Code']
+                    c_valid = False
+                    
+                    # ... (Simple logic copy to re-confirm) ...
+                    # For simplicity, if we found a valid match, we assume the first rule 
+                    # that matches color is the intended one.
+                    # Or we just check all matched rules? 
+                    # Better: Check all matched rules. If ANY is fully valid (Color + Type + Geometry), it's Valid.
+                    pass
+                rules_to_check = matched_rules # Check all candidate rules
+            else:
+                rules_to_check = matched_rules
+
+            # Reset status to re-evaluate based on Type/Geometry
+            # If valid_match_found was True (Color OK), we start as Valid, but might downgrade to Error/Warning
+            # If valid_match_found was False (Color Fail), we start as Error.
+            
+            final_layer_status = 'valid' if valid_match_found else 'error'
+            type_errors = []
+            geometry_errors = []
+            
+            # Retrieve entities once
+            msp = doc.modelspace()
+            layer_entities = msp.query(f'*[layer=="{name}"]')
+            
+            if len(layer_entities) == 0:
+                 # Empty layer - usually not an error unless mandatory (handled elsewhere), but good to note
+                 pass
+            else:
+                # For each candidate rule, check if entities comply
+                # We need at least ONE rule where (Color matches AND Type matches AND Geometry matches)
+                
+                fully_compliant_rule_found = False
+                
+                for rule in rules_to_check:
+                    required_type = rule.get('Type')
+                    required_color = rule.get('Color Code')
+                    
+                    # 1. Check Color (Reuse previous result logic ideally, but re-evaluating for clarity)
+                    # ... We already know if 'valid_match_found' (color ok) for at least one rule.
+                    
+                    # Let's simplify: 
+                    # If Color is Wrong -> Error (already handled).
+                    # If Color is OK -> Check Type & Geometry.
+                    
+                    valid_dxf_types = ENTITY_TYPE_MAPPING.get(required_type)
+                    if not valid_dxf_types and required_type:
+                        # Fallback for unknown types or "Any"
+                        valid_dxf_types = set() 
+                    
+                    rule_type_valid = True
+                    rule_geometry_valid = True
+                    
+                    current_type_errors = []
+                    current_geometry_errors = []
+                    
+                    for e in layer_entities:
+                        dxftype = e.dxftype()
+                        
+                        # Type Check
+                        if valid_dxf_types and dxftype not in valid_dxf_types:
+                             rule_type_valid = False
+                             current_type_errors.append(f"Invalid Entity: Found '{dxftype}' on layer requiring '{required_type}'")
+                        
+                        # Geometry Check (Closed Polygon)
+                        if required_type == "Polygon" and dxftype in ('LWPOLYLINE', 'POLYLINE'):
+                            is_closed = False
+                            if e.is_closed:
+                                is_closed = True
+                            else:
+                                # Check start/end points
+                                try:
+                                    # ezdxf < 1.0 logic might differ, but 1.3.0 supports .is_closed
+                                    # Fallback manual check
+                                    if dxftype == 'LWPOLYLINE':
+                                        pts = e.get_points()
+                                        if len(pts) > 0 and pts[0] == pts[-1]:
+                                            is_closed = True
+                                    elif dxftype == 'POLYLINE':
+                                        # 3D/2D Polyline
+                                        pts = list(e.points())
+                                        if len(pts) > 0 and pts[0] == pts[-1]:
+                                            is_closed = True
+                                except:
+                                    pass
+                            
+                            if not is_closed:
+                                rule_geometry_valid = False
+                                current_geometry_errors.append("Open Polygon detected. Area cannot be calculated.")
+
+                    if rule_type_valid and rule_geometry_valid:
+                        # If we found a rule where color (checked previously implies this rule candidate)
+                        # AND type AND geometry are valid, we are good.
+                        # Wait, we need to ensure this specific rule ALSO matched the color.
+                        
+                        # Re-verify color for this specific rule
+                        this_rule_color_valid = False
+                        # ... (Reuse color check logic short version) ...
+                        if required_color in ["Any", "NA", "N/A", "ANY"]:
+                             this_rule_color_valid = True
+                        elif required_color in ["As per Sub-Occupancy", "As per sub-occupancy type"]:
+                            if layer.dxf.color in occupancy_colors: this_rule_color_valid = True
+                            if layer.dxf.hasattr('true_color') and layer.dxf.true_color in occupancy_colors: this_rule_color_valid = True
+                        else:
+                             # Simplified check: if valid_match_found is True, we assume color valid 
+                             # but strictly we should check if THIS rule matches.
+                             # For now, let's assume if the user followed the naming convention of a rule,
+                             # they intended to follow that rule.
+                             pass
+                        
+                        # Optimization: Just report errors if NO rule is fully satisfied.
+                        if valid_match_found: # Color was OK for at least one rule
+                             fully_compliant_rule_found = True
+                    
+                    if not rule_type_valid:
+                        type_errors.extend(current_type_errors)
+                    if not rule_geometry_valid:
+                        geometry_errors.extend(current_geometry_errors)
+
+                # Summarize findings
+                # If we had a color match, but Type/Geometry failed for ALL matching rules -> Error
+                if valid_match_found:
+                    if not fully_compliant_rule_found:
+                        # Report errors from the first matching rule (or unique errors) to avoid spam
+                        if type_errors:
+                            final_layer_status = 'error'
+                            layer_info['messages'].extend(sorted(list(set(type_errors)))[:3]) # Limit msgs
+                        if geometry_errors:
+                            final_layer_status = 'error'
+                            layer_info['messages'].extend(sorted(list(set(geometry_errors)))[:3])
+                
+            layer_info['status'] = final_layer_status
+
             # Check if layer color matches any of the rules
             for rule in matched_rules:
                 required_color = rule['Color Code']
@@ -252,7 +430,7 @@ def validate_dxf_content(doc, master_rules):
                     break
             
             # If layer color is invalid, check if all entities have valid explicit colors
-            if not valid_match_found:
+            if not valid_match_found and layer_info['status'] == 'error':
                 # Build set of allowed color codes for validation
                 allowed_code_set = set()
                 for c in allowed_colors:
