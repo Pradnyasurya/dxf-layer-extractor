@@ -101,7 +101,7 @@ body {
 }
 
 .container--lg {
-    max-width: 960px;
+    max-width: 1400px;
 }
 
 .container__header {
@@ -610,29 +610,59 @@ h3 {
 
 .preview-viewport {
     width: 100%;
-    height: 500px;
+    height: 800px;
+    max-height: 85vh;
     overflow: auto;
-    background: #f0f0f0;
+    background-color: #e8e8e8;
+    background-image:
+        linear-gradient(45deg, #ddd 25%, transparent 25%),
+        linear-gradient(-45deg, #ddd 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ddd 75%),
+        linear-gradient(-45deg, transparent 75%, #ddd 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
     border: 1px solid var(--gray-300);
     border-radius: var(--radius-lg);
     position: relative;
+    cursor: grab;
+}
+
+/* Larger preview for PC screens */
+@media (min-width: 1200px) {
+    .preview-viewport {
+        height: 850px;
+        max-height: 90vh;
+    }
+}
+
+@media (min-width: 1600px) {
+    .preview-viewport {
+        height: 900px;
+        max-height: 92vh;
+    }
+}
+
+.preview-viewport:active {
+    cursor: grabbing;
 }
 
 .preview-content {
-    min-width: 100%;
-    min-height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    transform-origin: center center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 40px;
+    min-width: max-content;
+    min-height: max-content;
 }
 
 .preview-content svg {
     display: block;
     background: white;
     border-radius: var(--radius);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+    transform-origin: 0 0;
+    max-width: none;
+    transition: transform 0.1s ease-out;
 }
 
 .preview-legend {
@@ -927,21 +957,30 @@ h3 {
 }
 
 /* Scrollbar styling */
-.layers-list::-webkit-scrollbar {
-    width: 8px;
+.layers-list::-webkit-scrollbar,
+.preview-viewport::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
 }
 
-.layers-list::-webkit-scrollbar-track {
+.layers-list::-webkit-scrollbar-track,
+.preview-viewport::-webkit-scrollbar-track {
     background: var(--gray-100);
 }
 
-.layers-list::-webkit-scrollbar-thumb {
+.layers-list::-webkit-scrollbar-thumb,
+.preview-viewport::-webkit-scrollbar-thumb {
     background: var(--gray-300);
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
-.layers-list::-webkit-scrollbar-thumb:hover {
+.layers-list::-webkit-scrollbar-thumb:hover,
+.preview-viewport::-webkit-scrollbar-thumb:hover {
     background: var(--gray-400);
+}
+
+.preview-viewport::-webkit-scrollbar-corner {
+    background: var(--gray-100);
 }
 
 /* Responsive */
