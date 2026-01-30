@@ -128,7 +128,7 @@
                         <div class="preview-toolbar">
                             <div>
                                 <h2 class="issues-section__title">Visual Error Preview</h2>
-                                <div class="preview-hint">Use mouse wheel to zoom, +/- buttons or Fit</div>
+                                <div class="preview-hint">Wheel to zoom, drag to pan, click buttons for fit/reset</div>
                             </div>
                             <div class="preview-controls">
                                 <button class="btn btn--ghost btn--icon" type="button" data-zoom="out" title="Zoom out" aria-label="Zoom out">-</button>
@@ -327,7 +327,7 @@
         });
         {% endif %}
 
-        // Visual preview zoom controls
+        // Visual preview zoom and pan controls
         const previewViewport = document.getElementById('previewViewport');
         const previewZoomValue = document.getElementById('previewZoomValue');
         const previewControls = document.querySelectorAll('[data-zoom]');
@@ -338,17 +338,42 @@
             let zoom = 1;
             let lastMode = 'fit';
             const minZoom = 0.1;
-            const maxZoom = 20;
+            const maxZoom = 10;
             const step = 0.25;
+            
+            // Pan state
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0;
+            let scrollLeft = 0;
+            let scrollTop = 0;
 
             const applyZoom = () => {
                 previewSvg.style.transform = `scale(${zoom})`;
-                previewSvg.style.transformOrigin = 'center center';
                 previewZoomValue.textContent = `${Math.round(zoom * 100)}%`;
+                
+                // Update content size to allow scrolling
+                const svgWidth = parseFloat(previewSvg.getAttribute('width')) || 800;
+                const svgHeight = parseFloat(previewSvg.getAttribute('height')) || 600;
+                previewContent.style.width = `${svgWidth * zoom + 80}px`;
+                previewContent.style.height = `${svgHeight * zoom + 80}px`;
             };
 
-            const setZoom = (value) => {
+            const setZoom = (value, centerOnMouse = false) => {
+                const oldZoom = zoom;
                 zoom = Math.min(maxZoom, Math.max(minZoom, value));
+                
+                // If zooming with mouse wheel, center on mouse position
+                if (centerOnMouse && lastMouseX !== null && lastMouseY !== null) {
+                    const rect = previewViewport.getBoundingClientRect();
+                    const mouseX = lastMouseX - rect.left + previewViewport.scrollLeft;
+                    const mouseY = lastMouseY - rect.top + previewViewport.scrollTop;
+                    
+                    const zoomRatio = zoom / oldZoom;
+                    previewViewport.scrollLeft = mouseX * zoomRatio - (lastMouseX - rect.left);
+                    previewViewport.scrollTop = mouseY * zoomRatio - (lastMouseY - rect.top);
+                }
+                
                 applyZoom();
             };
 
@@ -358,22 +383,43 @@
                 const svgHeight = parseFloat(previewSvg.getAttribute('height')) || 600;
                 
                 // Calculate scale to fit in viewport with padding
-                const padding = 40;
+                const padding = 60;
                 const availableWidth = previewViewport.clientWidth - padding;
                 const availableHeight = previewViewport.clientHeight - padding;
                 
                 const scale = Math.min(availableWidth / svgWidth, availableHeight / svgHeight);
 
                 if (Number.isFinite(scale) && scale > 0) {
-                    setZoom(Math.max(minZoom, scale));
+                    zoom = Math.max(minZoom, Math.min(scale, 1)); // Cap at 1x for fit
                 } else {
-                    setZoom(1);
+                    zoom = 1;
                 }
+                applyZoom();
+                
+                // Center the content
+                const contentWidth = svgWidth * zoom;
+                const contentHeight = svgHeight * zoom;
+                previewViewport.scrollLeft = (contentWidth + 80 - previewViewport.clientWidth) / 2;
+                previewViewport.scrollTop = (contentHeight + 80 - previewViewport.clientHeight) / 2;
             };
 
             const resetZoom = () => {
-                setZoom(1);
+                zoom = 1;
+                applyZoom();
+                // Center the content
+                const svgWidth = parseFloat(previewSvg.getAttribute('width')) || 800;
+                const svgHeight = parseFloat(previewSvg.getAttribute('height')) || 600;
+                previewViewport.scrollLeft = (svgWidth + 80 - previewViewport.clientWidth) / 2;
+                previewViewport.scrollTop = (svgHeight + 80 - previewViewport.clientHeight) / 2;
             };
+
+            // Mouse tracking for wheel zoom centering
+            let lastMouseX = null;
+            let lastMouseY = null;
+            previewViewport.addEventListener('mousemove', (e) => {
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+            });
 
             previewControls.forEach((control) => {
                 control.addEventListener('click', () => {
@@ -397,13 +443,46 @@
                 });
             });
 
-            // Zoom with mouse wheel (no modifier needed)
+            // Zoom with mouse wheel - zoom toward mouse position
             previewViewport.addEventListener('wheel', (event) => {
                 event.preventDefault();
                 lastMode = 'manual';
                 const factor = event.deltaY > 0 ? 1 / (1 + step * 0.5) : (1 + step * 0.5);
-                setZoom(zoom * factor);
+                setZoom(zoom * factor, true);
             }, { passive: false });
+
+            // Pan with mouse drag
+            previewViewport.addEventListener('mousedown', (e) => {
+                if (e.button === 0) { // Left mouse button only
+                    isDragging = true;
+                    startX = e.pageX - previewViewport.offsetLeft;
+                    startY = e.pageY - previewViewport.offsetTop;
+                    scrollLeft = previewViewport.scrollLeft;
+                    scrollTop = previewViewport.scrollTop;
+                    previewViewport.style.cursor = 'grabbing';
+                }
+            });
+
+            previewViewport.addEventListener('mouseleave', () => {
+                isDragging = false;
+                previewViewport.style.cursor = 'grab';
+            });
+
+            previewViewport.addEventListener('mouseup', () => {
+                isDragging = false;
+                previewViewport.style.cursor = 'grab';
+            });
+
+            previewViewport.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.pageX - previewViewport.offsetLeft;
+                const y = e.pageY - previewViewport.offsetTop;
+                const walkX = (x - startX) * 1;
+                const walkY = (y - startY) * 1;
+                previewViewport.scrollLeft = scrollLeft - walkX;
+                previewViewport.scrollTop = scrollTop - walkY;
+            });
 
             window.addEventListener('resize', () => {
                 if (lastMode === 'fit') {
@@ -411,8 +490,12 @@
                 }
             });
 
-            // Initial fit
-            setTimeout(fitToView, 100);
+            // Initial fit - wait for SVG to be fully loaded
+            if (document.readyState === 'complete') {
+                setTimeout(fitToView, 100);
+            } else {
+                window.addEventListener('load', () => setTimeout(fitToView, 100));
+            }
         }
     </script>
 </body>
