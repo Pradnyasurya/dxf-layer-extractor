@@ -1,4 +1,21 @@
 [
+
+    {
+        "Feature": "Site Plan",
+        "Layer Name": "SITE_PLAN",
+        "Color Code": "Any",
+        "Requirement": "Optional",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon."
+    },
+    {
+        "Feature": "Plan Info",
+        "Layer Name": "PLAN_INFO",
+        "Color Code": "Any",
+        "Requirement": "Mandatory",
+        "Type": "Polygon",
+        "Drawing Guidelines": "Draw a closed polygon."
+    },
     {
         "Feature": "Plot Area",
         "Layer Name": "PLOT_BOUNDARY",
@@ -68,7 +85,7 @@
         "Layer Name": "BLK_n_PARAPET_HT",
         "Color Code": "3, 2, 1",
         "Requirement": "Mandatory as per rule",
-        "Type": "Polygon",
+        "Type": "Dimension",
         "Drawing Guidelines": "Draw dimensions for Parapet (3), staircase railing (2), service zone railing (1)"
     },
     {
