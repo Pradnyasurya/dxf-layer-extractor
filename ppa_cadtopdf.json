@@ -1,0 +1,849 @@
+{
+   "tenantId": "od",
+   "moduleName": "EDCR",
+   "DxfToPdfLayerConfigCat_CD_ALL": [
+      {
+         "sheetName": "SITE_PLAN",
+         "sheetSize": "A0",
+         "sheetSizeEnlargeFactor": 2,
+         "orientation": "LANDSCAPE",
+         "removeHatch": false,
+         "planPdfLayerConfigs": [
+            {
+               "layerName": "SITE_PLAN",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "PLOT_BOUNDARY",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_1_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_2_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_3_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_4_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            { 
+               "layerName": "BLK_5_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_6_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_7_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_8_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_9_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_10_COVERED_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_1_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_2_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_3_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_4_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_5_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_6_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_7_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_8_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_9_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_10_COVERED_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_1_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_2_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_3_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_4_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_5_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_6_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_7_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_8_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_9_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_10_LVL_0_BLDG_FOOT_PRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "RWH",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_1_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_2_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_3_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_4_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_5_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_6_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_7_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_8_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_9_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_10_LVL_0_FRONT_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_1_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_2_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_3_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_4_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_5_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_6_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_7_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_8_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_9_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_10_LVL_0_REAR_SETBACK",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_1_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_2_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_3_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_4_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_5_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_6_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_7_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_8_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_9_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_10_LVL_0_SIDE_SETBACK1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_1_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_2_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_3_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_4_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_5_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_6_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_7_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_8_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_9_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_10_LVL_0_SIDE_SETBACK2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "SITE_COMPONENTS",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "WATER_TREATMENT_PLANT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            }
+         ]
+      },
+      {
+         "sheetName": "BLK_*_FLR_*_FLOOR_PLAN",
+         "sheetSize": "A0",
+         "sheetSizeEnlargeFactor": 2,
+         "orientation": "LANDSCAPE",
+         "removeHatch": false,
+         "planPdfLayerConfigs": [
+            {
+               "layerName": "BLK_*_FLR_*_FLOOR_PLAN",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STILT_FLOOR",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STILT_FLOOR_EXISTING",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_1_FLIGHT_1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_1_FLIGHT_2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_1_FLIGHT_3",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_2_FLIGHT_1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_2_FLIGHT_2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_2_FLIGHT_3",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_1_LANDING_1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_1_LANDING_2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_1_LANDING_3",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_2_LANDING_1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_2_LANDING_2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_STAIR_2_LANDING_3",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_BLT_UP_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_BLT_UP_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_FAR_AREA_ADD",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_FAR_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_BLT_UP_AREA_EXISTING",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_BLT_UP_AREA_DEDUCT_EXISTING",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_FAR_AREA_ADD_EXISTING",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_FAR_AREA_DEDUCT_EXISTING",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_LIFT_1",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_LIFT_2",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_LIFT_3",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_LIFT_4",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_LIFT_5",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_LIFT_6",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_CARPET_AREA",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_CRPT_AREA_DEDUCT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_CARPET_AREA_EXISTING",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_CRPT_AREA_DEDUCT_EXISTING",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            },
+            {
+               "layerName": "BLK_*_FLR_*_BLDG_FOOTPRINT",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            }
+         ]
+      },
+      {
+         "sheetName": "ELEVATION_PLAN_*",
+         "sheetSize": "A0",
+         "sheetSizeEnlargeFactor": 2,
+         "orientation": "LANDSCAPE",
+         "removeHatch": false,
+         "planPdfLayerConfigs": [
+            {
+               "layerName": "ELEVATION_PLAN_*",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            }
+         ]
+      },
+      {
+         "sheetName": "SECTION_PLAN_*",
+         "sheetSize": "A0",
+         "sheetSizeEnlargeFactor": 2,
+         "orientation": "LANDSCAPE",
+         "removeHatch": false,
+         "planPdfLayerConfigs": [
+            {
+               "layerName": "SECTION_PLAN_*",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            }
+         ]
+      },
+      {
+         "sheetName": "SERVICE_PLAN",
+         "sheetSize": "A0",
+         "sheetSizeEnlargeFactor": 2,
+         "orientation": "LANDSCAPE",
+         "removeHatch": false,
+         "planPdfLayerConfigs": [
+            {
+               "layerName": "SERVICE_PLAN",
+               "layerType": null,
+               "overrideColor": null,
+               "overrideThickness": null,
+               "printLayerName": false
+            }
+         ]
+      }
+   ]
+}
