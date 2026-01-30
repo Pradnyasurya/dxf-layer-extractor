@@ -12,9 +12,11 @@ Repository layout (key files)
 - app.py: Flask routes + DXF validation logic (core behavior).
 - odisha_layers.json: master validation rules (single source of truth).
 - ppa_layers.json: alternative ruleset.
-- templates/: index/results/admin views.
+- templates/: index.html, results.html, admin.html (Jinja2).
 - static/css/style.css: UI styling.
-- uploads/: temp storage (auto-cleaned).
+- static/js/: client-side scripts (if any).
+- uploads/: temp storage (auto-cleaned after processing).
+- tests/: empty directory; no formal test suite yet.
 
 Build, run, lint, test
 
@@ -69,15 +71,24 @@ Python version
 Imports
 - Order: standard library, third-party, local.
 - Use absolute imports; avoid circular imports in app.py.
+- Example:
+  ```python
+  import os
+  import json
+  from flask import Flask
+  import ezdxf
+  ```
 
 Formatting
 - PEP 8, 4 spaces, line length 100-120.
 - Keep large functions coherent; if app.py grows too large, extract helpers.
+- Use blank lines to separate logical sections within functions.
 
 Naming
 - Functions/variables: snake_case.
 - Constants: UPPER_SNAKE_CASE.
 - Routes: short, noun-based, e.g., /upload, /admin.
+- Classes: PascalCase (if any).
 
 Types and data shapes
 - Validation rules are dictionaries loaded from JSON.
@@ -88,6 +99,7 @@ Error handling
 - Prefer explicit exceptions with a clear message for user-facing errors.
 - Cleanup temp files on both success and failure (see upload_file flow).
 - Use flash() with categories: error, warning, success.
+- Always use try/except around file operations and DXF parsing.
 
 DXF validation behavior (core logic)
 - Unit validation: $INSUNITS=6, $LUNITS=2, $AUNITS=0; warn if $LUPREC!=2.
@@ -108,17 +120,20 @@ Security and configuration
 - SECRET_KEY is pulled from env; default is dev-only.
 - Upload limit is 100 MB.
 - Always use secure_filename and restrict to .dxf/.zip.
+- Never log or expose file paths from user uploads.
 
 UI behavior
 - Results page expects layer data with status/messages and data_attributes.
 - Admin page updates odisha_layers.json; validate JSON before saving.
 - Avoid breaking server-rendered flow or template variable names.
+- Flash messages use Bootstrap alert classes (error=danger, warning=warning, success=success).
 
 Data files
 - Do not hardcode new validation rules in Python unless rule is generic (units,
   geometry, or formatting rules). JSON remains source of truth.
 - If you add new rulesets, keep them alongside odisha_layers.json and update
   rules_source handling.
+- Always validate JSON syntax before writing to disk.
 
 Manual validation checklist (quick)
 - Valid DXF: all green.
@@ -127,6 +142,7 @@ Manual validation checklist (quick)
 - Entity override: invalid layer color but all entities explicit valid -> valid.
 - Sub-occupancy: BLT_UP_AREA colors feed occupancy validation.
 - ZIP upload: first .dxf found is processed.
+- Admin save: JSON syntax errors show clear message.
 
 Cursor / Copilot rules
 - No .cursor/rules, .cursorrules, or .github/copilot-instructions.md found in
@@ -136,5 +152,7 @@ Notes for agentic changes
 - Avoid large refactors; focus on correctness and clarity.
 - If modifying validation logic, update error messages for user clarity.
 - Keep uploads cleaned even on exceptions; users upload large files.
+- Test manually with sample DXF files after any validation logic changes.
+- When adding features, check both / (upload) and /admin (rules) pages.
 
 Last updated: Jan 2026
