@@ -8,6 +8,10 @@ A Flask web app that uploads DXF or ZIP files, extracts layers, and validates th
 - Extract all layer names and summary statistics
 - Validate layers against the master JSON rules
 - **DXF Layer Analysis Result Table** - View all layers with color codes, swatches, line types, and visibility
+- **User Authentication** - Secure user accounts for managing file versions
+  - User registration and login
+  - User-specific version history and data isolation
+  - Secure password hashing
 - **Version Comparison Tool** - Compare two DXF versions to detect changes
   - Detects added, removed, and modified layers
   - Calculates area differences and position shifts
@@ -82,14 +86,17 @@ Rules are defined in [odisha_layers.json](odisha_layers.json) and are the single
 
 | Route | Method | Description |
 |-------|--------|-------------|
-| `/` | GET | Upload form for DXF/ZIP validation |
-| `/upload` | POST | Process uploaded file |
-| `/admin` | GET, POST | Manage validation rules JSON |
-| `/versions` | GET | View all stored DXF versions |
-| `/compare` | GET, POST | Select two versions to compare |
-| `/compare_result/<base>/<new>` | GET | View comparison results |
-| `/delete_version/<id>` | POST | Remove a stored version |
-| `/generate_fix_script` | POST | Download AutoLISP fix script |
+| `/register` | GET, POST | User registration |
+| `/login` | GET, POST | User login |
+| `/logout` | GET | User logout |
+| `/` | GET | Upload form for DXF/ZIP validation (Protected) |
+| `/upload` | POST | Process uploaded file (Protected) |
+| `/admin` | GET, POST | Manage validation rules JSON (Protected) |
+| `/versions` | GET | View all stored DXF versions (Protected) |
+| `/compare` | GET, POST | Select two versions to compare (Protected) |
+| `/compare_result/<base>/<new>` | GET | View comparison results (Protected) |
+| `/delete_version/<id>` | POST | Remove a stored version (Protected) |
+| `/generate_fix_script` | POST | Download AutoLISP fix script (Protected) |
 
 ## Deployment
 
