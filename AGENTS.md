@@ -10,13 +10,25 @@ Project summary
 
 Repository layout (key files)
 - app.py: Flask routes + DXF validation logic (core behavior).
+- comparison_engine.py: DXF version comparison engine (change detection, metrics).
 - odisha_layers.json: master validation rules (single source of truth).
 - ppa_layers.json: alternative ruleset.
-- templates/: index.html, results.html, admin.html (Jinja2).
+- templates/: index.html, results.html, admin.html, versions.html, compare_select.html, comparison_result.html (Jinja2).
 - static/css/style.css: UI styling.
 - static/js/: client-side scripts (if any).
 - uploads/: temp storage (auto-cleaned after processing).
+- dxf_versions.db: SQLite database (auto-created on startup).
 - tests/: empty directory; no formal test suite yet.
+
+Database models
+
+Version comparison uses SQLAlchemy with SQLite (dxf_versions.db, auto-created).
+Key tables:
+- `versions`: Stores file metadata (hash, upload_date, project_name, total_layers)
+- `layer_snapshots`: Stores per-layer metrics per version (area, entity_count, bounds, color)
+- `comparison_results`: Caches comparison results between version pairs
+
+Auto-creates tables on app startup. No manual migrations needed for MVP.
 
 Build, run, lint, test
 
@@ -30,8 +42,10 @@ pip install -r requirements.txt
 Run locally
 ```bash
 python app.py
-# http://localhost:8080
-# http://localhost:8080/admin
+# http://localhost:8080         - Upload form
+# http://localhost:8080/admin   - Rules management
+# http://localhost:8080/versions - Version history
+# http://localhost:8080/compare - Version comparison
 ```
 
 Docker
@@ -111,6 +125,16 @@ DXF validation behavior (core logic)
 - Entity fallback: if layer color is invalid, accept the layer only if all
   entities have explicit valid colors (not ByLayer/ByBlock).
 
+Version comparison behavior (comparison_engine.py)
+- DXFComparator class: detects added, removed, modified layers between versions.
+- Metrics compared: entity count, area (sq.m), perimeter, centroid position.
+- Change significance: critical/high/medium/low based on layer type.
+- Critical layers: BLT_UP_AREA, COVERED_AREA, SETBACK, PLOT_BOUNDARY.
+- High priority: STAIR, LIFT, HT_OF_BLDG, PLINTH_HEIGHT, BLDG_FOOT_PRINT.
+- Tolerance: ignore changes < 0.01 sq.m or < 0.01m shift.
+- Insights: auto-generated warnings about coverage, setbacks, new structures.
+- Visual diff: generate_diff_svg() creates overlay with color-coded changes.
+
 Entity type + geometry checks
 - Type mapping is in ENTITY_TYPE_MAPPING; keep it authoritative.
 - Polygon layers must be closed; area calculated via ezdxf helpers.
@@ -124,7 +148,11 @@ Security and configuration
 
 UI behavior
 - Results page expects layer data with status/messages and data_attributes.
+- Results page also includes layer_analysis table (color, line type, visibility).
 - Admin page updates odisha_layers.json; validate JSON before saving.
+- Versions page lists all stored versions with project filtering.
+- Compare page shows card-based selection for base and new versions.
+- Comparison result shows changes list with filtering by type/significance.
 - Avoid breaking server-rendered flow or template variable names.
 - Flash messages use Bootstrap alert classes (error=danger, warning=warning, success=success).
 
@@ -143,6 +171,11 @@ Manual validation checklist (quick)
 - Sub-occupancy: BLT_UP_AREA colors feed occupancy validation.
 - ZIP upload: first .dxf found is processed.
 - Admin save: JSON syntax errors show clear message.
+- Layer analysis: table shows color codes, swatches, line types, visibility.
+- Version storage: DXF files stored in database after upload.
+- Version comparison: detects added/removed/modified layers.
+- Comparison metrics: area diffs, position shifts shown correctly.
+- Comparison significance: critical/high/medium/low badges displayed.
 
 Cursor / Copilot rules
 - No .cursor/rules, .cursorrules, or .github/copilot-instructions.md found in
@@ -155,4 +188,4 @@ Notes for agentic changes
 - Test manually with sample DXF files after any validation logic changes.
 - When adding features, check both / (upload) and /admin (rules) pages.
 
-Last updated: Jan 2026
+Last updated: Feb 2026
