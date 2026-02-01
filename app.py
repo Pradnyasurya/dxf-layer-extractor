@@ -23,6 +23,8 @@ from ezdxf.addons.drawing.svg import SVGBackend
 from ezdxf.addons.drawing.properties import Properties, LayoutProperties
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
+from comparison_engine import DXFComparator, ChangeType
+import json
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-in-production")
@@ -1445,6 +1447,248 @@ def validate_dxf_content(doc, master_rules, config_path=None):
     }
 
 
+def store_version_metadata(
+    doc, filename, original_filename, filepath, project_name=None
+):
+    """
+    Store version metadata and layer snapshots in database.
+    Called after successful DXF validation.
+    """
+    try:
+        # Calculate file hash
+        import hashlib
+
+        with open(filepath, "rb") as f:
+            file_hash = hashlib.sha256(f.read()).hexdigest()
+
+        # Check if version already exists
+        existing = Version.query.filter_by(file_hash=file_hash).first()
+        if existing:
+            return existing.id
+
+        # Get file size
+        file_size = os.path.getsize(filepath)
+
+        # Create version record
+        version = Version(
+            filename=filename,
+            original_filename=original_filename,
+            file_hash=file_hash,
+            file_size=file_size,
+            dxf_version=doc.dxfversion,
+            total_layers=len(list(doc.layers)),
+            project_name=project_name or os.path.splitext(original_filename)[0],
+            notes="",
+        )
+        db.session.add(version)
+        db.session.flush()  # Get version.id
+
+        # Create layer snapshots
+        for layer in doc.layers:
+            layer_name = layer.dxf.name
+
+            # Extract metrics
+            msp = doc.modelspace()
+            entities = msp.query(f'*[layer=="{layer_name}"]')
+
+            # Calculate area for closed polygons
+            total_area = 0.0
+            for entity in entities:
+                dxftype = entity.dxftype()
+                if (
+                    dxftype == "LWPOLYLINE"
+                    and hasattr(entity, "is_closed")
+                    and entity.is_closed
+                ):
+                    try:
+                        points = list(entity.points())
+                        if len(points) >= 3:
+                            area = abs(calculate_entity_area(entity))
+                            total_area += area
+                    except:
+                        pass
+                elif dxftype == "HATCH" and hasattr(entity, "area"):
+                    total_area += entity.area
+
+            # Get bounding box
+            min_x, min_y, max_x, max_y = None, None, None, None
+            if len(entities) > 0:
+                all_x, all_y = [], []
+                for entity in entities:
+                    try:
+                        center = get_entity_center(entity)
+                        all_x.append(center[0])
+                        all_y.append(center[1])
+                    except:
+                        pass
+                if all_x and all_y:
+                    min_x, max_x = min(all_x), max(all_x)
+                    min_y, max_y = min(all_y), max(all_y)
+
+            snapshot = LayerSnapshot(
+                version_id=version.id,
+                layer_name=layer_name,
+                entity_count=len(entities),
+                total_area=total_area,
+                min_x=min_x,
+                min_y=min_y,
+                max_x=max_x,
+                max_y=max_y,
+                color=layer.dxf.color if hasattr(layer.dxf, "color") else None,
+                linetype=layer.dxf.linetype
+                if hasattr(layer.dxf, "linetype")
+                else "Continuous",
+                is_visible=not layer.is_off(),
+            )
+            db.session.add(snapshot)
+
+        db.session.commit()
+        return version.id
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error storing version metadata: {e}")
+        return None
+
+
+# ============================================================================
+# VERSION COMPARISON ROUTES
+# ============================================================================
+
+
+@app.route("/versions", methods=["GET"])
+def list_versions():
+    """List all stored versions with filtering by project"""
+    project = request.args.get("project", None)
+
+    query = Version.query
+    if project:
+        query = query.filter_by(project_name=project)
+
+    versions = query.order_by(Version.upload_date.desc()).all()
+
+    # Get unique project names for filter dropdown
+    projects = db.session.query(Version.project_name).distinct().all()
+    projects = [p[0] for p in projects if p[0]]
+
+    return render_template(
+        "versions.html", versions=versions, projects=projects, selected_project=project
+    )
+
+
+@app.route("/compare", methods=["GET", "POST"])
+def compare_versions():
+    """Interface to select and compare two versions"""
+    if request.method == "POST":
+        base_version_id = request.form.get("base_version_id")
+        new_version_id = request.form.get("new_version_id")
+
+        if not base_version_id or not new_version_id:
+            flash("Please select both base and new versions", "error")
+            return redirect(url_for("compare_versions"))
+
+        if base_version_id == new_version_id:
+            flash("Cannot compare a version with itself", "error")
+            return redirect(url_for("compare_versions"))
+
+        return redirect(
+            url_for("comparison_result", base_id=base_version_id, new_id=new_version_id)
+        )
+
+    # GET request - show version selection form
+    project = request.args.get("project", None)
+    query = Version.query
+    if project:
+        query = query.filter_by(project_name=project)
+
+    versions = query.order_by(Version.upload_date.desc()).all()
+    projects = db.session.query(Version.project_name).distinct().all()
+    projects = [p[0] for p in projects if p[0]]
+
+    return render_template(
+        "compare_select.html",
+        versions=versions,
+        projects=projects,
+        selected_project=project,
+    )
+
+
+@app.route("/compare_result/<int:base_id>/<int:new_id>")
+def comparison_result(base_id, new_id):
+    """Display comparison results between two versions"""
+    base_version = Version.query.get_or_404(base_id)
+    new_version = Version.query.get_or_404(new_id)
+
+    # Check if comparison already exists
+    existing = ComparisonResult.query.filter_by(
+        base_version_id=base_id, new_version_id=new_id
+    ).first()
+
+    if existing:
+        # Use cached results
+        changes = json.loads(existing.changes_json)
+        summary = {
+            "total_layers_base": base_version.total_layers,
+            "total_layers_new": new_version.total_layers,
+            "added_count": existing.added_layers_count,
+            "removed_count": existing.removed_layers_count,
+            "modified_count": existing.modified_layers_count,
+            "unchanged_count": existing.unchanged_layers_count,
+        }
+    else:
+        # Perform comparison
+        try:
+            # Re-read DXF files (they may have been deleted, need to handle this)
+            # For now, show error if files not available
+            flash(
+                "Comparison requires both DXF files to be available. Feature coming soon: persistent storage of DXF files.",
+                "warning",
+            )
+            changes = []
+            summary = {
+                "total_layers_base": base_version.total_layers,
+                "total_layers_new": new_version.total_layers,
+                "added_count": 0,
+                "removed_count": 0,
+                "modified_count": 0,
+                "unchanged_count": min(
+                    base_version.total_layers, new_version.total_layers
+                ),
+            }
+        except Exception as e:
+            flash(f"Error comparing versions: {str(e)}", "error")
+            return redirect(url_for("compare_versions"))
+
+    return render_template(
+        "comparison_result.html",
+        base_version=base_version,
+        new_version=new_version,
+        changes=changes,
+        summary=summary,
+    )
+
+
+@app.route("/delete_version/<int:version_id>", methods=["POST"])
+def delete_version(version_id):
+    """Delete a version and its snapshots"""
+    version = Version.query.get_or_404(version_id)
+
+    try:
+        db.session.delete(version)
+        db.session.commit()
+        flash(f"Version '{version.original_filename}' deleted successfully", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error deleting version: {str(e)}", "error")
+
+    return redirect(url_for("list_versions"))
+
+
+# ============================================================================
+# EXISTING ROUTES
+# ============================================================================
+
+
 @app.route("/", methods=["GET"])
 def index():
     """Display the upload form"""
@@ -1586,6 +1830,24 @@ def upload_file():
             result = validate_dxf_content(doc, master_rules, config_path)
             result["filename"] = filename
             result["rules_source_name"] = rules_source_name
+
+            # Store version metadata for comparison (only for DXF files, not ZIP)
+            if filename.lower().endswith(".dxf"):
+                try:
+                    version_id = store_version_metadata(
+                        doc=doc,
+                        filename=filename,
+                        original_filename=file.filename,
+                        filepath=filepath,
+                        project_name=request.form.get("project_name", None),
+                    )
+                    if version_id:
+                        result["version_id"] = version_id
+                        result["version_stored"] = True
+                except Exception as e:
+                    # Don't fail if version storage fails
+                    print(f"Warning: Could not store version metadata: {e}")
+                    result["version_stored"] = False
         except Exception as e:
             raise Exception(f"Error parsing DXF: {str(e)}")
 
