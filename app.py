@@ -1520,8 +1520,9 @@ def store_version_metadata(
         # Get file size
         file_size = os.path.getsize(filepath)
 
-        # Create version record
+        # Create version record with user association
         version = Version(
+            user_id=current_user.id,
             filename=filename,
             original_filename=original_filename,
             file_hash=file_hash,
@@ -1608,18 +1609,25 @@ def store_version_metadata(
 
 
 @app.route("/versions", methods=["GET"])
+@login_required
 def list_versions():
-    """List all stored versions with filtering by project"""
+    """List user's stored versions with filtering by project"""
     project = request.args.get("project", None)
 
-    query = Version.query
+    # Filter versions by current user
+    query = Version.query.filter_by(user_id=current_user.id)
     if project:
         query = query.filter_by(project_name=project)
 
     versions = query.order_by(Version.upload_date.desc()).all()
 
-    # Get unique project names for filter dropdown
-    projects = db.session.query(Version.project_name).distinct().all()
+    # Get unique project names for filter dropdown (user's projects only)
+    projects = (
+        db.session.query(Version.project_name)
+        .filter_by(user_id=current_user.id)
+        .distinct()
+        .all()
+    )
     projects = [p[0] for p in projects if p[0]]
 
     return render_template(
@@ -1628,6 +1636,7 @@ def list_versions():
 
 
 @app.route("/compare", methods=["GET", "POST"])
+@login_required
 def compare_versions():
     """Interface to select and compare two versions"""
     if request.method == "POST":
@@ -1646,14 +1655,19 @@ def compare_versions():
             url_for("comparison_result", base_id=base_version_id, new_id=new_version_id)
         )
 
-    # GET request - show version selection form
+    # GET request - show version selection form (user's versions only)
     project = request.args.get("project", None)
-    query = Version.query
+    query = Version.query.filter_by(user_id=current_user.id)
     if project:
         query = query.filter_by(project_name=project)
 
     versions = query.order_by(Version.upload_date.desc()).all()
-    projects = db.session.query(Version.project_name).distinct().all()
+    projects = (
+        db.session.query(Version.project_name)
+        .filter_by(user_id=current_user.id)
+        .distinct()
+        .all()
+    )
     projects = [p[0] for p in projects if p[0]]
 
     return render_template(
@@ -1665,10 +1679,19 @@ def compare_versions():
 
 
 @app.route("/compare_result/<int:base_id>/<int:new_id>")
+@login_required
 def comparison_result(base_id, new_id):
     """Display comparison results between two versions"""
     base_version = Version.query.get_or_404(base_id)
     new_version = Version.query.get_or_404(new_id)
+
+    # Verify user owns both versions
+    if (
+        base_version.user_id != current_user.id
+        or new_version.user_id != current_user.id
+    ):
+        flash("You don't have permission to compare these versions", "error")
+        return redirect(url_for("compare_versions"))
 
     # Check if comparison already exists
     existing = ComparisonResult.query.filter_by(
@@ -1717,9 +1740,15 @@ def comparison_result(base_id, new_id):
 
 
 @app.route("/delete_version/<int:version_id>", methods=["POST"])
+@login_required
 def delete_version(version_id):
     """Delete a version and its snapshots"""
     version = Version.query.get_or_404(version_id)
+
+    # Verify user owns this version
+    if version.user_id != current_user.id:
+        flash("You don't have permission to delete this version", "error")
+        return redirect(url_for("list_versions"))
 
     try:
         db.session.delete(version)
@@ -1833,6 +1862,7 @@ def index():
 
 
 @app.route("/admin", methods=["GET", "POST"])
+@login_required
 def admin():
     """Admin panel for updating master validation rules JSON file"""
     if request.method == "POST":
@@ -1862,6 +1892,7 @@ def admin():
 
 
 @app.route("/upload", methods=["POST"])
+@login_required
 def upload_file():
     """Process uploaded DXF/ZIP file and return validation results"""
     if "file" not in request.files:
@@ -2008,6 +2039,7 @@ def upload_file():
 
 
 @app.route("/generate_fix_script", methods=["POST"])
+@login_required
 def generate_fix_script():
     """Generate AutoLISP script to fix layer issues"""
     try:
