@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Version History - DXF Layer Validator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="page-wrapper page-wrapper--top">
+        <div class="container container--lg">
+            <!-- Header -->
+            <div class="page-header" style="padding: 24px 32px;">
+                <div class="page-header__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1>Version History</h1>
+                    <p class="page-description">View and manage uploaded DXF file versions for comparison</p>
+                </div>
+            </div>
+            
+            <div class="container__body">
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                    <form method="GET" action="{{ url_for('list_versions') }}" class="filter-form">
+                        <div class="filter-group">
+                            <label for="project-filter">Filter by Project:</label>
+                            <select name="project" id="project-filter" onchange="this.form.submit()">
+                                <option value="">All Projects</option>
+                                {% for project in projects %}
+                                <option value="{{ project }}" {% if selected_project == project %}selected{% endif %}>{{ project }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <a href="{{ url_for('compare_versions') }}" class="btn btn--primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 18px; height: 18px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                            </svg>
+                            Compare Versions
+                        </a>
+                    </form>
+                </div>
+                
+                <!-- Versions List -->
+                <div class="versions-section">
+                    {% if versions %}
+                    <div class="versions-table-wrapper">
+                        <table class="versions-table">
+                            <thead>
+                                <tr>
+                                    <th>Upload Date</th>
+                                    <th>Filename</th>
+                                    <th>Project</th>
+                                    <th>DXF Version</th>
+                                    <th>Layers</th>
+                                    <th>File Size</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for version in versions %}
+                                <tr>
+                                    <td class="upload-date">
+                                        {{ version.upload_date.strftime('%Y-%m-%d %H:%M') }}
+                                    </td>
+                                    <td class="filename">
+                                        <span class="filename-text" title="{{ version.original_filename }}">
+                                            {{ version.original_filename }}
+                                        </span>
+                                    </td>
+                                    <td class="project">{{ version.project_name or '-' }}</td>
+                                    <td class="dxf-version">{{ version.dxf_version or 'Unknown' }}</td>
+                                    <td class="layer-count">{{ version.total_layers }}</td>
+                                    <td class="file-size">
+                                        {% if version.file_size %}
+                                            {{ "%.1f"|format(version.file_size / 1024) }} KB
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td class="actions">
+                                        <form method="POST" action="{{ url_for('delete_version', version_id=version.id) }}" 
+                                              onsubmit="return confirm('Are you sure you want to delete this version?');"
+                                              style="display: inline;">
+                                            <button type="submit" class="btn btn--danger btn--sm">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px;">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="empty-state">
+                        <svg class="empty-state__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p>No versions stored yet.</p>
+                        <p class="text-sm text-muted">Upload a DXF file to start tracking versions.</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Back Button -->
+                <div class="actions" style="margin-top: 24px;">
+                    <a href="/" class="btn btn--secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 18px; height: 18px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                        </svg>
+                        Back to Upload
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

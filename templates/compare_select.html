@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Versions - DXF Layer Validator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="page-wrapper page-wrapper--top">
+        <div class="container container--lg">
+            <!-- Header -->
+            <div class="page-header" style="padding: 24px 32px;">
+                <div class="page-header__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                    </svg>
+                </div>
+                <div>
+                    <h1>Compare Versions</h1>
+                    <p class="page-description">Select two versions to compare and detect changes</p>
+                </div>
+            </div>
+            
+            <div class="container__body">
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                    <form method="GET" action="{{ url_for('compare_versions') }}" class="filter-form">
+                        <div class="filter-group">
+                            <label for="project-filter">Filter by Project:</label>
+                            <select name="project" id="project-filter" onchange="this.form.submit()">
+                                <option value="">All Projects</option>
+                                {% for project in projects %}
+                                <option value="{{ project }}" {% if selected_project == project %}selected{% endif %}>{{ project }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Comparison Form -->
+                <form method="POST" action="{{ url_for('compare_versions') }}" class="compare-form">
+                    {% if versions|length >= 2 %}
+                    <div class="compare-selection">
+                        <div class="version-selection">
+                            <h3>Base Version (Older)</h3>
+                            <div class="version-list">
+                                {% for version in versions %}
+                                <label class="version-card">
+                                    <input type="radio" name="base_version_id" value="{{ version.id }}" required>
+                                    <div class="version-card__content">
+                                        <div class="version-card__date">
+                                            {{ version.upload_date.strftime('%Y-%m-%d %H:%M') }}
+                                        </div>
+                                        <div class="version-card__filename" title="{{ version.original_filename }}">
+                                            {{ version.original_filename }}
+                                        </div>
+                                        <div class="version-card__meta">
+                                            {{ version.total_layers }} layers • {{ version.dxf_version or 'Unknown' }}
+                                        </div>
+                                    </div>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="compare-arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                        </div>
+                        
+                        <div class="version-selection">
+                            <h3>New Version (Revised)</h3>
+                            <div class="version-list">
+                                {% for version in versions %}
+                                <label class="version-card">
+                                    <input type="radio" name="new_version_id" value="{{ version.id }}" required>
+                                    <div class="version-card__content">
+                                        <div class="version-card__date">
+                                            {{ version.upload_date.strftime('%Y-%m-%d %H:%M') }}
+                                        </div>
+                                        <div class="version-card__filename" title="{{ version.original_filename }}">
+                                            {{ version.original_filename }}
+                                        </div>
+                                        <div class="version-card__meta">
+                                            {{ version.total_layers }} layers • {{ version.dxf_version or 'Unknown' }}
+                                        </div>
+                                    </div>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="compare-actions">
+                        <button type="submit" class="btn btn--primary btn--lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                            </svg>
+                            Compare Selected Versions
+                        </button>
+                    </div>
+                    {% else %}
+                    <div class="empty-state">
+                        <svg class="empty-state__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                        </svg>
+                        <p>Need at least 2 versions to compare</p>
+                        <p class="text-sm text-muted">Upload more DXF files to enable comparison.</p>
+                    </div>
+                    {% endif %}
+                </form>
+                
+                <!-- Navigation -->
+                <div class="actions" style="margin-top: 32px; justify-content: space-between;">
+                    <a href="{{ url_for('list_versions') }}" class="btn btn--secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 18px; height: 18px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        View Version History
+                    </a>
+                    <a href="/" class="btn btn--secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 18px; height: 18px;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                        </svg>
+                        Back to Upload
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Visual feedback for selected versions
+        document.querySelectorAll('input[name="base_version_id"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('.version-card').forEach(card => {
+                    card.classList.remove('selected-base');
+                });
+                this.closest('.version-card').classList.add('selected-base');
+            });
+        });
+        
+        document.querySelectorAll('input[name="new_version_id"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('.version-card').forEach(card => {
+                    card.classList.remove('selected-new');
+                });
+                this.closest('.version-card').classList.add('selected-new');
+            });
+        });
+    </script>
+</body>
+</html>
