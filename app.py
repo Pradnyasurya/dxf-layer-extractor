@@ -1711,23 +1711,73 @@ def comparison_result(base_id, new_id):
         }
         diff_svg = None  # Diff SVG not stored, would need to regenerate
     else:
-        # Perform comparison - for now show placeholder since files aren't stored persistently
-        # TODO: Implement persistent DXF file storage to enable real-time comparison
-        flash(
-            "ℹ️ Visual diff map will be available when persistent DXF storage is enabled. "
-            "Currently showing layer-level changes only.",
-            "info",
-        )
-        changes = []
-        summary = {
-            "total_layers_base": base_version.total_layers,
-            "total_layers_new": new_version.total_layers,
-            "added_count": 0,
-            "removed_count": 0,
-            "modified_count": 0,
-            "unchanged_count": min(base_version.total_layers, new_version.total_layers),
-        }
-        diff_svg = None
+        # Perform comparison using stored LayerSnapshots
+
+        # Helper to convert snapshots to metrics dict format expected by comparator
+        def snapshots_to_dict(version_id):
+            snapshots = LayerSnapshot.query.filter_by(version_id=version_id).all()
+            data = {}
+            for s in snapshots:
+                data[s.layer_name] = {
+                    "entity_count": s.entity_count,
+                    "total_area": s.total_area,
+                    "perimeter": s.perimeter,
+                    "min_x": s.min_x,
+                    "min_y": s.min_y,
+                    "max_x": s.max_x,
+                    "max_y": s.max_y,
+                    "color": s.color,
+                    "linetype": s.linetype,
+                    "is_visible": s.is_visible,
+                }
+            return data
+
+        try:
+            base_data = snapshots_to_dict(base_id)
+            new_data = snapshots_to_dict(new_id)
+
+            comparator = DXFComparator()
+            changes_objects, summary_obj = comparator.compare_snapshot_data(
+                base_data, new_data
+            )
+
+            # Serialize changes for display and storage
+            changes = [c.to_dict() for c in changes_objects]
+            summary = summary_obj.to_dict()
+
+            # Store result in database for caching
+            result = ComparisonResult(
+                base_version_id=base_id,
+                new_version_id=new_id,
+                added_layers_count=summary["added_count"],
+                removed_layers_count=summary["removed_count"],
+                modified_layers_count=summary["modified_count"],
+                unchanged_layers_count=summary["unchanged_count"],
+                changes_json=json.dumps(changes),
+            )
+            db.session.add(result)
+            db.session.commit()
+
+            diff_svg = (
+                None  # SVG generation requires original DXF files which are not stored
+            )
+
+        except Exception as e:
+            db.session.rollback()
+            import traceback
+
+            traceback.print_exc()
+            flash(f"Error performing comparison: {str(e)}", "error")
+            changes = []
+            summary = {
+                "total_layers_base": base_version.total_layers,
+                "total_layers_new": new_version.total_layers,
+                "added_count": 0,
+                "removed_count": 0,
+                "modified_count": 0,
+                "unchanged_count": 0,
+            }
+            diff_svg = None
 
     return render_template(
         "comparison_result.html",
@@ -2112,6 +2162,18 @@ def request_entity_too_large(error):
     """Handle file too large error"""
     flash("File is too large. Maximum size is 100 MB", "error")
     return redirect(url_for("index"))
+
+
+@app.template_filter("format_change")
+def format_change_filter(value):
+    """Format a number with explicit sign for positive values"""
+    try:
+        val = float(value)
+        if val > 0:
+            return f"+{val:g}"
+        return f"{val:g}"
+    except (ValueError, TypeError):
+        return str(value)
 
 
 # Database table creation

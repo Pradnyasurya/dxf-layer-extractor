@@ -175,6 +175,197 @@ class DXFComparator:
 
         return changes, summary
 
+    def compare_snapshot_data(
+        self, base_data: Dict[str, dict], new_data: Dict[str, dict]
+    ) -> Tuple[List[LayerChange], ComparisonSummary]:
+        """
+        Compare two versions using pre-extracted metrics data (from snapshots).
+
+        Args:
+            base_data: Dictionary of {layer_name: metrics_dict} for base version
+            new_data: Dictionary of {layer_name: metrics_dict} for new version
+
+        Returns:
+            Tuple of (list of LayerChange objects, ComparisonSummary)
+        """
+        changes = []
+        base_layer_names = set(base_data.keys())
+        new_layer_names = set(new_data.keys())
+
+        # Find added layers
+        added_names = new_layer_names - base_layer_names
+        for name in added_names:
+            metrics = new_data[name]
+            significance = self._classify_significance(name, "added")
+
+            change = LayerChange(
+                layer_name=name,
+                change_type=ChangeType.ADDED,
+                significance=significance,
+                new_entity_count=metrics.get("entity_count", 0),
+                new_area=metrics.get("total_area", 0.0),
+                new_perimeter=metrics.get("perimeter", 0.0),
+                new_color=metrics.get("color"),
+                new_linetype=metrics.get("linetype", "Continuous"),
+                new_visible=metrics.get("is_visible", True),
+                description=f"New layer added with {metrics.get('entity_count', 0)} entities",
+            )
+
+            if change.new_area > 0:
+                change.description += f", area {change.new_area:.2f} sq.m"
+
+            changes.append(change)
+
+        # Find removed layers
+        removed_names = base_layer_names - new_layer_names
+        for name in removed_names:
+            metrics = base_data[name]
+            significance = self._classify_significance(name, "removed")
+
+            change = LayerChange(
+                layer_name=name,
+                change_type=ChangeType.REMOVED,
+                significance=significance,
+                base_entity_count=metrics.get("entity_count", 0),
+                base_area=metrics.get("total_area", 0.0),
+                base_perimeter=metrics.get("perimeter", 0.0),
+                base_color=metrics.get("color"),
+                base_linetype=metrics.get("linetype", "Continuous"),
+                base_visible=metrics.get("is_visible", True),
+                description=f"Layer removed (had {metrics.get('entity_count', 0)} entities",
+            )
+
+            if change.base_area > 0:
+                change.description += f", {change.base_area:.2f} sq.m"
+            change.description += ")"
+
+            changes.append(change)
+
+        # Find common layers and check for modifications
+        common_names = base_layer_names & new_layer_names
+        for name in common_names:
+            base_metrics = base_data[name]
+            new_metrics = new_data[name]
+
+            # Check for changes
+            has_changes = False
+            change = LayerChange(
+                layer_name=name,
+                change_type=ChangeType.MODIFIED,
+                significance="low",
+                base_entity_count=base_metrics.get("entity_count", 0),
+                new_entity_count=new_metrics.get("entity_count", 0),
+                entity_count_diff=new_metrics.get("entity_count", 0)
+                - base_metrics.get("entity_count", 0),
+                base_area=base_metrics.get("total_area", 0.0),
+                new_area=new_metrics.get("total_area", 0.0),
+                base_perimeter=base_metrics.get("perimeter", 0.0),
+                new_perimeter=new_metrics.get("perimeter", 0.0),
+                base_color=base_metrics.get("color"),
+                new_color=new_metrics.get("color"),
+                base_linetype=base_metrics.get("linetype", "Continuous"),
+                new_linetype=new_metrics.get("linetype", "Continuous"),
+                base_visible=base_metrics.get("is_visible", True),
+                new_visible=new_metrics.get("is_visible", True),
+            )
+
+            # Check entity count change
+            if abs(change.entity_count_diff) > 0:
+                has_changes = True
+                if change.entity_count_diff > 0:
+                    change.description += (
+                        f"+{change.entity_count_diff} entities added. "
+                    )
+                else:
+                    change.description += (
+                        f"{change.entity_count_diff} entities removed. "
+                    )
+
+            # Check area change
+            if change.base_area > 0 or change.new_area > 0:
+                change.area_diff = change.new_area - change.base_area
+                if change.base_area > 0:
+                    change.area_diff_percent = (
+                        change.area_diff / change.base_area
+                    ) * 100
+
+                if abs(change.area_diff) > self.tolerance:
+                    has_changes = True
+                    change.description += (
+                        f"Area changed by {change.area_diff:+.2f} sq.m. "
+                    )
+
+            # Check perimeter change
+            change.perimeter_diff = change.new_perimeter - change.base_perimeter
+            if abs(change.perimeter_diff) > self.tolerance:
+                has_changes = True
+                change.description += (
+                    f"Perimeter changed by {change.perimeter_diff:+.2f}m. "
+                )
+
+            # Check property changes
+            if change.base_color != change.new_color:
+                change.color_changed = True
+                has_changes = True
+                change.description += (
+                    f"Color changed from {change.base_color} to {change.new_color}. "
+                )
+
+            if change.base_linetype != change.new_linetype:
+                change.linetype_changed = True
+                has_changes = True
+                change.description += f"Line type changed. "
+
+            if change.base_visible != change.new_visible:
+                change.visibility_changed = True
+                has_changes = True
+                change.description += f"Visibility changed to {'visible' if change.new_visible else 'hidden'}. "
+
+            # Calculate centroid shift if bounds available (approximate)
+            # Snapshot data uses bounds (min_x, min_y, max_x, max_y)
+            base_bounds = (
+                base_metrics.get("min_x"),
+                base_metrics.get("min_y"),
+                base_metrics.get("max_x"),
+                base_metrics.get("max_y"),
+            )
+            new_bounds = (
+                new_metrics.get("min_x"),
+                new_metrics.get("min_y"),
+                new_metrics.get("max_x"),
+                new_metrics.get("max_y"),
+            )
+
+            if all(v is not None for v in base_bounds) and all(
+                v is not None for v in new_bounds
+            ):
+                base_center_x = (base_bounds[0] + base_bounds[2]) / 2
+                base_center_y = (base_bounds[1] + base_bounds[3]) / 2
+                new_center_x = (new_bounds[0] + new_bounds[2]) / 2
+                new_center_y = (new_bounds[1] + new_bounds[3]) / 2
+
+                dx = new_center_x - base_center_x
+                dy = new_center_y - base_center_y
+                distance = (dx**2 + dy**2) ** 0.5
+
+                change.centroid_shift_x = dx
+                change.centroid_shift_y = dy
+                change.centroid_shift_distance = distance
+
+                if distance > self.tolerance:
+                    has_changes = True
+                    change.description += (
+                        f"Position shifted by approx {distance:.2f}m. "
+                    )
+
+            if has_changes:
+                change.significance = self._classify_modification_significance(change)
+                changes.append(change)
+
+        # Generate summary
+        summary = self._generate_summary(changes, base_layer_names, new_layer_names)
+        return changes, summary
+
     def _analyze_added_layer(self, name: str, layer, doc) -> LayerChange:
         """Analyze a newly added layer"""
         metrics = self._extract_layer_metrics(name, doc)
