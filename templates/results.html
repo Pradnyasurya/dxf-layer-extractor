@@ -53,6 +53,47 @@
                     </div>
                 </div>
                 
+                <!-- DXF Layer Analysis Result Table -->
+                {% if layer_analysis %}
+                <div class="analysis-section">
+                    <div class="analysis-section__header">
+                        <h2 class="analysis-section__title">DXF Layer Analysis Result</h2>
+                    </div>
+                    <div class="analysis-table-wrapper">
+                        <table class="analysis-table">
+                            <thead>
+                                <tr>
+                                    <th>Layer Name</th>
+                                    <th>Color Code (Integer)</th>
+                                    <th>Color Swatch</th>
+                                    <th>Line Type</th>
+                                    <th>Visibility</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for layer in layer_analysis %}
+                                <tr>
+                                    <td class="layer-name">{{ layer.layer_name }}</td>
+                                    <td class="color-integer">{{ layer.color_integer }}</td>
+                                    <td class="color-swatch">
+                                        <div class="color-swatch__box" style="background-color: {{ layer.color_swatch }};"></div>
+                                    </td>
+                                    <td class="line-type">{{ layer.line_type }}</td>
+                                    <td class="visibility">
+                                        {% if layer.visibility == 'Visible' %}
+                                        <span class="visibility-badge visibility-badge--visible">{{ layer.visibility }}</span>
+                                        {% else %}
+                                        <span class="visibility-badge visibility-badge--hidden">{{ layer.visibility }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                
                 <!-- Summary Banner -->
                 {% if not errors and error_count == 0 %}
                 <div class="summary-banner summary-banner--success">

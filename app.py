@@ -611,6 +611,106 @@ def generate_preview_svg(doc, error_markers, config_path=None):
         return None
 
 
+def get_layer_analysis_data(doc):
+    """
+    Extract layer analysis data for display in the results table.
+    Returns list of dicts with: layer_name, color_hex, color_swatch, line_type, visibility
+    """
+    layer_analysis = []
+
+    # DXF color to RGB mapping for standard AutoCAD colors
+    # Standard AutoCAD colors 1-255 mapped to RGB values
+    aci_colors = {
+        0: (0, 0, 0),  # ByBlock (special)
+        1: (255, 0, 0),  # Red
+        2: (255, 255, 0),  # Yellow
+        3: (0, 255, 0),  # Green
+        4: (0, 255, 255),  # Cyan
+        5: (0, 0, 255),  # Blue
+        6: (255, 0, 255),  # Magenta
+        7: (255, 255, 255),  # White/Black
+        8: (128, 128, 128),  # Dark Gray
+        9: (192, 192, 192),  # Light Gray
+        # Common colors
+        10: (255, 0, 0),  # Red
+        30: (0, 127, 0),  # Dark Green
+        40: (127, 0, 0),  # Dark Red
+        50: (127, 63, 0),  # Brown
+        80: (127, 127, 0),  # Olive
+        100: (255, 127, 0),  # Orange
+        120: (127, 0, 127),  # Dark Magenta
+        140: (0, 127, 127),  # Dark Cyan
+        160: (192, 192, 192),  # Light Gray
+        180: (128, 128, 128),  # Dark Gray
+    }
+
+    # Default for colors not in mapping
+    def get_color_rgb(color_code, true_color=None):
+        if true_color is not None and true_color > 0:
+            # True color is stored as 24-bit RGB
+            r = (true_color >> 16) & 0xFF
+            g = (true_color >> 8) & 0xFF
+            b = true_color & 0xFF
+            return (r, g, b)
+        elif color_code in aci_colors:
+            return aci_colors[color_code]
+        elif color_code == 256:
+            # ByLayer - use layer color
+            return (128, 128, 128)
+        elif color_code == 0:
+            # ByBlock
+            return (0, 0, 0)
+        else:
+            # Generate a color based on the index
+            # Simple algorithm for colors not in our mapping
+            return (
+                (color_code * 47) % 256,
+                (color_code * 113) % 256,
+                (color_code * 179) % 256,
+            )
+
+    for layer in doc.layers:
+        layer_name = layer.dxf.name
+
+        # Get color
+        color_code = layer.dxf.color
+        true_color = None
+        if layer.dxf.hasattr("true_color"):
+            true_color = layer.dxf.true_color
+
+        rgb = get_color_rgb(color_code, true_color)
+        color_integer = str(color_code)
+        if true_color is not None and true_color > 0:
+            color_integer = str(true_color)
+        color_swatch = f"rgb({rgb[0]}, {rgb[1]}, {rgb[2]})"
+
+        # Get line type
+        line_type = "Continuous"
+        if layer.dxf.hasattr("linetype"):
+            line_type = layer.dxf.linetype
+
+        # Get visibility
+        visibility = "Visible"
+        if layer.is_off():
+            visibility = "Hidden"
+        elif layer.dxf.hasattr("frozen") and layer.dxf.frozen:
+            visibility = "Frozen"
+
+        layer_analysis.append(
+            {
+                "layer_name": layer_name,
+                "color_integer": color_integer,
+                "color_swatch": color_swatch,
+                "line_type": line_type,
+                "visibility": visibility,
+            }
+        )
+
+    # Sort by layer name
+    layer_analysis.sort(key=lambda x: x["layer_name"])
+    return layer_analysis
+
+
 def validate_dxf_content(doc, master_rules, config_path=None):
     """Validate DXF content against master rules, checking units and layer specifications"""
     errors = []
@@ -1250,6 +1350,9 @@ def validate_dxf_content(doc, master_rules, config_path=None):
     # Note: config_path is passed from the caller (upload_file route)
     preview_svg = generate_preview_svg(doc, error_markers, config_path)
 
+    # Generate layer analysis data for the table
+    layer_analysis = get_layer_analysis_data(doc)
+
     return {
         "success": True,
         "layers": validated_layers,  # List of validated layer dictionaries
@@ -1259,6 +1362,7 @@ def validate_dxf_content(doc, master_rules, config_path=None):
         "fix_actions": fix_actions,
         "dxf_version": doc.dxfversion,
         "preview_svg": preview_svg,
+        "layer_analysis": layer_analysis,  # Layer analysis data for results table
     }
 
 
