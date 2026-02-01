@@ -21,6 +21,8 @@ from ezdxf.addons.drawing.frontend import Frontend
 from ezdxf.addons.drawing.properties import RenderContext
 from ezdxf.addons.drawing.svg import SVGBackend
 from ezdxf.addons.drawing.properties import Properties, LayoutProperties
+from flask_sqlalchemy import SQLAlchemy
+import hashlib
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-in-production")
@@ -31,6 +33,83 @@ app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(__file__), "uploads")
 app.config["MASTER_JSON"] = os.path.join(
     os.path.dirname(__file__), "odisha_layers.json"
 )
+
+# Database configuration
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+    "DATABASE_URL", "sqlite:///dxf_versions.db"
+)
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+# Initialize database
+db = SQLAlchemy(app)
+
+
+# Database Models for Version Comparison
+class Version(db.Model):
+    """Stores metadata about uploaded DXF versions"""
+
+    __tablename__ = "versions"
+
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(255), nullable=False)
+    original_filename = db.Column(db.String(255), nullable=False)
+    upload_date = db.Column(db.DateTime, default=db.func.current_timestamp())
+    file_hash = db.Column(db.String(64), unique=True, nullable=False)
+    file_size = db.Column(db.Integer)
+    dxf_version = db.Column(db.String(10))
+    total_layers = db.Column(db.Integer)
+    project_name = db.Column(db.String(255))
+    notes = db.Column(db.Text)
+
+    def __repr__(self):
+        return f"<Version {self.id}: {self.original_filename}>"
+
+
+class LayerSnapshot(db.Model):
+    """Stores extracted metrics for each layer at a point in time"""
+
+    __tablename__ = "layer_snapshots"
+
+    id = db.Column(db.Integer, primary_key=True)
+    version_id = db.Column(db.Integer, db.ForeignKey("versions.id"), nullable=False)
+    layer_name = db.Column(db.String(255), nullable=False)
+    entity_count = db.Column(db.Integer, default=0)
+    total_area = db.Column(db.Float, default=0.0)
+    perimeter = db.Column(db.Float, default=0.0)
+    min_x = db.Column(db.Float)
+    min_y = db.Column(db.Float)
+    max_x = db.Column(db.Float)
+    max_y = db.Column(db.Float)
+    color = db.Column(db.Integer)
+    linetype = db.Column(db.String(50))
+    is_visible = db.Column(db.Boolean, default=True)
+    geometry_hash = db.Column(db.String(64))
+
+    def __repr__(self):
+        return f"<LayerSnapshot {self.layer_name} in Version {self.version_id}>"
+
+
+class ComparisonResult(db.Model):
+    """Stores results of version comparisons"""
+
+    __tablename__ = "comparison_results"
+
+    id = db.Column(db.Integer, primary_key=True)
+    base_version_id = db.Column(
+        db.Integer, db.ForeignKey("versions.id"), nullable=False
+    )
+    new_version_id = db.Column(db.Integer, db.ForeignKey("versions.id"), nullable=False)
+    comparison_date = db.Column(db.DateTime, default=db.func.current_timestamp())
+    added_layers_count = db.Column(db.Integer, default=0)
+    removed_layers_count = db.Column(db.Integer, default=0)
+    modified_layers_count = db.Column(db.Integer, default=0)
+    unchanged_layers_count = db.Column(db.Integer, default=0)
+    changes_json = db.Column(db.Text)
+
+    def __repr__(self):
+        return f"<ComparisonResult {self.base_version_id} -> {self.new_version_id}>"
+
+
 ALLOWED_EXTENSIONS = {"dxf", "zip"}
 
 # Layers to ignore during validation (AutoCAD standard + user defined)
@@ -1602,6 +1681,11 @@ def request_entity_too_large(error):
     """Handle file too large error"""
     flash("File is too large. Maximum size is 100 MB", "error")
     return redirect(url_for("index"))
+
+
+# Database table creation
+with app.app_context():
+    db.create_all()
 
 
 if __name__ == "__main__":
