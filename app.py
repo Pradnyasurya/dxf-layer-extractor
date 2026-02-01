@@ -22,6 +22,15 @@ from ezdxf.addons.drawing.properties import RenderContext
 from ezdxf.addons.drawing.svg import SVGBackend
 from ezdxf.addons.drawing.properties import Properties, LayoutProperties
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_user,
+    logout_user,
+    login_required,
+    current_user,
+)
+from werkzeug.security import generate_password_hash, check_password_hash
 import hashlib
 from comparison_engine import DXFComparator, ChangeType, generate_diff_svg, LayerChange
 import json
@@ -45,6 +54,47 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # Initialize database
 db = SQLAlchemy(app)
 
+# Initialize Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+login_manager.login_message = "Please log in to access this page."
+login_manager.login_message_category = "warning"
+
+
+# User Model for Authentication
+class User(UserMixin, db.Model):
+    """User model for authentication"""
+
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    is_active = db.Column(db.Boolean, default=True)
+
+    # Relationship with versions
+    versions = db.relationship("Version", backref="user", lazy=True)
+
+    def set_password(self, password):
+        """Hash and set user password"""
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        """Verify user password"""
+        return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return f"<User {self.username}>"
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    """Load user by ID for Flask-Login"""
+    return User.query.get(int(user_id))
+
 
 # Database Models for Version Comparison
 class Version(db.Model):
@@ -53,6 +103,7 @@ class Version(db.Model):
     __tablename__ = "versions"
 
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     filename = db.Column(db.String(255), nullable=False)
     original_filename = db.Column(db.String(255), nullable=False)
     upload_date = db.Column(db.DateTime, default=db.func.current_timestamp())
@@ -1682,11 +1733,100 @@ def delete_version(version_id):
 
 
 # ============================================================================
+# AUTHENTICATION ROUTES
+# ============================================================================
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """User registration"""
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+
+    if request.method == "POST":
+        username = request.form.get("username", "").strip()
+        email = request.form.get("email", "").strip()
+        password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password", "")
+
+        # Validation
+        if not username or not email or not password:
+            flash("All fields are required", "error")
+            return render_template("register.html")
+
+        if password != confirm_password:
+            flash("Passwords do not match", "error")
+            return render_template("register.html")
+
+        if len(password) < 8:
+            flash("Password must be at least 8 characters long", "error")
+            return render_template("register.html")
+
+        # Check if user exists
+        if User.query.filter_by(username=username).first():
+            flash("Username already exists", "error")
+            return render_template("register.html")
+
+        if User.query.filter_by(email=email).first():
+            flash("Email already registered", "error")
+            return render_template("register.html")
+
+        # Create user
+        user = User(username=username, email=email)
+        user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+
+        flash("Registration successful! Please log in.", "success")
+        return redirect(url_for("login"))
+
+    return render_template("register.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    """User login"""
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+
+    if request.method == "POST":
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "")
+        remember = request.form.get("remember", False)
+
+        if not username or not password:
+            flash("Please enter both username and password", "error")
+            return render_template("login.html")
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and user.check_password(password):
+            login_user(user, remember=remember)
+            next_page = request.args.get("next")
+            flash(f"Welcome back, {user.username}!", "success")
+            return redirect(next_page) if next_page else redirect(url_for("index"))
+        else:
+            flash("Invalid username or password", "error")
+
+    return render_template("login.html")
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    """User logout"""
+    logout_user()
+    flash("You have been logged out successfully", "success")
+    return redirect(url_for("login"))
+
+
+# ============================================================================
 # EXISTING ROUTES
 # ============================================================================
 
 
 @app.route("/", methods=["GET"])
+@login_required
 def index():
     """Display the upload form"""
     return render_template("index.html")
