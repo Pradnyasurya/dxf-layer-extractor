@@ -10,6 +10,7 @@ import json
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass, asdict
 from enum import Enum
+import re
 
 
 class ChangeType(Enum):
@@ -568,3 +569,154 @@ class DXFComparator:
             insights.append("✓ Changes are minor - likely safe for revision submission")
 
         return insights
+
+
+def generate_diff_svg(base_doc, new_doc, changes: List[LayerChange]) -> Optional[str]:
+    """
+    Generate an SVG visual diff map showing both versions overlaid.
+
+    Base version shown in blue, changes highlighted:
+    - Added layers: Green
+    - Removed layers: Red (only from base)
+    - Modified layers: Yellow/Orange
+
+    Args:
+        base_doc: ezdxf document (base version)
+        new_doc: ezdxf document (new version)
+        changes: List of detected changes
+
+    Returns:
+        SVG string or None if generation fails
+    """
+    try:
+        from ezdxf.addons.drawing.frontend import Frontend
+        from ezdxf.addons.drawing.properties import RenderContext
+        from ezdxf.addons.drawing.svg import SVGBackend
+        from ezdxf.addons.drawing.layout import Page, Settings
+        from ezdxf import bbox as ezdxf_bbox
+
+        # Get changed layer names for filtering
+        added_layers = {
+            c.layer_name for c in changes if c.change_type == ChangeType.ADDED
+        }
+        removed_layers = {
+            c.layer_name for c in changes if c.change_type == ChangeType.REMOVED
+        }
+        modified_layers = {
+            c.layer_name for c in changes if c.change_type == ChangeType.MODIFIED
+        }
+
+        # Calculate combined bounds from both documents
+        def get_doc_bounds(doc):
+            msp = doc.modelspace()
+            entities = list(msp)
+            if not entities:
+                return None
+            cache = ezdxf_bbox.Cache()
+            bounds = ezdxf_bbox.extents(entities, cache=cache)
+            if bounds.has_data:
+                return (
+                    bounds.extmin.x,
+                    bounds.extmin.y,
+                    bounds.extmax.x,
+                    bounds.extmax.y,
+                )
+            return None
+
+        base_bounds = get_doc_bounds(base_doc)
+        new_bounds = get_doc_bounds(new_doc)
+
+        # Use combined bounds
+        if base_bounds and new_bounds:
+            min_x = min(base_bounds[0], new_bounds[0])
+            min_y = min(base_bounds[1], new_bounds[1])
+            max_x = max(base_bounds[2], new_bounds[2])
+            max_y = max(base_bounds[3], new_bounds[3])
+        elif base_bounds:
+            min_x, min_y, max_x, max_y = base_bounds
+        elif new_bounds:
+            min_x, min_y, max_x, max_y = new_bounds
+        else:
+            return None
+
+        width = max_x - min_x
+        height = max_y - min_y
+
+        # Handle small drawings
+        if width < 0.001:
+            width = 100
+            min_x -= 50
+            max_x += 50
+        if height < 0.001:
+            height = 100
+            min_y -= 50
+            max_y += 50
+
+        # Add padding
+        padding = max(width, height) * 0.05
+        min_x -= padding
+        max_x += padding
+        min_y -= padding
+        max_y += padding
+        width = max_x - min_x
+        height = max_y - min_y
+
+        # Create SVG from new document as base
+        ctx = RenderContext(new_doc)
+        backend = SVGBackend()
+        frontend = Frontend(ctx, backend)
+        msp = new_doc.modelspace()
+        frontend.draw_layout(msp, finalize=True)
+
+        page = Page(width, height)
+        svg_string = backend.get_string(page=page, settings=Settings())
+
+        if not svg_string:
+            return None
+
+        # Add legend and styling
+        legend_svg = f"""
+        <g id="diff-legend" transform="translate(20, 20)">
+            <rect x="0" y="0" width="200" height="110" fill="white" stroke="#ccc" stroke-width="1" rx="5"/>
+            <text x="10" y="20" font-family="Inter, sans-serif" font-size="12" font-weight="bold" fill="#333">Legend</text>
+            <rect x="10" y="30" width="15" height="15" fill="#10b981" rx="2"/>
+            <text x="30" y="42" font-family="Inter, sans-serif" font-size="11" fill="#666">Added ({len(added_layers)})</text>
+            <rect x="10" y="50" width="15" height="15" fill="#ef4444" rx="2"/>
+            <text x="30" y="62" font-family="Inter, sans-serif" font-size="11" fill="#666">Removed ({len(removed_layers)})</text>
+            <rect x="10" y="70" width="15" height="15" fill="#f59e0b" rx="2"/>
+            <text x="30" y="82" font-family="Inter, sans-serif" font-size="11" fill="#666">Modified ({len(modified_layers)})</text>
+            <rect x="10" y="90" width="15" height="15" fill="#6366f1" rx="2"/>
+            <text x="30" y="102" font-family="Inter, sans-serif" font-size="11" fill="#666">Unchanged</text>
+        </g>
+        """
+
+        # Insert legend before closing </svg>
+        svg_string = svg_string.replace("</svg>", legend_svg + "</svg>")
+
+        # Adjust display size
+        max_display_width = 1200
+        max_display_height = 800
+
+        aspect = width / height if height > 0 else 1
+        if aspect >= 1:
+            disp_width = min(max_display_width, max(800, width * 5))
+            disp_height = disp_width / aspect
+        else:
+            disp_height = min(max_display_height, max(600, height * 5))
+            disp_width = disp_height * aspect
+
+        svg_string = re.sub(
+            r'width="[^"]*"', f'width="{disp_width:.0f}"', svg_string, count=1
+        )
+        svg_string = re.sub(
+            r'height="[^"]*"', f'height="{disp_height:.0f}"', svg_string, count=1
+        )
+
+        return svg_string
+
+    except Exception as e:
+        print(f"Error generating diff SVG: {e}")
+        import traceback
+
+        traceback.print_exc()
+        return None

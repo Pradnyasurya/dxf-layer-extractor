@@ -49,6 +49,33 @@
                     </div>
                 </div>
                 
+                <!-- Visual Diff Preview (when available) -->
+                {% if diff_svg %}
+                <div class="preview-section">
+                    <div class="preview-panel">
+                        <div class="preview-toolbar">
+                            <h2 class="issues-section__title">Visual Diff Map</h2>
+                            <div class="preview-controls">
+                                <button class="btn btn--ghost btn--icon" type="button" data-zoom="out">-</button>
+                                <div class="preview-zoom">100%</div>
+                                <button class="btn btn--ghost btn--icon" type="button" data-zoom="in">+</button>
+                                <button class="btn btn--ghost btn--icon" type="button" data-zoom="fit">Fit</button>
+                            </div>
+                        </div>
+                        <div class="preview-viewport">
+                            <div class="preview-content">
+                                {{ diff_svg|safe }}
+                            </div>
+                        </div>
+                        <div class="preview-legend">
+                            <span style="display: inline-block; width: 12px; height: 12px; background: #10b981; border-radius: 2px; margin-right: 4px;"></span> Added layers
+                            <span style="display: inline-block; width: 12px; height: 12px; background: #ef4444; border-radius: 2px; margin: 0 4px 0 12px;"></span> Removed layers
+                            <span style="display: inline-block; width: 12px; height: 12px; background: #f59e0b; border-radius: 2px; margin: 0 4px 0 12px;"></span> Modified layers
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
                 <!-- Summary Stats -->
                 <div class="compare-summary">
                     <div class="compare-stats-grid">

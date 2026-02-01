@@ -23,7 +23,7 @@ from ezdxf.addons.drawing.svg import SVGBackend
 from ezdxf.addons.drawing.properties import Properties, LayoutProperties
 from flask_sqlalchemy import SQLAlchemy
 import hashlib
-from comparison_engine import DXFComparator, ChangeType
+from comparison_engine import DXFComparator, ChangeType, generate_diff_svg, LayerChange
 import json
 
 app = Flask(__name__)
@@ -1635,29 +1635,25 @@ def comparison_result(base_id, new_id):
             "modified_count": existing.modified_layers_count,
             "unchanged_count": existing.unchanged_layers_count,
         }
+        diff_svg = None  # Diff SVG not stored, would need to regenerate
     else:
-        # Perform comparison
-        try:
-            # Re-read DXF files (they may have been deleted, need to handle this)
-            # For now, show error if files not available
-            flash(
-                "Comparison requires both DXF files to be available. Feature coming soon: persistent storage of DXF files.",
-                "warning",
-            )
-            changes = []
-            summary = {
-                "total_layers_base": base_version.total_layers,
-                "total_layers_new": new_version.total_layers,
-                "added_count": 0,
-                "removed_count": 0,
-                "modified_count": 0,
-                "unchanged_count": min(
-                    base_version.total_layers, new_version.total_layers
-                ),
-            }
-        except Exception as e:
-            flash(f"Error comparing versions: {str(e)}", "error")
-            return redirect(url_for("compare_versions"))
+        # Perform comparison - for now show placeholder since files aren't stored persistently
+        # TODO: Implement persistent DXF file storage to enable real-time comparison
+        flash(
+            "ℹ️ Visual diff map will be available when persistent DXF storage is enabled. "
+            "Currently showing layer-level changes only.",
+            "info",
+        )
+        changes = []
+        summary = {
+            "total_layers_base": base_version.total_layers,
+            "total_layers_new": new_version.total_layers,
+            "added_count": 0,
+            "removed_count": 0,
+            "modified_count": 0,
+            "unchanged_count": min(base_version.total_layers, new_version.total_layers),
+        }
+        diff_svg = None
 
     return render_template(
         "comparison_result.html",
@@ -1665,6 +1661,7 @@ def comparison_result(base_id, new_id):
         new_version=new_version,
         changes=changes,
         summary=summary,
+        diff_svg=diff_svg,
     )
 
 
