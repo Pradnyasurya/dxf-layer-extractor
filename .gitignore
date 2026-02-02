@@ -55,3 +55,14 @@ target/
 *.jar
 *.zip
 lib/
+
+# Testing and coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+
+# Ruff cache
+.ruff_cache/
