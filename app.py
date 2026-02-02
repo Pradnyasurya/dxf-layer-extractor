@@ -33,7 +33,6 @@ from flask_login import (
 from werkzeug.security import generate_password_hash, check_password_hash
 import hashlib
 from comparison_engine import DXFComparator, ChangeType, generate_diff_svg, LayerChange
-import json
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-in-production")

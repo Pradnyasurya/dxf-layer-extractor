@@ -5,8 +5,6 @@ Provides comprehensive comparison between two DXF file versions,
 detecting added, removed, and modified layers with detailed metrics.
 """
 
-import hashlib
-import json
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -314,7 +312,7 @@ class DXFComparator:
             if change.base_linetype != change.new_linetype:
                 change.linetype_changed = True
                 has_changes = True
-                change.description += f"Line type changed. "
+                change.description += "Line type changed. "
 
             if change.base_visible != change.new_visible:
                 change.visibility_changed = True
