@@ -1,191 +1,173 @@
 # Agent Guide
 
-Purpose: give agentic coding tools the exact commands, conventions, and edge cases
-for this Flask DXF layer validator. Keep changes consistent with current behavior.
+Purpose: Give agentic coding tools commands, conventions, and edge cases for this Flask DXF layer validator.
 
-Project summary
-- Flask web app that uploads .dxf/.zip files, validates layers vs JSON rules.
-- Primary rules: odisha_layers.json; optional ppa_layers.json or custom upload.
-- UI is server-rendered (Jinja2 templates) with small JS/CSS.
+## Project Overview
 
-Repository layout (key files)
-- app.py: Flask routes + DXF validation logic (core behavior).
-- comparison_engine.py: DXF version comparison engine (change detection, metrics).
-- odisha_layers.json: master validation rules (single source of truth).
-- ppa_layers.json: alternative ruleset.
-- templates/: index.html, results.html, admin.html, versions.html, compare_select.html, comparison_result.html (Jinja2).
-- static/css/style.css: UI styling.
-- static/js/: client-side scripts (if any).
-- uploads/: temp storage (auto-cleaned after processing).
-- dxf_versions.db: SQLite database (auto-created on startup).
-- tests/: empty directory; no formal test suite yet.
+Flask web app for DXF file validation against JSON rulesets. Supports version comparison and user management.
 
-Database models
+**Key Files:**
+- `app.py` - Flask routes and validation logic
+- `comparison_engine.py` - DXF version comparison engine
+- `odisha_layers.json` - Master validation rules
+- `templates/` - Jinja2 templates (index.html, results.html, admin.html, versions.html, compare_select.html, comparison_result.html)
+- `tests/` - pytest test suite (test_smoke.py, test_validation.py)
 
-Version comparison uses SQLAlchemy with SQLite (dxf_versions.db, auto-created).
-Key tables:
-- `versions`: Stores file metadata (hash, upload_date, project_name, total_layers)
-- `layer_snapshots`: Stores per-layer metrics per version (area, entity_count, bounds, color)
-- `comparison_results`: Caches comparison results between version pairs
+## Build, Run, Lint, Test
 
-Auto-creates tables on app startup. No manual migrations needed for MVP.
-
-Build, run, lint, test
-
-Environment setup
+**Setup:**
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Run locally
+**Run locally:**
 ```bash
 python app.py
-# http://localhost:8080         - Upload form
-# http://localhost:8080/admin   - Rules management
+# http://localhost:8080 - Upload
+# http://localhost:8080/admin - Rules management
 # http://localhost:8080/versions - Version history
 # http://localhost:8080/compare - Version comparison
 ```
 
-Docker
+**Docker:**
 ```bash
 docker build -t dxf-layer-validator .
 docker run -p 8080:8080 dxf-layer-validator
 ```
 
-Lint (flake8)
+**Lint:**
 ```bash
-flake8 app.py --max-line-length=120 --ignore=E203,W503
+flake8 app.py comparison_engine.py --max-line-length=120 --ignore=E203,W503
 ```
 
-Type checking (mypy)
+**Type check:**
 ```bash
-mypy app.py --ignore-missing-imports
+mypy app.py comparison_engine.py --ignore-missing-imports
 ```
 
-Tests
-- There is no formal test suite in this repo.
-- Use manual validation against known DXF samples (see checklist below).
-- For a single test, create a tiny script in a temp location and run `python`.
-  Example:
+**Tests:**
+- No formal test suite exists yet.
+- To create one, add pytest to requirements.txt, create test files in `tests/`, then run:
   ```bash
-  python -c "import ezdxf; print(ezdxf.__version__)"
+  pytest tests/                    # Run all tests
+  pytest tests/test_file.py::test_name  # Run single test
   ```
+- For quick validation: `python -c "import ezdxf; print(ezdxf.__version__)"`
 
-If you add a test suite, document these in README and update this file:
-- Run all tests: (command here)
-- Run single test: (command here, e.g., pytest path::test_name)
+## Code Style
 
-Code style and conventions
+**Python:** Target 3.14+
 
-Python version
-- Target Python 3.14+ (per README).
+**Imports:**
+```python
+import os
+import json
+from typing import Dict, List
 
-Imports
-- Order: standard library, third-party, local.
-- Use absolute imports; avoid circular imports in app.py.
-- Example:
-  ```python
-  import os
-  import json
-  from flask import Flask
-  import ezdxf
-  ```
+from flask import Flask
+import ezdxf
 
-Formatting
-- PEP 8, 4 spaces, line length 100-120.
-- Keep large functions coherent; if app.py grows too large, extract helpers.
-- Use blank lines to separate logical sections within functions.
+from comparison_engine import DXFComparator
+```
 
-Naming
-- Functions/variables: snake_case.
-- Constants: UPPER_SNAKE_CASE.
-- Routes: short, noun-based, e.g., /upload, /admin.
-- Classes: PascalCase (if any).
+**Formatting:**
+- PEP 8, 4 spaces, max line length 100-120
+- Blank lines between logical sections
+- Use absolute imports only
 
-Types and data shapes
-- Validation rules are dictionaries loaded from JSON.
-- Keep rule keys as-is ("Layer Name", "Color Code", "Type", "Requirement").
-- When adding new rule fields, update any code that assumes key presence.
+**Naming:**
+- Functions/variables: `snake_case`
+- Constants: `UPPER_SNAKE_CASE`
+- Routes: Short, noun-based (`/upload`, `/admin`)
+- Classes: `PascalCase`
 
-Error handling
-- Prefer explicit exceptions with a clear message for user-facing errors.
-- Cleanup temp files on both success and failure (see upload_file flow).
-- Use flash() with categories: error, warning, success.
-- Always use try/except around file operations and DXF parsing.
+**Types:**
+- Validation rules are dicts from JSON with keys: "Layer Name", "Color Code", "Type", "Requirement"
+- Use type hints for function signatures
+- Keep rule keys as-is (don't rename)
 
-DXF validation behavior (core logic)
-- Unit validation: $INSUNITS=6, $LUNITS=2, $AUNITS=0; warn if $LUPREC!=2.
-- Layer pattern matching converts placeholders like BLK_n to regex digits.
-- Color rules:
-  - "Any"/"NA"/"N/A" are always valid.
-  - "RGB r,g,b" uses true_color matching (colors.rgb2int).
-  - "As per Sub-Occupancy" derives allowed colors from BLK_n_FLR_n_BLT_UP_AREA.
-- Entity fallback: if layer color is invalid, accept the layer only if all
-  entities have explicit valid colors (not ByLayer/ByBlock).
+**Error Handling:**
+- Use explicit exceptions with clear user-facing messages
+- Always cleanup temp files (even on failure)
+- Use `flash()` with categories: `error`, `warning`, `success`
+- Wrap file operations and DXF parsing in try/except
 
-Version comparison behavior (comparison_engine.py)
-- DXFComparator class: detects added, removed, modified layers between versions.
-- Metrics compared: entity count, area (sq.m), perimeter, centroid position.
-- Change significance: critical/high/medium/low based on layer type.
-- Critical layers: BLT_UP_AREA, COVERED_AREA, SETBACK, PLOT_BOUNDARY.
-- High priority: STAIR, LIFT, HT_OF_BLDG, PLINTH_HEIGHT, BLDG_FOOT_PRINT.
-- Tolerance: ignore changes < 0.01 sq.m or < 0.01m shift.
-- Insights: auto-generated warnings about coverage, setbacks, new structures.
-- Visual diff: generate_diff_svg() creates overlay with color-coded changes.
+## Core Validation Logic
 
-Entity type + geometry checks
-- Type mapping is in ENTITY_TYPE_MAPPING; keep it authoritative.
-- Polygon layers must be closed; area calculated via ezdxf helpers.
-- Text layers validate content by layer suffix (CAPACITY_L, VOLTAGE_KV, etc.).
+**Unit Validation:** $INSUNITS=6, $LUNITS=2, $AUNITS=0; warn if $LUPREC!=2
 
-Security and configuration
-- SECRET_KEY is pulled from env; default is dev-only.
-- Upload limit is 100 MB.
-- Always use secure_filename and restrict to .dxf/.zip.
-- Never log or expose file paths from user uploads.
+**Layer Patterns:** BLK_n converts to regex `BLK_\d+`
 
-UI behavior
-- Results page expects layer data with status/messages and data_attributes.
-- Results page also includes layer_analysis table (color, line type, visibility).
-- Admin page updates odisha_layers.json; validate JSON before saving.
-- Versions page lists all stored versions with project filtering.
-- Compare page shows card-based selection for base and new versions.
-- Comparison result shows changes list with filtering by type/significance.
-- Avoid breaking server-rendered flow or template variable names.
-- Flash messages use Bootstrap alert classes (error=danger, warning=warning, success=success).
+**Color Rules:**
+- "Any"/"NA"/"N/A" always valid
+- "RGB r,g,b" uses true_color matching (colors.rgb2int)
+- "As per Sub-Occupancy" derives from BLT_UP_AREA layer colors
+- Entity fallback: If layer color invalid but all entities have explicit valid colors → valid
 
-Data files
-- Do not hardcode new validation rules in Python unless rule is generic (units,
-  geometry, or formatting rules). JSON remains source of truth.
-- If you add new rulesets, keep them alongside odisha_layers.json and update
-  rules_source handling.
-- Always validate JSON syntax before writing to disk.
+**Entity Types:** Use ENTITY_TYPE_MAPPING for authoritative type checks
 
-Manual validation checklist (quick)
-- Valid DXF: all green.
-- Invalid units: $INSUNITS!=6 triggers error.
-- Color mismatch: wrong layer color yields error.
-- Entity override: invalid layer color but all entities explicit valid -> valid.
-- Sub-occupancy: BLT_UP_AREA colors feed occupancy validation.
-- ZIP upload: first .dxf found is processed.
-- Admin save: JSON syntax errors show clear message.
-- Layer analysis: table shows color codes, swatches, line types, visibility.
-- Version storage: DXF files stored in database after upload.
-- Version comparison: detects added/removed/modified layers.
-- Comparison metrics: area diffs, position shifts shown correctly.
-- Comparison significance: critical/high/medium/low badges displayed.
+**Geometry:**
+- Polygon layers must be closed
+- Calculate area via ezdxf helpers
+- Text layers validate by suffix (CAPACITY_L, VOLTAGE_KV)
 
-Cursor / Copilot rules
-- No .cursor/rules, .cursorrules, or .github/copilot-instructions.md found in
-  this repo at time of writing. If added later, mirror them here.
+## Version Comparison (comparison_engine.py)
 
-Notes for agentic changes
-- Avoid large refactors; focus on correctness and clarity.
-- If modifying validation logic, update error messages for user clarity.
-- Keep uploads cleaned even on exceptions; users upload large files.
-- Test manually with sample DXF files after any validation logic changes.
-- When adding features, check both / (upload) and /admin (rules) pages.
+- `DXFComparator` detects added/removed/modified layers
+- Metrics: entity count, area (sq.m), perimeter, centroid position
+- Significance: critical/high/medium/low based on layer type
+  - Critical: BLT_UP_AREA, COVERED_AREA, SETBACK, PLOT_BOUNDARY
+  - High: STAIR, LIFT, HT_OF_BLDG, PLINTH_HEIGHT, BLDG_FOOT_PRINT
+- Tolerance: Ignore changes < 0.01 sq.m or < 0.01m shift
+- `generate_diff_svg()` creates overlay visualization
+
+## Database Models
+
+SQLite (auto-created on startup). Key tables:
+- `versions` - file metadata (hash, upload_date, project_name, total_layers)
+- `layer_snapshots` - per-layer metrics (area, entity_count, bounds, color)
+- `comparison_results` - cached comparison results between versions
+- `users` - user accounts with password hashing
+
+## UI Behavior
+
+- Results page needs: `layer_data` with status/messages, `data_attributes`, `layer_analysis` table
+- Flash messages use Bootstrap classes: `error=danger`, `warning=warning`, `success=success`
+- Admin page validates JSON before saving to odisha_layers.json
+- Keep server-rendered flow intact; don't break template variable names
+
+## Security
+
+- SECRET_KEY from env (default is dev-only)
+- MAX_CONTENT_LENGTH = 100 MB
+- Always use `secure_filename()` and restrict to .dxf/.zip
+- Never log or expose user upload file paths
+
+## Manual Validation Checklist
+
+Test these scenarios after any validation changes:
+1. Valid DXF → all green
+2. Invalid units ($INSUNITS≠6) → error
+3. Color mismatch → error
+4. Entity color override → valid if all entities have explicit colors
+5. ZIP upload → first .dxf processed
+6. Admin save → JSON syntax errors show clear message
+7. Version storage → DXF stored in DB after upload
+8. Version comparison → detects added/removed/modified layers
+9. Comparison metrics → area diffs and shifts displayed correctly
+
+## Agent Notes
+
+- Avoid large refactors; focus on correctness
+- Update error messages when modifying validation logic
+- Always cleanup uploads/ directory, even on exceptions
+- Check both `/` (upload) and `/admin` (rules) pages when making changes
+- JSON files remain source of truth for rules; don't hardcode new rules in Python
+
+## Cursor / Copilot Rules
+
+No .cursor/rules, .cursorrules, or .github/copilot-instructions.md found. If added later, mirror them here.
 
 Last updated: Feb 2026
