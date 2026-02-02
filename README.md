@@ -32,14 +32,20 @@ A Flask web app that uploads DXF or ZIP files, extracts layers, and validates th
 
 ## Quick Start
 
-1. Create a virtual environment and install dependencies:
+1. Copy the environment configuration:
+   ```bash
+   cp .env.example .env
+   # Edit .env and update SECRET_KEY for production
+   ```
+
+2. Create a virtual environment and install dependencies:
    ```bash
    python3 -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
 
-2. Run the app:
+3. Run the app:
    ```bash
    python app.py
    ```
@@ -72,6 +78,29 @@ A Flask web app that uploads DXF or ZIP files, extracts layers, and validates th
    - Position shifts (for setbacks and structures)
    - Significance classification
    - Compliance insights and warnings
+
+## Development
+
+### Testing
+Run the test suite with pytest:
+```bash
+pytest tests/                    # Run all tests
+pytest tests/ -v                 # Verbose output
+pytest tests/ --cov=.           # With coverage report
+pytest tests/test_file.py::test_name  # Run single test
+```
+
+### Linting
+```bash
+flake8 app.py comparison_engine.py --max-line-length=120 --ignore=E203,W503
+black --check app.py comparison_engine.py    # Check formatting
+black app.py comparison_engine.py            # Apply formatting
+```
+
+### Utility Scripts
+See [UTILITIES.md](UTILITIES.md) for helper scripts to manage validation rules:
+- `analyze_layers.py` - Analyze layer name mappings between JSON files
+- `correct_layers.py` - Clean up and correct layer configurations
 
 ## Validation Rules
 
